@@ -7,13 +7,14 @@
         "Eralyne",
         "jawstarion",
         "magnetuning",
-        "Padme4000"
+        "Padme4000",
+        "pentapox"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
     "Flight Risk": {
       "label": "Flight risk! (Will throw fit and leave if criticized too much)",
-      "authors": ["Eralyne", "Arthmoor", "Xilandro"],
+      "authors": ["Eralyne", "Arthmoor", "Xilandro", "pentapox"],
       "icon": "https://f.rpghq.org/nD9rLv9rzAZY.png"
     },
     "Bug Ignorer": {
@@ -28,7 +29,7 @@
     },
     "Copystriker": {
       "label": "Viciously gets patches and reuploads of mods taken down. Retardedly believes they own their mod legally.\n\nDoes this for the ego boost, not for the good of the modding community.",
-      "authors": ["Arthmoor", "Xilandro", "Vessnelle"],
+      "authors": ["Arthmoor", "Xilandro", "Vessnelle", "pentapox"],
       "icon": "https://f.rpghq.org/JxQfA8F2nAnr.png"
     },
     "Incident": {
