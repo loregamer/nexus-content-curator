@@ -1,0 +1,57 @@
+[align=center][img]https://f.rpghq.org/3QDNLP3lY0OA.png?n=pasted-file.png[/img][/align]
+
+
+[hr]
+
+
+[size=150][b][color=#FE545D] Overview [/color][/b][/size]
+A userscript to add Warning tags to Nexus Mods and their authors.
+
+[img size=35]https://f.rpghq.org/Cvmsh43PDFvl.png?n=pasted-file.png[/img]
+
+[hr]
+
+
+[size=150][b][color=#FE545D] Why I Made This [/color][/b][/size]
+Nexus Mods and its moderation is horrible. Enforced positivity and author-set permission policy has been disastrous. People don't realize how rampant this issue is.
+
+This will allow us to manually mark and curate mods to be tagged.
+
+
+[hr]
+
+
+[size=150][b][color=#FE545D] Installation [/color][/b][/size]
+[list=1]
+[*] Download a userscript extension for your browser, like [url=https://chromewebstore.google.com/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag?hl=en]Violentmonkey[/url]
+[*] Open this link: [url=https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-content-curator.user.js]📥Nexus Mods Content Curator[/url]
+[/list]
+
+
+[hr]
+
+
+[size=150][b][color=#FE545D] How To Report Mods As Broken/Bad [/color][/b][/size]
+On the mod you want to add to the database, click the Report To HQ button:
+[img]https://f.rpghq.org/0IWG7O46bSDX.png?n=pasted-file.png[/img]
+
+Then, fill out the form and click "Copy To Clipboard"
+[img]https://f.rpghq.org/SHT6IsqU5CKh.png?n=pasted-file.png[/img]
+
+When you click it, it will open this thread and you can paste your clipboard. Post it and I will then review it and add it to the database. 
+[img]https://f.rpghq.org/7CGqj90wp9rE.png?n=pasted-file.png[/img]
+
+[size=150][b]NOTE:[/b] I will be looking into having a shared database that auto-updates for us to use[/size]
+
+
+[hr]
+
+
+[size=150][b][color=#FE545D] To Do [/color][/b][/size]
+[list]
+[*] Add [b]Recommended[/b] mods
+[*] Figure out if we can use a shared database to auto-maintain the list [size=85](May need [smention u=58]rusty_shackleford[/smention]'s help)[/size]
+[/list]
+ 
+ 
+[hr]
