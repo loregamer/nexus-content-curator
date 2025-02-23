@@ -1,21 +1,42 @@
-[align=center][img]https://f.rpghq.org/3QDNLP3lY0OA.png?n=pasted-file.png[/img][/align]
-
-
 [hr]
 
 
 [size=150][b][color=#FE545D] Overview [/color][/b][/size]
 A userscript to add Warning tags to Nexus Mods and their authors.
+ 
 
-[img size=35]https://f.rpghq.org/Cvmsh43PDFvl.png?n=pasted-file.png[/img]
+[hr]
+
+[img size=85]https://f.rpghq.org/fLdZYrxWVKU5.png?n=pasted-file.png[/img]
+
+[hr]
+
+[img]https://f.rpghq.org/ExZuEJQVrTwq.png?n=pasted-file.png[/img]
+
+[hr]
+
+[img]https://f.rpghq.org/3QDNLP3lY0OA.png?n=pasted-file.png[/img]
+
+[hr]
+
+
 
 [hr]
 
 
 [size=150][b][color=#FE545D] Why I Made This [/color][/b][/size]
-Nexus Mods and its moderation is horrible. Enforced positivity and author-set permission policy has been disastrous. People don't realize how rampant this issue is.
+Nexus Mods and its moderation is [b]horrible[/b]. Enforced positivity and author-set permission policies has been [b]disastrous[/b]. My hope is that by maintaining this tool, we will truly realize how rampant this issue is and the [b]necessity[/b] for ModHQ.
 
-This will allow us to manually mark and curate mods to be tagged.
+It's just us, bros. Every other modding community is [size=150][b]COMPROMISED[/b][/size].
+
+You will now know if mods are:
+[list]
+[*] [b]broken[/b]
+[*] whether or not an author is worth [b]engaging[/b] in
+[*] if the mod author was stingy with their permission policy
+[*] Viable alternatives to the mods you are visiting
+[*] [size=85]etc.[/size]
+[/list]
 
 
 [hr]
@@ -50,7 +71,8 @@ When you click it, it will open this thread and you can paste your clipboard. Po
 [size=150][b][color=#FE545D] To Do [/color][/b][/size]
 [list]
 [*] Add [b]Recommended[/b] mods
-[*] Figure out if we can use a shared database to auto-maintain the list [size=85](May need [smention u=58]rusty_shackleford[/smention]'s help)[/size]
+[*] [size=140]Figure out if we can use a shared database to auto-maintain the list [size=85](May need [smention u=58]rusty_shackleford[/smention]'s help)[/size][/size]
+[*] Add a report button to authors
 [/list]
  
  
