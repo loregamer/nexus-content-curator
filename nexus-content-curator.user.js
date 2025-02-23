@@ -567,7 +567,7 @@
   const DEFAULT_ICONS = {
     MALICIOUS: "⛔",
     WARNING: "⚡",
-    INFO: "ℹ️",
+    CAUTION: "⚠️",
   };
 
   // Add status indicator to author name
@@ -627,14 +627,14 @@
 
         // Fallback to emoji if image fails to load
         img.onerror = () => {
-          indicator.textContent = DEFAULT_ICONS[label.type] || "ℹ️";
+          indicator.textContent = DEFAULT_ICONS[label.type] || "⚠️";
           indicator.style.color = label.color || "orange";
           indicator.style.fontSize = "14px"; // Adjust emoji size to match image height
         };
 
         indicator.appendChild(img);
       } else {
-        indicator.textContent = DEFAULT_ICONS[label.type] || "ℹ️";
+        indicator.textContent = DEFAULT_ICONS[label.type] || "⚠️";
         indicator.style.color = label.color || "orange";
         indicator.style.fontSize = "14px"; // Adjust emoji size to match image height
       }
@@ -762,6 +762,11 @@
     AUTHOR_SUCKS: {
       icons: ["👿"],
       color: "#ff4400",
+      class: "warning",
+    },
+    CAUTION: {
+      icons: ["⚠️"],
+      color: "#ffa500",
       class: "warning",
     },
   };
@@ -908,7 +913,7 @@
     } else {
       if (!featured.className.includes("has-severe-warning")) {
         featured.className =
-          status.type === "INFO" ? "has-info" : "has-warning";
+          status.type === "CAUTION" ? "has-caution" : "has-warning";
       }
       bannerContainer.appendChild(textContainer);
     }
@@ -1631,7 +1636,7 @@
       iconWrapper.className = "title-warning-icon";
 
       // Get icon based on warning type
-      let icon = "ℹ️";
+      let icon = "⚠️";
       switch (warning.type) {
         case "BROKEN":
           icon = "⛔";
@@ -1700,8 +1705,8 @@
       warnings.some((w) => w.type === "CLOSED_PERMISSIONS" || w.type === "LAME")
     ) {
       gradientClass = "has-warning";
-    } else if (warnings.some((w) => w.type === "INFO")) {
-      gradientClass = "has-info";
+    } else if (warnings.some((w) => w.type === "CAUTION")) {
+      gradientClass = "has-caution";
     }
 
     // Apply gradient to either nofeature or featured element
@@ -1856,7 +1861,7 @@
             <select id="modStatus">
               <option value="BROKEN">Broken</option>
               <option value="LAME">Sucks</option>
-              <option value="INFO">Info</option>
+              <option value="CAUTION">Caution</option>
             </select>
           </div>
           <div class="form-group">
@@ -1932,7 +1937,7 @@
   function stripEmojis(text) {
     return text
       .replace(
-        /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}⚖️⛔️⚡️ℹ️👎🔒🔓👿]/gu,
+        /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}⚖️⛔️⚡️⚠️👎🔒🔓👿]/gu,
         ""
       )
       .trim();
