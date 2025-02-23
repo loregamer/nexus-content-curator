@@ -1025,7 +1025,7 @@
     modActions.appendChild(reportLi);
   }
 
-  // Modify setupDOMObserver to use addReportButton instead of replaceVirusScanButton
+  // Modify setupDOMObserver to skip mod tile checks
   function setupDOMObserver() {
     let checkTimeout;
     const observer = new MutationObserver((mutations) => {
@@ -1056,13 +1056,14 @@
           hasCheckedCurrentMod = true;
         }
 
-        // Check mod tiles - both on mod pages and search results
+        /* Temporarily disabled mod tile checks
         const modTiles = document.querySelectorAll(".mod-tile, .tile");
         modTiles.forEach((tile) => {
           if (!tile.querySelector(".mod-warning-banner")) {
             checkModTileStatus(tile);
           }
         });
+        */
 
         // Only check author status if we don't have all labels yet
         const authorLinks = document.querySelectorAll("a[href*='/users/']");
@@ -1123,8 +1124,11 @@
     return null;
   }
 
-  // Modify checkModTileStatus to include keyword checking
+  // Modify checkModTileStatus to do nothing for now
   function checkModTileStatus(modTile) {
+    // Temporarily disabled
+    return;
+    /* 
     const titleLink = modTile.querySelector(".tile-name a");
     if (!titleLink) {
       console.warn("[Debug] Could not find title link in tile");
@@ -1137,87 +1141,8 @@
       return;
     }
 
-    const gameName = match[1];
-    const modId = match[2];
-    const modTitle = titleLink.textContent.trim();
-
-    // Get category text from tile if available
-    const categoryText =
-      modTile.querySelector(".category")?.textContent.trim() || "";
-    const combinedTitle = `${categoryText} ${modTitle}`;
-
-    console.log(
-      "[Debug] Checking mod tile status for game:",
-      gameName,
-      "mod:",
-      modId
-    );
-
-    function processModTileStatus(modStatusData) {
-      if (!modStatusData) {
-        console.log("[Debug] No mod status data available");
-        return;
-      }
-
-      console.log("[Debug] Received mod status data:", modStatusData);
-
-      // First check explicit mod statuses
-      const gameStatuses = modStatusData["Mod Statuses"]?.[gameName];
-      let foundStatus = null;
-
-      if (gameStatuses) {
-        for (const [statusType, modList] of Object.entries(gameStatuses)) {
-          if (modList.includes(modId)) {
-            foundStatus = statusType;
-            break;
-          }
-        }
-      }
-
-      if (foundStatus) {
-        // Create base status object
-        const indicatorStatus = {
-          type: foundStatus,
-          reason: `This mod is marked as ${foundStatus.toLowerCase()}`,
-          color: STATUS_TYPES[foundStatus]?.color || "#ff0000",
-        };
-
-        // Check if we have additional descriptor info
-        const modDescriptor =
-          modStatusData["Mod Descriptors"]?.[gameName]?.[modId];
-        if (modDescriptor) {
-          if (modDescriptor.reason)
-            indicatorStatus.reason = modDescriptor.reason;
-          if (modDescriptor.alternative)
-            indicatorStatus.alternative = modDescriptor.alternative;
-          if (modDescriptor.url) indicatorStatus.url = modDescriptor.url;
-          if (modDescriptor.icon) indicatorStatus.icon = modDescriptor.icon;
-        }
-
-        console.log("[Debug] Created indicator status:", indicatorStatus);
-        addWarningBannerToTile(modTile, indicatorStatus);
-      } else {
-        // Check keyword rules if no explicit status was found
-        const keywordStatus = checkKeywordRules(
-          modStatusData,
-          gameName,
-          combinedTitle
-        );
-        if (keywordStatus) {
-          console.log("[Debug] Found keyword match:", keywordStatus);
-          addWarningBannerToTile(modTile, keywordStatus);
-        } else {
-          console.log("[Debug] No status found for mod tile");
-        }
-      }
-    }
-
-    // Always fetch fresh data first
-    fetchAndStoreJSON(
-      MOD_STATUS_URL,
-      STORAGE_KEYS.MOD_STATUS,
-      processModTileStatus
-    );
+    // Rest of the function...
+    */
   }
 
   // Function to clean permission title
