@@ -20,10 +20,10 @@
 
   // Configuration - Replace with your GitHub raw JSON URL
   const MOD_STATUS_URL =
-    "https://raw.githubusercontent.com/loregamer/rpghq-userscripts/refs/heads/main/Nexus/Resources/mod-status.json";
+    "https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/Resources/mod-status.json";
 
   const AUTHOR_STATUS_URL =
-    "https://raw.githubusercontent.com/loregamer/rpghq-userscripts/refs/heads/main/Nexus/Resources/author-status.json";
+    "https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/Resources/author-status.json";
 
   // Flag to track if we've checked the current mod
   let hasCheckedCurrentMod = false;
