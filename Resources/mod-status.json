@@ -4,7 +4,7 @@
       "BROKEN": ["899"],
       "LAME": ["2754"],
       "ABANDONED": [],
-      "INFO": ["141", "880"]
+      "CAUTION": ["141", "880"]
     },
     "newvegas": {
       "BROKEN": [
@@ -50,7 +50,7 @@
         "39157",
         "65094"
       ],
-      "INFO": ["38844", "76009", "81185", "81332", "81010", "61173"]
+      "CAUTION": ["38844", "76009", "81185", "81332", "81010", "61173"]
     }
   },
   "Mod Descriptors": {
@@ -157,7 +157,7 @@
           "reason": "Monster Mod has broken meshes that cause crashing and broken levelled lists."
         }
       ],
-      "INFO": [
+      "CAUTION": [
         {
           "pattern": "Killable Children",
           "reason": "Might break quests :("
