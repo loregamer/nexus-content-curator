@@ -1029,17 +1029,25 @@
         animation: reportButtonPulse 2s infinite;
     `;
 
-    // Create custom icon image
-    const iconImg = document.createElement("img");
-    iconImg.src = "https://f.rpghq.org/yU0EJOsrSUxO.png";
-    iconImg.style.cssText =
-      "width: 14px; height: 14px; margin: 0 5px 0 0; display: block;";
+    // Create custom icon using the endorse icon but flipped upside down
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "icon icon-endorse");
+    svg.style.transform = "rotate(180deg)"; // Flip the icon upside down
+    svg.style.marginRight = "5px";
+
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttributeNS(
+      "http://www.w3.org/1999/xlink",
+      "xlink:href",
+      "https://www.nexusmods.com/assets/images/icons/icons.svg#icon-endorse"
+    );
+    svg.appendChild(use);
 
     const label = document.createElement("span");
     label.className = "flex-label";
     label.innerHTML = `Report to <span style="color: #F5575D">H</span><span style="color: #3889ED">Q</span>`;
 
-    reportButton.appendChild(iconImg);
+    reportButton.appendChild(svg);
     reportButton.appendChild(label);
     reportButton.addEventListener("click", showReportForm);
 
