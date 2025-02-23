@@ -11,6 +11,8 @@
 // @connect      raw.githubusercontent.com
 // @connect      rpghq.org
 // @icon         https://www.nexusmods.com/favicon.ico
+// @updateURL    https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-content-curator.user.js
+// @downloadURL  https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-content-curator.user.js
 // ==/UserScript==
 
 (function () {
