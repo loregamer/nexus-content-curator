@@ -1,7 +1,7 @@
 {
   "Mod Statuses": {
     "baldursgate3": {
-      "BROKEN": ["899"],
+      "BROKEN": ["899", "1420"],
       "LAME": ["2754"],
       "ABANDONED": [],
       "CAUTION": ["141", "880"]
@@ -70,6 +70,10 @@
       "880": {
         "reason": "Requires patches to work. Very outdated.",
         "alternative": null
+      },
+      "1420": {
+        "reason": "Well... okay it's not broken, but I have a grudge that'll go to the grave, nigga.",
+        "alternative": "https://rpghq.org/forums/viewtopic.php?t=1652-icon-patches-for-vessnelle-s-hair-collection-2-0-0-baldur-s-gate-3"
       }
     },
     "newvegas": {
