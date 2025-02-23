@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1957,7 +1957,7 @@ Status: "${status}"${reason ? `\nReason: "${reason}"` : ""}${
 
         // Open the forum thread in a new tab
         const forumWindow = window.open(
-          "https://rpghq.org/forums/posting.php?mode=reply&t=2647",
+          "https://rpghq.org/forums/posting.php?mode=reply&t=3504",
           "_blank"
         );
 
