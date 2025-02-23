@@ -1221,12 +1221,14 @@
             if (titleElement) {
               const title = titleElement.textContent.trim();
               if (shouldIncludePermission(title)) {
-                if (permission.classList.contains("permission-yes")) {
-                  openPermissions.push(cleanPermissionTitle(title));
-                } else if (permission.classList.contains("permission-no")) {
+                // Treat both 'no' and 'maybe' as closed permissions
+                if (
+                  permission.classList.contains("permission-no") ||
+                  permission.classList.contains("permission-maybe")
+                ) {
                   closedPermissions.push(cleanPermissionTitle(title));
-                } else {
-                  customPermissions.push(cleanPermissionTitle(title));
+                } else if (permission.classList.contains("permission-yes")) {
+                  openPermissions.push(cleanPermissionTitle(title));
                 }
               }
             }
@@ -1287,12 +1289,14 @@
         if (titleElement) {
           const title = titleElement.textContent.trim();
           if (shouldIncludePermission(title)) {
-            if (permission.classList.contains("permission-yes")) {
-              openPermissions.push(cleanPermissionTitle(title));
-            } else if (permission.classList.contains("permission-no")) {
+            // Treat both 'no' and 'maybe' as closed permissions
+            if (
+              permission.classList.contains("permission-no") ||
+              permission.classList.contains("permission-maybe")
+            ) {
               closedPermissions.push(cleanPermissionTitle(title));
-            } else {
-              customPermissions.push(cleanPermissionTitle(title));
+            } else if (permission.classList.contains("permission-yes")) {
+              openPermissions.push(cleanPermissionTitle(title));
             }
           }
         }
