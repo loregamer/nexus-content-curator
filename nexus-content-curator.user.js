@@ -371,6 +371,21 @@
       opacity: 1;
       visibility: visible;
     }
+
+    @keyframes reportButtonPulse {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(245, 87, 93, 0.4);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 4px rgba(245, 87, 93, 0);
+        }
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(245, 87, 93, 0);
+        }
+    }
   `;
 
   // Add form styles
@@ -1009,11 +1024,14 @@
     reportButton.style.cssText = `
         font-size: 12px;
         background-color: #242A36;
+        border: 1px solid #C62D51;
+        transition: all 0.3s ease;
+        animation: reportButtonPulse 2s infinite;
     `;
 
     // Create custom icon image
     const iconImg = document.createElement("img");
-    iconImg.src = "https://f.rpghq.org/6RPr3xG4432g.png";
+    iconImg.src = "https://f.rpghq.org/yU0EJOsrSUxO.png";
     iconImg.style.cssText =
       "width: 14px; height: 14px; margin: 0 5px 0 0; display: block;";
 
