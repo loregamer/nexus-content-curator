@@ -1006,16 +1006,20 @@
 
     const reportButton = document.createElement("a");
     reportButton.className = "btn inline-flex";
-    reportButton.style.cssText = "font-size: 12px;"; // Keep small font but remove custom padding
+    reportButton.style.cssText = `
+        font-size: 12px;
+        background-color: #242A36;
+    `;
 
     // Create custom icon image
     const iconImg = document.createElement("img");
     iconImg.src = "https://f.rpghq.org/6RPr3xG4432g.png";
-    iconImg.style.cssText = "width: 14px; height: 14px; display: block;"; // Remove margin and add display:block to match SVG behavior
+    iconImg.style.cssText =
+      "width: 14px; height: 14px; margin: 0 5px 0 0; display: block;";
 
     const label = document.createElement("span");
     label.className = "flex-label";
-    label.textContent = "Report to HQ";
+    label.innerHTML = `Report to <span style="color: #F5575D">H</span><span style="color: #3889ED">Q</span>`;
 
     reportButton.appendChild(iconImg);
     reportButton.appendChild(label);
