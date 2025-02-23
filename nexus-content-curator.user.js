@@ -1189,8 +1189,7 @@
       "Asset use for files that earn donation points",
       "Asset use permission in mods/files that are being sold",
       "Asset use permission in mods/files that earn donation points",
-      "Asset use permission for files that are being sold",
-      "Asset use permission for files that earn donation points",
+      "Other user's assets",
     ];
 
     const cleanedTitle = cleanPermissionTitle(title);
