@@ -51,6 +51,12 @@
         "65094"
       ],
       "CAUTION": ["38844", "76009", "81185", "81332", "81010", "61173"]
+    },
+    "skyrimspecialedition": {
+      "BROKEN": [],
+      "LAME": [],
+      "ABANDONED": [],
+      "CAUTION": ["266"]
     }
   },
   "Mod Descriptors": {
@@ -136,6 +142,12 @@
       "37002": {
         "reason": "Countless broken meshes and leveled lists that will cause crashes. Use Classic Fallout Weapons Remastered instead.",
         "alternative": "https://www.nexusmods.com/newvegas/mods/73805"
+      }
+    },
+    "skyrimspecialedition": {
+      "266": {
+        "reason": "This mod makes unnecessary changes that are outside of the scope of mere bug fixes. You will need a mod to undo its changes.",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/72083"
       }
     }
   },
