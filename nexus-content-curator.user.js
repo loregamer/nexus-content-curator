@@ -921,111 +921,13 @@
     console.log("[Debug] Banner added to featured element");
   }
 
-  // Add warning banner to mod tile
-  function addWarningBannerToTile(modTile, status) {
-    console.log("[Debug] Adding warning banner to mod tile");
-
-    // Check for existing banner
-    const existingBanner = modTile.querySelector(".mod-warning-banner");
-    if (existingBanner) {
-      console.log("[Debug] Removing existing banner");
-      existingBanner.remove();
-    }
-
-    // Create a simplified banner for tiles
-    const banner = document.createElement("div");
-    banner.className = `mod-warning-banner ${status.type.toLowerCase()}`;
-
-    const iconContainer = document.createElement("div");
-    iconContainer.className = "warning-icon-container";
-    const icon = document.createElement("span");
-    icon.className = "warning-icon";
-    icon.textContent = STATUS_TYPES[status.type]?.icons[0] || "⛔";
-    iconContainer.appendChild(icon);
-
-    const textContainer = document.createElement("div");
-    textContainer.className = "warning-text";
-    textContainer.textContent = status.type;
-
-    banner.appendChild(iconContainer);
-    banner.appendChild(textContainer);
-
-    // Add tooltip with full details
-    const showTooltip = (e) => {
-      tooltip.innerHTML = formatTooltipText(status.reason);
-      tooltip.style.display = "block";
-      updateTooltipPosition(e);
-    };
-
-    const hideTooltip = () => {
-      tooltip.style.display = "none";
-    };
-
-    banner.addEventListener("mouseover", showTooltip);
-    banner.addEventListener("mousemove", updateTooltipPosition);
-    banner.addEventListener("mouseout", hideTooltip);
-    banner.style.cursor = "help";
-
-    // Add banner to tile's image
-    modTile.querySelector(".mod-image")?.appendChild(banner);
-
-    // Add warning class to tile for highlighting
-    if (status.type === "BROKEN") {
-      modTile.classList.add("has-broken-warning");
-    }
+  // Modify checkModTileStatus to do nothing for now
+  function checkModTileStatus(modTile) {
+    // Temporarily disabled
+    return;
   }
 
-  // Function to replace download buttons with report button
-  function addReportButton() {
-    const modActions = document.querySelector(".modactions.clearfix");
-    if (!modActions) return;
-
-    // Remove download label and buttons
-    const downloadLabel = modActions.querySelector(".dllabel");
-    if (downloadLabel) downloadLabel.remove();
-
-    const nmmButton = modActions.querySelector("#action-nmm");
-    if (nmmButton) nmmButton.remove();
-
-    const manualButton = modActions.querySelector("#action-manual");
-    if (manualButton) manualButton.remove();
-
-    // Remove Vote and Add Media buttons
-    const voteButton = modActions.querySelector("li a .icon-vote");
-    if (voteButton) voteButton.closest("li").remove();
-
-    const addMediaButton = modActions.querySelector("#action-media");
-    if (addMediaButton) addMediaButton.remove();
-
-    // Check if report button already exists
-    if (modActions.querySelector("#action-report-hq")) return;
-
-    // Create report button
-    const reportLi = document.createElement("li");
-    reportLi.id = "action-report-hq";
-
-    const reportButton = document.createElement("a");
-    reportButton.className = "btn inline-flex";
-    reportButton.style.cssText = "font-size: 12px;"; // Keep small font but remove custom padding
-
-    // Create custom icon image
-    const iconImg = document.createElement("img");
-    iconImg.src = "https://f.rpghq.org/6RPr3xG4432g.png";
-    iconImg.style.cssText = "width: 14px; height: 14px; display: block;"; // Remove margin and add display:block to match SVG behavior
-
-    const label = document.createElement("span");
-    label.className = "flex-label";
-    label.textContent = "Report to HQ";
-
-    reportButton.appendChild(iconImg);
-    reportButton.appendChild(label);
-    reportButton.addEventListener("click", showReportForm);
-
-    reportLi.appendChild(reportButton);
-    modActions.appendChild(reportLi);
-  }
-
-  // Modify setupDOMObserver to use addReportButton instead of replaceVirusScanButton
+  // Modify setupDOMObserver to skip mod tile checks
   function setupDOMObserver() {
     let checkTimeout;
     const observer = new MutationObserver((mutations) => {
@@ -1055,14 +957,6 @@
           checkModStatus();
           hasCheckedCurrentMod = true;
         }
-
-        // Check mod tiles - both on mod pages and search results
-        const modTiles = document.querySelectorAll(".mod-tile, .tile");
-        modTiles.forEach((tile) => {
-          if (!tile.querySelector(".mod-warning-banner")) {
-            checkModTileStatus(tile);
-          }
-        });
 
         // Only check author status if we don't have all labels yet
         const authorLinks = document.querySelectorAll("a[href*='/users/']");
@@ -1121,103 +1015,6 @@
       }
     }
     return null;
-  }
-
-  // Modify checkModTileStatus to include keyword checking
-  function checkModTileStatus(modTile) {
-    const titleLink = modTile.querySelector(".tile-name a");
-    if (!titleLink) {
-      console.warn("[Debug] Could not find title link in tile");
-      return;
-    }
-
-    const match = titleLink.href.match(/nexusmods\.com\/([^\/]+)\/mods\/(\d+)/);
-    if (!match) {
-      console.warn("[Debug] Could not parse game/mod ID from URL");
-      return;
-    }
-
-    const gameName = match[1];
-    const modId = match[2];
-    const modTitle = titleLink.textContent.trim();
-
-    // Get category text from tile if available
-    const categoryText =
-      modTile.querySelector(".category")?.textContent.trim() || "";
-    const combinedTitle = `${categoryText} ${modTitle}`;
-
-    console.log(
-      "[Debug] Checking mod tile status for game:",
-      gameName,
-      "mod:",
-      modId
-    );
-
-    function processModTileStatus(modStatusData) {
-      if (!modStatusData) {
-        console.log("[Debug] No mod status data available");
-        return;
-      }
-
-      console.log("[Debug] Received mod status data:", modStatusData);
-
-      // First check explicit mod statuses
-      const gameStatuses = modStatusData["Mod Statuses"]?.[gameName];
-      let foundStatus = null;
-
-      if (gameStatuses) {
-        for (const [statusType, modList] of Object.entries(gameStatuses)) {
-          if (modList.includes(modId)) {
-            foundStatus = statusType;
-            break;
-          }
-        }
-      }
-
-      if (foundStatus) {
-        // Create base status object
-        const indicatorStatus = {
-          type: foundStatus,
-          reason: `This mod is marked as ${foundStatus.toLowerCase()}`,
-          color: STATUS_TYPES[foundStatus]?.color || "#ff0000",
-        };
-
-        // Check if we have additional descriptor info
-        const modDescriptor =
-          modStatusData["Mod Descriptors"]?.[gameName]?.[modId];
-        if (modDescriptor) {
-          if (modDescriptor.reason)
-            indicatorStatus.reason = modDescriptor.reason;
-          if (modDescriptor.alternative)
-            indicatorStatus.alternative = modDescriptor.alternative;
-          if (modDescriptor.url) indicatorStatus.url = modDescriptor.url;
-          if (modDescriptor.icon) indicatorStatus.icon = modDescriptor.icon;
-        }
-
-        console.log("[Debug] Created indicator status:", indicatorStatus);
-        addWarningBannerToTile(modTile, indicatorStatus);
-      } else {
-        // Check keyword rules if no explicit status was found
-        const keywordStatus = checkKeywordRules(
-          modStatusData,
-          gameName,
-          combinedTitle
-        );
-        if (keywordStatus) {
-          console.log("[Debug] Found keyword match:", keywordStatus);
-          addWarningBannerToTile(modTile, keywordStatus);
-        } else {
-          console.log("[Debug] No status found for mod tile");
-        }
-      }
-    }
-
-    // Always fetch fresh data first
-    fetchAndStoreJSON(
-      MOD_STATUS_URL,
-      STORAGE_KEYS.MOD_STATUS,
-      processModTileStatus
-    );
   }
 
   // Function to clean permission title
