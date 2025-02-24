@@ -44,7 +44,8 @@
         "1115",
         "5913",
         "7686",
-        "4743"
+        "4743",
+        "1713"
       ],
       "LAME": [
         "2754",
@@ -468,6 +469,10 @@
       },
       "4096": {
         "reason": "Pack includes DIVERSIFIED, ETHNICALLY MODERN Elf heads.\n\nAuthor DARED speak ill on the glorious state of Israel in support of PALESTINE, which is a DISGRACE to the memory of the 6 million jews murdered by the Nazis.",
+        "alternative": null
+      },
+      "1713": {
+        "reason": "Hasn't been updated in ages and no longer needs to be used since Minthara can be recruited without killing the tieflings (Larian made this workaround in later patches).",
         "alternative": null
       }
     },
