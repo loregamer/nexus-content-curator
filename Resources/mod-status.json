@@ -4,7 +4,17 @@
       "BROKEN": ["899", "1420", "10", "492", "978"],
       "LAME": ["2754", "205", "8295"],
       "ABANDONED": [],
-      "CAUTION": ["141", "880", "8993", "1058", "1933", "2435", "629", "9625"]
+      "CAUTION": [
+        "141",
+        "880",
+        "8993",
+        "1058",
+        "1933",
+        "2435",
+        "629",
+        "9625",
+        "6473"
+      ]
     },
     "newvegas": {
       "BROKEN": [
@@ -117,6 +127,9 @@
       },
       "9625": {
         "reason": "Use the PAK file version, not the loose files version.\n\nYou should pretty much never mess with loose files in your Data folder."
+      },
+      "6473": {
+        "reason": "This mod uses loose files. Normally, we suggest to NEVER mod your Data folder, but this one can be a rare exception. Especially since you may have different versions of the mod installed during multiplayer.\n\nJust remember this is the only mod you should have installed as a loose file."
       }
     },
     "newvegas": {
