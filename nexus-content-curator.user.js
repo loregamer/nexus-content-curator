@@ -2098,7 +2098,6 @@
     // Function to process mod status data
     function processModStatus(modStatusData) {
       if (!modStatusData) {
-        addAllWarnings(warnings);
         return;
       }
 
@@ -2152,8 +2151,14 @@
         }
       }
 
-      // Add all collected warnings after we've gathered everything
-      addAllWarnings(warnings);
+      // First ensure author status is checked
+      checkAuthorStatus();
+
+      // Wait a short time for author status to be applied
+      setTimeout(() => {
+        // Now add all warnings after author status has been checked
+        addAllWarnings(warnings);
+      }, 300);
     }
 
     // Always fetch fresh data first
