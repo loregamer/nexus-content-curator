@@ -29,7 +29,7 @@
         "6473",
         "327"
       ],
-      "INFORMATIVE": ["6183"]
+      "INFORMATIVE": ["6183", "2922"]
     },
     "newvegas": {
       "BROKEN": [
@@ -188,6 +188,10 @@
       },
       "6183": {
         "reason": "Don't use this on an honor mode run.\n\nAlso, you will still run into various bugs if you extend your party limit, no matter what, so proceed with caution.",
+        "alternative": null
+      },
+      "2922": {
+        "reason": "Mod works well, but it requires finesse. Eralyne ignores bug reports, so don't bother reporting them.\n\nMake sure to save and reload every time you Transmog something.",
         "alternative": null
       }
     },
