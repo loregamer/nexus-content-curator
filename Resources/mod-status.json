@@ -109,8 +109,8 @@
       "CAUTION": ["38844", "76009", "81185", "81332", "81010", "61173"]
     },
     "skyrimspecialedition": {
-      "BROKEN": ["266", "3038", "33746", "63000", "9358"],
-      "LAME": [],
+      "BROKEN": ["266", "3038", "33746", "63000", "9358", "87707"],
+      "LAME": ["365", "276", "173", "2272"],
       "ABANDONED": [],
       "CAUTION": ["266"]
     }
@@ -364,6 +364,26 @@
       "9358": {
         "reason": "Use \"Improved Camera SE\" instead.",
         "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/93962"
+      },
+      "365": {
+        "reason": "Sucks. No voice acting. Author takes down patches for this.",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/51711"
+      },
+      "276": {
+        "reason": "Makes unnecessary changes that are outside the scope of the mod.\n\nIf you must restore cut content, use \"Skyrim Cut Content Restoration\"",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/90744"
+      },
+      "173": {
+        "reason": "Extremely incompatible mod. Doesn't work with many others. Author takes down any patches made for it.\n\nUse \"AI Overhaul SSE\" instead.",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/21654"
+      },
+      "2272": {
+        "reason": "Outdated, messy mod. Author takes down any patches made for it.\n\nUse \"AI Overhaul SSE\" instead.",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/21654"
+      },
+      "87707": {
+        "reason": "You are entering a world of pain if you install this. Or any Open Cities mod, really. If you must, use \"SR Exterior Cities Series\"\n\nAlso, click Arthmoor's author tags and read up about the drama about this mod. Very informative!",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/87954"
       }
     }
   },
