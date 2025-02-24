@@ -386,6 +386,48 @@
             box-shadow: 0 0 0 0 rgba(245, 87, 93, 0);
         }
     }
+
+    /* Make warning tags match regular tag sizes */
+    .tags li {
+      display: inline-flex !important;
+      margin: 0 4px 4px 0 !important;
+    }
+
+    .tags .btn.inline-flex {
+      height: 24px !important;
+      padding: 0 8px !important;
+      font-size: 12px !important;
+      line-height: 24px !important;
+      white-space: nowrap !important;
+    }
+
+    .tags .icon.icon-tag {
+      width: 12px !important;
+      height: 12px !important;
+      margin-right: 4px !important;
+    }
+
+    .tags span:first-child {
+      display: inline-flex !important;
+      flex-wrap: wrap !important;
+      gap: 4px !important;
+      margin: -2px !important;
+      padding: 2px !important;
+    }
+
+    /* Ensure warning tags align with regular tags */
+    .tags li[data-warning-tag] {
+      order: -1;
+    }
+
+    .tags li[data-warning-tag] .btn.inline-flex {
+      display: inline-flex !important;
+      align-items: center !important;
+    }
+
+    .tags li[data-warning-tag] .flex-label {
+      line-height: 24px !important;
+    }
   `;
 
   // Add form styles
@@ -1410,9 +1452,13 @@
     }
   }
 
-  // Create warning tag element
+  // Function to create warning tag element
   function createWarningTag(status) {
     const tagLi = document.createElement("li");
+    tagLi.style.cssText = `
+      display: inline-flex;
+      margin: 0 4px 4px 0;
+    `;
 
     const tagBtn = document.createElement("a");
     tagBtn.className = "btn inline-flex";
@@ -1452,11 +1498,23 @@
       pointer-events: none;
       color: white;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      height: 24px;
+      padding: 0 8px;
+      font-size: 12px;
+      line-height: 24px;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
     `;
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "icon icon-tag");
     svg.setAttribute("title", "");
+    svg.style.cssText = `
+      width: 12px;
+      height: 12px;
+      margin-right: 4px;
+    `;
 
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
     use.setAttributeNS(
@@ -1468,72 +1526,22 @@
 
     const label = document.createElement("span");
     label.className = "flex-label";
+    label.style.cssText = `
+      line-height: 24px;
+    `;
     label.textContent = status.type.replace(/_/g, " ");
 
     tagBtn.appendChild(svg);
     tagBtn.appendChild(label);
     tagLi.appendChild(tagBtn);
 
+    // Add tabindex to match regular tags
+    tagBtn.setAttribute("tabindex", "0");
+
     return tagLi;
   }
 
-  // Function to check if any author has warning labels
-  function hasAuthorWarnings() {
-    // Get the mod author links from the file information section
-    const authorLinks = document.querySelectorAll(
-      '#fileinfo .sideitem a[href*="/users/"]'
-    );
-    let hasWarnings = false;
-
-    // Find the "Created by" heading and its parent div
-    const createdByHeading = Array.from(
-      document.querySelectorAll("#fileinfo .sideitem h3")
-    ).find((h3) => h3.textContent.trim() === "Created by");
-
-    if (createdByHeading) {
-      // Get the text content of the "Created by" div
-      const createdByDiv = createdByHeading.parentElement;
-      if (createdByDiv) {
-        const authors = createdByDiv.textContent
-          .replace("Created by", "")
-          .trim()
-          .split(" and ")
-          .map((author) => author.trim());
-
-        // Check if any of these authors have warning containers
-        authors.forEach((author) => {
-          const authorElements = document.querySelectorAll(
-            `a[href*="/users/"]:not(.comments-link)`
-          );
-          authorElements.forEach((element) => {
-            if (
-              element.textContent.trim() === author &&
-              element.nextElementSibling?.classList.contains(
-                "author-status-container"
-              )
-            ) {
-              hasWarnings = true;
-            }
-          });
-        });
-      }
-    }
-
-    // Also check the "Uploaded by" author
-    authorLinks.forEach((authorLink) => {
-      if (
-        authorLink.nextElementSibling?.classList.contains(
-          "author-status-container"
-        )
-      ) {
-        hasWarnings = true;
-      }
-    });
-
-    return hasWarnings;
-  }
-
-  // Add warning tags to the page
+  // Update addWarningTags function to match structure
   function addWarningTags(warnings) {
     const tagsContainer = document.querySelector(".sideitem.clearfix .tags");
     if (!tagsContainer) {
@@ -1542,10 +1550,11 @@
     }
 
     // Get the first span that contains the visible tags
-    const firstSpan = tagsContainer.querySelector("span:first-child");
+    let firstSpan = tagsContainer.querySelector("span:first-child");
     if (!firstSpan) {
-      console.warn("[Debug] First span not found in tags container");
-      return;
+      // If no span exists, create one
+      firstSpan = document.createElement("span");
+      tagsContainer.insertBefore(firstSpan, tagsContainer.firstChild);
     }
 
     // Remove any existing warning tags
@@ -1566,15 +1575,13 @@
 
     // Add new warning tags at the start of the tags list
     warnings.forEach((warning) => {
+      if (!warning || !warning.type) return;
+
       const warningTag = createWarningTag(warning);
       warningTag.setAttribute("data-warning-tag", warning.type);
-      // Insert before the first existing li element
-      const firstLi = firstSpan.querySelector("li");
-      if (firstLi) {
-        firstSpan.insertBefore(warningTag, firstLi);
-      } else {
-        firstSpan.appendChild(warningTag);
-      }
+
+      // Insert at the start of the first span
+      firstSpan.insertBefore(warningTag, firstSpan.firstChild);
     });
   }
 
@@ -1988,6 +1995,62 @@ Status: "${status}"${reason ? `\nReason: "${reason}"` : ""}${
         console.error("Failed to copy:", err);
         alert("Failed to copy to clipboard");
       });
+  }
+
+  // Function to check if any author has warning labels
+  function hasAuthorWarnings() {
+    // Get the mod author links from the file information section
+    const authorLinks = document.querySelectorAll(
+      '#fileinfo .sideitem a[href*="/users/"]'
+    );
+    let hasWarnings = false;
+
+    // Find the "Created by" heading and its parent div
+    const createdByHeading = Array.from(
+      document.querySelectorAll("#fileinfo .sideitem h3")
+    ).find((h3) => h3.textContent.trim() === "Created by");
+
+    if (createdByHeading) {
+      // Get the text content of the "Created by" div
+      const createdByDiv = createdByHeading.parentElement;
+      if (createdByDiv) {
+        const authors = createdByDiv.textContent
+          .replace("Created by", "")
+          .trim()
+          .split(" and ")
+          .map((author) => author.trim());
+
+        // Check if any of these authors have warning containers
+        authors.forEach((author) => {
+          const authorElements = document.querySelectorAll(
+            `a[href*="/users/"]:not(.comments-link)`
+          );
+          authorElements.forEach((element) => {
+            if (
+              element.textContent.trim() === author &&
+              element.nextElementSibling?.classList.contains(
+                "author-status-container"
+              )
+            ) {
+              hasWarnings = true;
+            }
+          });
+        });
+      }
+    }
+
+    // Also check the "Uploaded by" author
+    authorLinks.forEach((authorLink) => {
+      if (
+        authorLink.nextElementSibling?.classList.contains(
+          "author-status-container"
+        )
+      ) {
+        hasWarnings = true;
+      }
+    });
+
+    return hasWarnings;
   }
 
   // Run when the page loads
