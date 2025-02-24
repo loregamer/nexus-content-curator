@@ -45,7 +45,8 @@
         "5913",
         "7686",
         "4743",
-        "1713"
+        "1713",
+        "1515"
       ],
       "LAME": [
         "2754",
@@ -473,6 +474,10 @@
       },
       "1713": {
         "reason": "Hasn't been updated in ages and no longer needs to be used since Minthara can be recruited without killing the tieflings (Larian made this workaround in later patches).",
+        "alternative": null
+      },
+      "1515": {
+        "reason": "Outdated minthara recruitment mod. No longer needs to be used since Minthara can be recruited without killing the tieflings (Larian made this workaround in later patches).",
         "alternative": null
       }
     },
