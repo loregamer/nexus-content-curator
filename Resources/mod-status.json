@@ -13,7 +13,8 @@
         "2164",
         "2051",
         "3206",
-        "2518"
+        "2518",
+        "4273"
       ],
       "LAME": ["2754", "205", "8295", "3479", "11939", "11172", "7294"],
       "ABANDONED": [],
@@ -197,6 +198,10 @@
       "7294": {
         "reason": "Pretty ironic \"Open Faerun\" has closed permissions, huh...",
         "alternative": null
+      },
+      "4273": {
+        "reason": "Abandoned, but updated on ModHQ by loregamer.",
+        "alternative": "https://rpghq.org/forums/viewtopic.php?t=2555-plus-ui-unofficial-patch-7-fix-1-6-baldur-s-gate-3"
       }
     },
     "newvegas": {
