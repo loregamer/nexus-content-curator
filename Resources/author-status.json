@@ -22,6 +22,7 @@
       "authors": [
         "Aether",
         "Arthmoor",
+        "clintmich",
         "Eralyne",
         "Xilandro",
         "Vessnelle",
@@ -94,6 +95,12 @@
     "Raizans": {
       "Bug Ignorer": {
         "label": "Inactive. Mods are likely broken, or won't have their bugs fixed.",
+        "referenceLink": null
+      }
+    },
+    "clintmich": {
+      "Bug Ignorer": {
+        "label": "Inactive. Mod bugs will not be fixed or updated to new patches.",
         "referenceLink": null
       }
     }
