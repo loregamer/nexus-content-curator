@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.2.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -10,6 +10,7 @@
 // @grant        GM_getValue
 // @connect      raw.githubusercontent.com
 // @connect      rpghq.org
+// @connect      github.com
 // @icon         https://www.nexusmods.com/favicon.ico
 // @updateURL    https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-content-curator.user.js
 // @downloadURL  https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-content-curator.user.js
