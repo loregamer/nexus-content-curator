@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.3.1
+// @version      1.3.2
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1686,13 +1686,12 @@
     let bgColor;
     switch (status.type) {
       case "BROKEN":
+      case "LAME":
         bgColor =
           "linear-gradient(45deg, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0.9))";
         break;
       case "CLOSED_PERMISSIONS":
-      case "LAME":
-        bgColor =
-          "linear-gradient(45deg, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0.9))";
+        bgColor = "#ffa500";
         break;
       case "CAUTION":
         bgColor =
