@@ -5,6 +5,7 @@
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
+// @match        https://next.nexusmods.com/profile/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -568,9 +569,75 @@
     }
   `;
 
+  // Add new styles for the author report button and form
+  const authorReportStyles = `
+    .author-report-button {
+      position: relative;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.25rem;
+      min-height: 2.25rem;
+      padding: 0 0.75rem;
+      min-width: 6rem;
+      cursor: pointer;
+      background: #C62D51;
+      color: white;
+      border: none;
+    }
+
+    .author-report-button:hover {
+      background: #A02442;
+    }
+
+    .author-report-button span {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    .author-report-form {
+      width: 600px;
+      max-width: 90vw;
+    }
+
+    .author-report-form textarea {
+      min-height: 120px;
+    }
+
+    .author-report-form .form-group label {
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .author-report-form .evidence-field {
+      margin-top: 10px;
+    }
+
+    .author-report-form .evidence-field input {
+      margin-bottom: 5px;
+    }
+
+    .author-report-form .add-evidence {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+
+    .author-report-form .add-evidence:hover {
+      background: #555;
+    }
+  `;
+
   // Add styles to document
   const styleSheet = document.createElement("style");
-  styleSheet.textContent = styles + formStyles;
+  styleSheet.textContent = styles + formStyles + authorReportStyles;
   document.head.appendChild(styleSheet);
 
   // Create and setup tooltip element
@@ -1169,6 +1236,9 @@
         if (unlabeledAuthors) {
           checkAuthorStatus();
         }
+
+        // Add profile page check
+        addReportButtonToProfile();
       }, 100);
     });
 
@@ -2070,6 +2140,214 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
     });
 
     return hasWarnings;
+  }
+
+  // Function to create author report button
+  function createAuthorReportButton() {
+    const button = document.createElement("button");
+    button.className = "author-report-button";
+    button.type = "button";
+
+    button.innerHTML = `
+      <span>
+        <svg viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem" role="presentation" class="shrink-0 -ml-0.5">
+          <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" style="fill:currentColor"/>
+        </svg>
+        <span class="typography-body-lg grow text-left leading-5">Report to HQ</span>
+      </span>
+    `;
+
+    button.addEventListener("click", showAuthorReportForm);
+    return button;
+  }
+
+  // Function to create author report form HTML
+  function createAuthorReportFormHTML() {
+    return `
+      <div class="form-overlay">
+        <div class="mod-report-form author-report-form">
+          <button class="close">&times;</button>
+          <h2>Report Author to HQ</h2>
+          
+          <div class="form-group">
+            <label>Author Username</label>
+            <input type="text" id="authorUsername" readonly class="readonly-input" disabled>
+          </div>
+          
+          <div class="form-group">
+            <label>Report Type</label>
+            <select id="reportType">
+              <option value="MALICIOUS">Malicious Activity</option>
+              <option value="WARNING">Concerning Behavior</option>
+              <option value="CAUTION">General Caution</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Reason</label>
+            <textarea id="reportReason" placeholder="Describe the issues with this author..."></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Evidence Links</label>
+            <div id="evidenceFields" class="evidence-field">
+              <input type="text" placeholder="https://..." class="evidence-link">
+            </div>
+            <button type="button" class="add-evidence" onclick="this.previousElementSibling.insertAdjacentHTML('beforeend', '<input type=\'text\' placeholder=\'https://...\' class=\'evidence-link\'>')">
+              + Add Evidence Link
+            </button>
+          </div>
+          
+          <div class="buttons">
+            <button class="primary" id="copyAuthorReport">Copy to Clipboard</button>
+            <button id="closeForm">Close</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Function to show author report form
+  function showAuthorReportForm() {
+    // Get author username from the profile page
+    const username = window.location.pathname.split("/").pop();
+
+    // Create and add form if it doesn't exist
+    if (!document.querySelector(".form-overlay")) {
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        createAuthorReportFormHTML()
+      );
+
+      // Add event listeners
+      document
+        .querySelector(".close")
+        .addEventListener("click", hideReportForm);
+      document
+        .querySelector("#closeForm")
+        .addEventListener("click", hideReportForm);
+      document
+        .querySelector("#copyAuthorReport")
+        .addEventListener("click", copyAuthorReportToClipboard);
+
+      // Close form when clicking overlay
+      document.querySelector(".form-overlay").addEventListener("click", (e) => {
+        if (e.target.classList.contains("form-overlay")) {
+          hideReportForm();
+        }
+      });
+    }
+
+    // Set initial values
+    document.querySelector("#authorUsername").value = username;
+
+    // Show form
+    document.querySelector(".form-overlay").classList.add("active");
+    document.querySelector(".mod-report-form").classList.add("active");
+  }
+
+  // Function to copy author report to clipboard
+  function copyAuthorReportToClipboard() {
+    const username = document.querySelector("#authorUsername").value;
+    const reportType = document.querySelector("#reportType").value;
+    const reason = document.querySelector("#reportReason").value;
+    const evidenceLinks = Array.from(
+      document.querySelectorAll(".evidence-link")
+    )
+      .map((input) => input.value)
+      .filter((link) => link.trim() !== "");
+
+    // Create BBCode formatted message
+    const bbCodeMessage = `[b]Author Report:[/b] [url=https://www.nexusmods.com/users/${username}]${username}[/url]
+
+[code]
+Username: ${username}
+Report Type: ${reportType}
+Reason: ${reason}
+${
+  evidenceLinks.length > 0
+    ? "\nEvidence Links:\n" + evidenceLinks.join("\n")
+    : ""
+}
+[/code]`;
+
+    // Create JSON data
+    const jsonData = {
+      "Author Labels": {
+        [reportType]: {
+          authors: [username],
+          label: reportType,
+          icon: "⚠️",
+        },
+      },
+    };
+
+    if (reason || evidenceLinks.length > 0) {
+      jsonData["Author Tooltips"] = {
+        [username]: {
+          [reportType]: {
+            label: reason,
+            referenceLink: evidenceLinks[0] || undefined,
+          },
+        },
+      };
+    }
+
+    const jsonString = JSON.stringify(jsonData, null, 2);
+
+    // Copy BBCode to clipboard and store JSON
+    navigator.clipboard
+      .writeText(bbCodeMessage)
+      .then(() => {
+        localStorage.setItem("lastAuthorReportJson", jsonString);
+
+        // Open the forum thread in a new tab
+        const forumWindow = window.open(
+          "https://rpghq.org/forums/posting.php?mode=reply&t=3504",
+          "_blank"
+        );
+
+        if (forumWindow) {
+          forumWindow.onload = function () {
+            const messageBox = forumWindow.document.querySelector("#message");
+            if (messageBox) {
+              messageBox.value = bbCodeMessage;
+              alert("Copied to clipboard and pasted to forum!");
+            } else {
+              alert(
+                "Copied to clipboard but couldn't paste to forum - please paste manually"
+              );
+            }
+          };
+        } else {
+          alert(
+            "Copied to clipboard but popup was blocked - please enable popups and try again"
+          );
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+        alert("Failed to copy to clipboard");
+      });
+  }
+
+  // Function to add report button to profile page
+  function addReportButtonToProfile() {
+    // Check if we're on a profile page
+    if (!window.location.href.includes("/profile/")) return;
+
+    // Find the button container
+    const buttonContainer = document.querySelector(
+      ".flex.flex-col.gap-y-3.sm\\:flex-row.sm\\:flex-wrap.sm\\:gap-4"
+    );
+    if (!buttonContainer) return;
+
+    // Check if button already exists
+    if (buttonContainer.querySelector(".author-report-button")) return;
+
+    // Add the report button
+    const reportButton = createAuthorReportButton();
+    buttonContainer.appendChild(reportButton);
   }
 
   // Run when the page loads
