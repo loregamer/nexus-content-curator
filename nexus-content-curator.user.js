@@ -191,10 +191,29 @@
       box-shadow: inset 0 0 20px rgba(255, 165, 0, 0.1);
     }
 
+    #featured.has-caution, #nofeature.has-caution {
+      background: linear-gradient(45deg, rgba(255, 165, 0, 0.03), rgba(255, 165, 0, 0.06));
+      border: 2px solid rgba(255, 165, 0, 0.2);
+      box-shadow: inset 0 0 20px rgba(255, 165, 0, 0.05);
+    }
+
     #featured.has-info, #nofeature.has-info {
       background: linear-gradient(45deg, rgba(0, 136, 255, 0.05), rgba(0, 136, 255, 0.1));
       border: 2px solid rgba(0, 136, 255, 0.3);
       box-shadow: inset 0 0 20px rgba(0, 136, 255, 0.1);
+    }
+
+    /* Make warning gradients more visible on nofeature */
+    #nofeature.has-warning {
+      background: linear-gradient(45deg, rgba(255, 165, 0, 0.08), rgba(255, 165, 0, 0.15));
+      border: 2px solid rgba(255, 165, 0, 0.4);
+      box-shadow: inset 0 0 30px rgba(255, 165, 0, 0.15);
+    }
+
+    #nofeature.has-severe-warning {
+      background: linear-gradient(45deg, rgba(255, 0, 0, 0.08), rgba(255, 0, 0, 0.15));
+      border: 2px solid rgba(255, 0, 0, 0.4);
+      box-shadow: inset 0 0 30px rgba(255, 0, 0, 0.15);
     }
 
     .warning-icon-container {
@@ -1909,6 +1928,8 @@
       gradientClass = "has-warning";
     } else if (warnings.some((w) => w.type === "CAUTION")) {
       gradientClass = "has-caution";
+    } else if (warnings.some((w) => w.type === "OPEN_PERMISSIONS")) {
+      gradientClass = "has-info";
     }
 
     // Apply gradient to either nofeature or featured element
