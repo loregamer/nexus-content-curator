@@ -109,7 +109,7 @@
       "CAUTION": ["38844", "76009", "81185", "81332", "81010", "61173"]
     },
     "skyrimspecialedition": {
-      "BROKEN": ["266", "3038", "33746", "63000"],
+      "BROKEN": ["266", "3038", "33746", "63000", "9358"],
       "LAME": [],
       "ABANDONED": [],
       "CAUTION": ["266"]
@@ -360,6 +360,10 @@
       "63000": {
         "reason": "Broken unless you download \"TUDM Pandora Animation Patch\"",
         "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/127728?tab=posts"
+      },
+      "9358": {
+        "reason": "Use \"Improved Camera SE\" instead.",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/93962"
       }
     }
   },
