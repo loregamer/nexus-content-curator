@@ -2289,9 +2289,7 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
             </label>
           </div>
           <div class="label-details" style="display: none;">
-            <input type="text" class="label-text" placeholder="Custom label text (optional, default: ${
-              info.defaultLabel
-            })">
+            <input type="text" class="label-text" placeholder="Custom label text (optional)">
             <input type="text" class="reference-link" placeholder="Reference link (optional)">
           </div>
         </div>
@@ -2382,10 +2380,17 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
         icon: row.querySelector(".label-icon").src,
       }));
 
+    // Check if any labels have custom text or reference links
+    const hasCustomFields = selectedLabels.some(
+      (label) => label.label || label.referenceLink
+    );
+
     // Create BBCode formatted message
     const bbCodeMessage = `[b]Author Report:[/b] [url=https://www.nexusmods.com/users/${username}]${username}[/url]
 
-[code]
+${
+  hasCustomFields
+    ? `[code]
 Username: ${username}
 Labels: ${selectedLabels.map((l) => l.type).join(", ")}
 ${selectedLabels
@@ -2396,44 +2401,24 @@ ${l.type}:${l.label ? `\n  Label: ${l.label}` : ""}${
     }`
   )
   .join("\n")}
-[/code]`;
-
-    // Create JSON data
-    const jsonData = {
-      "Author Labels": {},
-      "Author Tooltips": {
-        [username]: {},
-      },
-    };
-
-    // Add each selected label to the JSON
-    selectedLabels.forEach((label) => {
-      const labelKey = label.type.replace(/ /g, "_").toUpperCase();
-
-      // Add to Labels section
-      if (!jsonData["Author Labels"][labelKey]) {
-        jsonData["Author Labels"][labelKey] = {
-          label: label.type,
-          authors: [username],
-          icon: label.icon,
-        };
-      } else if (
-        !jsonData["Author Labels"][labelKey].authors.includes(username)
-      ) {
-        jsonData["Author Labels"][labelKey].authors.push(username);
-      }
-
-      // Add to Tooltips section if there's a custom label or reference
-      if (label.label || label.referenceLink) {
-        jsonData["Author Tooltips"][username][labelKey] = {
-          label: label.label,
-          referenceLink: label.referenceLink || undefined,
-        };
-      }
-    });
+[/code]`
+    : `[code]
+Username: ${username}
+Labels: ${selectedLabels.map((l) => l.type).join(", ")}
+[/code]`
+}`;
 
     // Rest of the function remains the same...
-    const jsonString = JSON.stringify(jsonData, null, 2);
+    const jsonString = JSON.stringify(
+      {
+        "Author Labels": {},
+        "Author Tooltips": {
+          [username]: {},
+        },
+      },
+      null,
+      2
+    );
 
     navigator.clipboard
       .writeText(bbCodeMessage)
