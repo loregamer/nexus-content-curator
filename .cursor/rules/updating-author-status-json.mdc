@@ -1,0 +1,99 @@
+---
+description: Guide on updating author-status.json
+globs: author-status.json
+---
+# Updating author-status.json
+
+This document explains how to update the `author-status.json` file which contains information about mod authors and their associated labels.
+
+## File Structure
+
+The file consists of two main sections:
+
+1. `Labels` - Defines the available labels and their associated authors
+2. `Tooltips` - Contains detailed information about specific authors under specific labels
+
+### Labels Section
+
+Each label has the following properties:
+
+- `label`: The display text for the label
+- `authors`: Array of author usernames who have this label
+- `icon`: URL to the icon image for this label
+
+Example:
+
+```json
+"Bug Ignorer": {
+  "label": "Ignores bugs. Will deny they exist and not fix them",
+  "authors": ["AuthorName1", "AuthorName2"],
+  "icon": "https://example.com/icon.png"
+}
+```
+
+### Tooltips Section
+
+Tooltips provide additional information about specific authors under specific labels. Each tooltip has:
+
+- `label`: Detailed description or reason for the label
+- `referenceLink`: Link to supporting evidence/discussion (use `null` if no reference exists)
+
+Example:
+
+```json
+"AuthorName": {
+  "Bug Ignorer": {
+    "label": "Description of why this author ignores bugs",
+    "referenceLink": "https://forum.link/to/evidence"
+  }
+}
+```
+
+## Adding a New Author
+
+1. Add the author's username to the appropriate label's `authors` array
+2. If there's additional context, add a tooltip entry under the `Tooltips` section
+
+Example:
+
+```json
+// In Labels section
+"Bug Ignorer": {
+  "authors": [
+    "ExistingAuthor1",
+    "NewAuthor"  // Add the new author here
+  ]
+}
+
+// In Tooltips section
+"NewAuthor": {
+  "Bug Ignorer": {
+    "label": "Detailed description",
+    "referenceLink": null  // Use null if no reference exists
+  }
+}
+```
+
+## Guidelines
+
+1. Maintain alphabetical order in author arrays when possible
+2. Use `null` for missing reference links, not empty strings or "-"
+3. Ensure all URLs are valid and accessible
+4. Keep label descriptions concise but informative
+5. Include relevant evidence links when available
+
+## JSON Format
+
+The file must be valid JSON. Remember to:
+
+- Use double quotes for strings
+- Add commas between items in arrays and objects
+- Do not add trailing commas
+- Properly close all brackets and braces
+- Use `\n` for line breaks in text, not actual line breaks
+
+Example of multi-line text:
+
+```json
+"label": "First line of text.\nSecond line of text.\nThird line of text."
+```
