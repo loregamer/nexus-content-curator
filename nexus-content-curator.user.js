@@ -1429,10 +1429,6 @@
         bgColor =
           "linear-gradient(45deg, rgba(255, 165, 0, 0.8), rgba(255, 165, 0, 0.9))";
         break;
-      case "CAUTION":
-        bgColor =
-          "linear-gradient(45deg, rgba(255, 165, 0, 0.8), rgba(255, 165, 0, 0.9))";
-        break;
       case "OPEN_PERMISSIONS":
         bgColor =
           "linear-gradient(45deg, rgba(0, 170, 0, 0.8), rgba(0, 170, 0, 0.9))";
