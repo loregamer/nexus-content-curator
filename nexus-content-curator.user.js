@@ -766,13 +766,17 @@
     padding: 12px 16px;
     border-radius: 6px;
     font-size: 14px;
-    max-width: 300px;
+    max-width: min(600px, 80vw); // Larger max width, but not more than 80% of viewport
+    min-width: 200px;
+    width: auto;
     box-shadow: 0 3px 12px rgba(0,0,0,0.3);
     z-index: 10000;
     pointer-events: none;
     border: 1px solid #444;
     line-height: 1.4;
     white-space: pre-line;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   `;
 
   // Add tooltip when body is available
@@ -801,35 +805,68 @@
 
   // Helper function to format tooltip text
   function formatTooltipText(text, additionalInfo = "") {
-    const formattedText = text
+    // Split very long words
+    const wordWrapText = text.replace(/(\S{30})/g, "$1\u200B");
+
+    const formattedText = wordWrapText
       .replace(/\\n/g, "\n")
-      .replace(/\((.*?)\)/g, '<span style="font-size: 0.65em;">($1)</span>');
-    return `<div style="font-size: 14px; margin-bottom: 6px;">${formattedText}</div>${
-      additionalInfo
-        ? `<div style="font-size: 12px; color: #aaa; margin-top: 4px;">${additionalInfo}</div>`
-        : ""
-    }`;
+      .replace(/\((.*?)\)/g, '<span style="font-size: 0.85em;">($1)</span>');
+
+    return `
+      <div style="font-size: 14px; margin-bottom: 6px;">
+        ${formattedText}
+      </div>
+      ${
+        additionalInfo
+          ? `<div style="font-size: 12px; color: #aaa; margin-top: 4px; border-top: 1px solid #444; padding-top: 4px;">
+          ${additionalInfo}
+        </div>`
+          : ""
+      }
+    `;
   }
 
   // Handle tooltip positioning
   function updateTooltipPosition(e) {
     const offset = 15; // Distance from cursor
-    let x = e.clientX + offset;
-    let y = e.clientY + offset;
+    const padding = 20; // Padding from viewport edges
 
-    // Check if tooltip would go off screen and adjust if needed
-    const tooltipRect = tooltip.getBoundingClientRect();
+    // Get viewport dimensions
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    if (x + tooltipRect.width > viewportWidth) {
+    // Get tooltip dimensions
+    const tooltipRect = tooltip.getBoundingClientRect();
+
+    // Calculate initial position
+    let x = e.clientX + offset;
+    let y = e.clientY + offset;
+
+    // If tooltip is wider than half the viewport, center it horizontally
+    if (tooltipRect.width > viewportWidth / 2) {
+      x = Math.max(padding, (viewportWidth - tooltipRect.width) / 2);
+    }
+    // Otherwise, check horizontal positioning
+    else if (x + tooltipRect.width > viewportWidth - padding) {
       x = e.clientX - tooltipRect.width - offset;
+      if (x < padding) {
+        x = padding;
+      }
     }
 
-    if (y + tooltipRect.height > viewportHeight) {
+    // If tooltip is taller than half the viewport, position at top
+    if (tooltipRect.height > viewportHeight / 2) {
+      y = padding;
+    }
+    // Otherwise, check vertical positioning
+    else if (y + tooltipRect.height > viewportHeight - padding) {
       y = e.clientY - tooltipRect.height - offset;
+      if (y < padding) {
+        y = padding;
+      }
     }
 
+    // Apply final position
     tooltip.style.left = x + "px";
     tooltip.style.top = y + "px";
   }
