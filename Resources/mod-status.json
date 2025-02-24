@@ -4,7 +4,7 @@
       "BROKEN": ["899", "1420"],
       "LAME": ["2754"],
       "ABANDONED": [],
-      "CAUTION": ["141", "880"]
+      "CAUTION": ["141", "880", "8993"]
     },
     "newvegas": {
       "BROKEN": [
@@ -74,6 +74,10 @@
       "1420": {
         "reason": "Well... okay it's not broken, but I have a grudge that'll go to the grave, nigga.",
         "alternative": "https://rpghq.org/forums/viewtopic.php?t=1652-icon-patches-for-vessnelle-s-hair-collection-2-0-0-baldur-s-gate-3"
+      },
+      "8993": {
+        "reason": "This mod author adds poorly balanced drawbacks to his mods, but the real problem is that he intentionally avoids documenting them, so users will get ass-raped when they don't play with his exact build. Basically a minefield.\n\nMoney quote: \"I made a deliberate choice not to explain how it works, but it's really not that bad once you figure it out.\" This was in reference to a hidden damage trigger that kills you very quickly unless you happen to be running a high-INT build (there is no way to find this out before triggering the damage, and the readme does not even mention the existence of this trigger.)",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/5105"
       }
     },
     "newvegas": {
