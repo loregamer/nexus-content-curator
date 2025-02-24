@@ -46,7 +46,17 @@
         "7686",
         "4743"
       ],
-      "LAME": ["2754", "205", "8295", "3479", "11939", "11172", "7294", "856"],
+      "LAME": [
+        "2754",
+        "205",
+        "8295",
+        "3479",
+        "11939",
+        "11172",
+        "7294",
+        "856",
+        "353"
+      ],
       "ABANDONED": [],
       "CAUTION": [
         "141",
@@ -283,6 +293,10 @@
       },
       "213": {
         "reason": "Hairs have no physics and don't have CC Icons.\n\nMake sure to install \"Icon and Race Patches for Tav's Hair Salon\" for the icons, at least.",
+        "alternative": null
+      },
+      "353": {
+        "reason": "This mod exists because mod authors are too lazy to not override the entire \"Races.lsx\" file, so this is a sloppy, tranny-curated list of a bunch of mods put together into a Races.lsx. If Padme4000 doesn't personall sign off on the mod, then it isn't added to this.\n\nUnfortunately, the mod is likely still necessary unless the CC mods you want have a ModHQ cleaned up version of them. Ping @loregamer on the forum to make a patch, if you want. He has a script to automate this.",
         "alternative": null
       }
     },
