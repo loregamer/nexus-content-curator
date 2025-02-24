@@ -30,9 +30,18 @@
         "2917",
         "4702",
         "4598",
-        "4703"
+        "4703",
+        "3204",
+        "1696",
+        "885",
+        "746",
+        "1285",
+        "3168",
+        "1883",
+        "1373",
+        "3345"
       ],
-      "LAME": ["2754", "205", "8295", "3479", "11939", "11172", "7294"],
+      "LAME": ["2754", "205", "8295", "3479", "11939", "11172", "7294", "856"],
       "ABANDONED": [],
       "CAUTION": [
         "141",
@@ -46,7 +55,7 @@
         "6473",
         "327"
       ],
-      "INFORMATIVE": ["6183", "2922"]
+      "INFORMATIVE": ["6183", "2922", "2037", "1950"]
     },
     "newvegas": {
       "BROKEN": [
@@ -218,6 +227,46 @@
       "4273": {
         "reason": "Abandoned, but updated on ModHQ by loregamer.",
         "alternative": "https://rpghq.org/forums/viewtopic.php?t=2555-plus-ui-unofficial-patch-7-fix-1-6-baldur-s-gate-3"
+      },
+      "885": {
+        "reason": "Hasn't been updated since early patches. Use Improved World Tooltips instead.",
+        "alternative": null
+      },
+      "2037": {
+        "reason": "If you want more items to be shown as tooltips, download Improved World Tooltips instead.\n\nIt includes this mod in it.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/5342"
+      },
+      "856": {
+        "reason": "May break your game because if an item exist in this barrel the game will soft lock many quests and proceed to keep you locked out of things.\n\nWould suggest you just spawn in items by hand.",
+        "alternative": null
+      },
+      "746": {
+        "reason": "Outdated. Needs to be updated to the latest patch.",
+        "alternative": null
+      },
+      "1285": {
+        "reason": null,
+        "alternative": null
+      },
+      "3168": {
+        "reason": "Broken on patch 7. Use \"Emotes\" insead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/4744"
+      },
+      "1883": {
+        "reason": "Requires the \"Critical Miss Has Consequences FIXED\" patch.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/6050?tab=posts"
+      },
+      "1373": {
+        "reason": "Outdated. Use \"Improved World Tooltips\" instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/5342"
+      },
+      "3345": {
+        "reason": "No longer working on latest patches. Use \"Reaction Points on Hotbar\" instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/13455"
+      },
+      "1950": {
+        "reason": "Author has superseded this with two other mods. He has them listed in the mod description.",
+        "alternative": null
       }
     },
     "newvegas": {
