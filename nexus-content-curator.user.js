@@ -633,6 +633,121 @@
     .author-report-form .add-evidence:hover {
       background: #555;
     }
+
+    .label-selections {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #333;
+      border-radius: 4px;
+    }
+
+    .label-row {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+
+    .label-row > label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .label-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+    }
+
+    .label-details {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-left: 24px;
+      margin-top: 5px;
+    }
+
+    .label-details input {
+      width: 100%;
+      padding: 6px;
+      background: #444;
+      border: 1px solid #555;
+      border-radius: 3px;
+      color: white;
+    }
+
+    .label-details input::placeholder {
+      color: #888;
+    }
+
+    .label-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .label-icon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    .label-row {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+
+    .label-row > .label-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .label-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+    }
+
+    .label-details {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-left: 24px;
+      margin-top: 5px;
+    }
+
+    .label-details input {
+      width: 100%;
+      padding: 6px;
+      background: #444;
+      border: 1px solid #555;
+      border-radius: 3px;
+      color: white;
+    }
+
+    .label-details input::placeholder {
+      color: #888;
+    }
+
+    .label-text {
+      font-family: monospace;
+    }
   `;
 
   // Add styles to document
@@ -2163,6 +2278,60 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
 
   // Function to create author report form HTML
   function createAuthorReportFormHTML() {
+    // Get the labels from author-status.json
+    const labels = {
+      Troon: {
+        icon: "https://f.rpghq.org/b1PMDDCK0hrc.png",
+        defaultLabel: "Troon",
+      },
+      "Flight Risk": {
+        icon: "https://f.rpghq.org/nD9rLv9rzAZY.png",
+        defaultLabel:
+          "Flight risk! (Will throw fit and leave if criticized too much)",
+      },
+      "Bug Ignorer": {
+        icon: "https://f.rpghq.org/H8CVupxrNCt3.png",
+        defaultLabel: "Ignores bugs. Will deny they exist and not fix them",
+      },
+      Paywaller: {
+        icon: "https://f.rpghq.org/RPCaQVvTOu2c.png?n=pasted-file.png",
+        defaultLabel: "Paywaller",
+      },
+      Copystriker: {
+        icon: "https://f.rpghq.org/JxQfA8F2nAnr.png",
+        defaultLabel:
+          "Viciously gets patches and reuploads of mods taken down. Retardedly believes they own their mod legally.",
+      },
+      Incident: {
+        icon: "https://f.rpghq.org/xjhpiEPNoOV6.png",
+        defaultLabel: "Incident:",
+      },
+    };
+
+    const labelRows = Object.entries(labels)
+      .map(
+        ([name, info]) => `
+        <div class="label-row">
+          <div class="label-header">
+            <input type="checkbox" id="label-${name
+              .toLowerCase()
+              .replace(/ /g, "-")}" value="${name}">
+            <label for="label-${name.toLowerCase().replace(/ /g, "-")}">
+              <img src="${info.icon}" alt="${name}" class="label-icon">
+              ${name}
+            </label>
+          </div>
+          <div class="label-details" style="display: none;">
+            <input type="text" class="label-text" placeholder="Custom label text (optional)" value="${
+              info.defaultLabel
+            }">
+            <input type="text" class="reference-link" placeholder="Reference link (optional)">
+          </div>
+        </div>
+      `
+      )
+      .join("");
+
     return `
       <div class="form-overlay">
         <div class="mod-report-form author-report-form">
@@ -2175,27 +2344,10 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
           </div>
           
           <div class="form-group">
-            <label>Report Type</label>
-            <select id="reportType">
-              <option value="MALICIOUS">Malicious Activity</option>
-              <option value="WARNING">Concerning Behavior</option>
-              <option value="CAUTION">General Caution</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label>Reason</label>
-            <textarea id="reportReason" placeholder="Describe the issues with this author..."></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label>Evidence Links</label>
-            <div id="evidenceFields" class="evidence-field">
-              <input type="text" placeholder="https://..." class="evidence-link">
+            <label>Labels</label>
+            <div class="label-selections">
+              ${labelRows}
             </div>
-            <button type="button" class="add-evidence" onclick="this.previousElementSibling.insertAdjacentHTML('beforeend', '<input type=\'text\' placeholder=\'https://...\' class=\'evidence-link\'>')">
-              + Add Evidence Link
-            </button>
           </div>
           
           <div class="buttons">
@@ -2230,6 +2382,9 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
         .querySelector("#copyAuthorReport")
         .addEventListener("click", copyAuthorReportToClipboard);
 
+      // Setup label details toggle
+      setupLabelDetailsToggle();
+
       // Close form when clicking overlay
       document.querySelector(".form-overlay").addEventListener("click", (e) => {
         if (e.target.classList.contains("form-overlay")) {
@@ -2249,59 +2404,75 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
   // Function to copy author report to clipboard
   function copyAuthorReportToClipboard() {
     const username = document.querySelector("#authorUsername").value;
-    const reportType = document.querySelector("#reportType").value;
-    const reason = document.querySelector("#reportReason").value;
-    const evidenceLinks = Array.from(
-      document.querySelectorAll(".evidence-link")
-    )
-      .map((input) => input.value)
-      .filter((link) => link.trim() !== "");
+
+    // Collect all selected labels and their details
+    const selectedLabels = Array.from(document.querySelectorAll(".label-row"))
+      .filter((row) => row.querySelector('input[type="checkbox"]').checked)
+      .map((row) => ({
+        type: row.querySelector('input[type="checkbox"]').value,
+        label: row.querySelector(".label-text").value.trim(),
+        referenceLink: row.querySelector(".reference-link").value.trim(),
+        icon: row.querySelector(".label-icon").src,
+      }));
 
     // Create BBCode formatted message
     const bbCodeMessage = `[b]Author Report:[/b] [url=https://www.nexusmods.com/users/${username}]${username}[/url]
 
 [code]
 Username: ${username}
-Report Type: ${reportType}
-Reason: ${reason}
-${
-  evidenceLinks.length > 0
-    ? "\nEvidence Links:\n" + evidenceLinks.join("\n")
-    : ""
-}
+Labels: ${selectedLabels.map((l) => l.type).join(", ")}
+${selectedLabels
+  .map(
+    (l) => `
+${l.type}:${l.label ? `\n  Label: ${l.label}` : ""}${
+      l.referenceLink ? `\n  Reference: ${l.referenceLink}` : ""
+    }`
+  )
+  .join("\n")}
 [/code]`;
 
     // Create JSON data
     const jsonData = {
-      "Author Labels": {
-        [reportType]: {
-          authors: [username],
-          label: reportType,
-          icon: "⚠️",
-        },
+      "Author Labels": {},
+      "Author Tooltips": {
+        [username]: {},
       },
     };
 
-    if (reason || evidenceLinks.length > 0) {
-      jsonData["Author Tooltips"] = {
-        [username]: {
-          [reportType]: {
-            label: reason,
-            referenceLink: evidenceLinks[0] || undefined,
-          },
-        },
-      };
-    }
+    // Add each selected label to the JSON
+    selectedLabels.forEach((label) => {
+      const labelKey = label.type.replace(/ /g, "_").toUpperCase();
 
+      // Add to Labels section
+      if (!jsonData["Author Labels"][labelKey]) {
+        jsonData["Author Labels"][labelKey] = {
+          label: label.type,
+          authors: [username],
+          icon: label.icon,
+        };
+      } else if (
+        !jsonData["Author Labels"][labelKey].authors.includes(username)
+      ) {
+        jsonData["Author Labels"][labelKey].authors.push(username);
+      }
+
+      // Add to Tooltips section if there's a custom label or reference
+      if (label.label || label.referenceLink) {
+        jsonData["Author Tooltips"][username][labelKey] = {
+          label: label.label,
+          referenceLink: label.referenceLink || undefined,
+        };
+      }
+    });
+
+    // Rest of the function remains the same...
     const jsonString = JSON.stringify(jsonData, null, 2);
 
-    // Copy BBCode to clipboard and store JSON
     navigator.clipboard
       .writeText(bbCodeMessage)
       .then(() => {
         localStorage.setItem("lastAuthorReportJson", jsonString);
 
-        // Open the forum thread in a new tab
         const forumWindow = window.open(
           "https://rpghq.org/forums/posting.php?mode=reply&t=3504",
           "_blank"
@@ -2348,6 +2519,20 @@ ${
     // Add the report button
     const reportButton = createAuthorReportButton();
     buttonContainer.appendChild(reportButton);
+  }
+
+  // Add event handler to show/hide label details when checkbox is clicked
+  function setupLabelDetailsToggle() {
+    document
+      .querySelectorAll('.label-row input[type="checkbox"]')
+      .forEach((checkbox) => {
+        checkbox.addEventListener("change", (e) => {
+          const details = e.target
+            .closest(".label-row")
+            .querySelector(".label-details");
+          details.style.display = e.target.checked ? "flex" : "none";
+        });
+      });
   }
 
   // Run when the page loads
