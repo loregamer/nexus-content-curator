@@ -15,6 +15,7 @@
 // @icon         https://www.nexusmods.com/favicon.ico
 // @updateURL    https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-content-curator.user.js
 // @downloadURL  https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-content-curator.user.js
+// @run-at       document-start
 // ==/UserScript==
 
 (function () {
@@ -739,9 +740,18 @@
   // Add styles to document
   const styleSheet = document.createElement("style");
   styleSheet.textContent = styles + formStyles + authorReportStyles;
-  document.head.appendChild(styleSheet);
 
-  // Create and setup tooltip element
+  // Insert styles as soon as possible
+  if (document.head) {
+    document.head.appendChild(styleSheet);
+  } else {
+    // If head doesn't exist yet, wait for it
+    document.addEventListener("DOMContentLoaded", () => {
+      document.head.appendChild(styleSheet);
+    });
+  }
+
+  // Create tooltip element early
   const tooltip = document.createElement("div");
   tooltip.style.cssText = `
     position: fixed;
@@ -759,7 +769,30 @@
     line-height: 1.4;
     white-space: pre-line;
   `;
-  document.body.appendChild(tooltip);
+
+  // Add tooltip when body is available
+  if (document.body) {
+    document.body.appendChild(tooltip);
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.appendChild(tooltip);
+    });
+  }
+
+  // Initialize main functionality when DOM is ready
+  function init() {
+    checkModStatus();
+    hasCheckedCurrentMod = true;
+    checkAuthorStatus();
+    setupDOMObserver();
+  }
+
+  // Run init when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 
   // Helper function to format tooltip text
   function formatTooltipText(text, additionalInfo = "") {
@@ -2737,10 +2770,4 @@ ${l.type}:
       processAuthorStatus
     );
   }
-
-  // Run when the page loads
-  checkModStatus();
-  hasCheckedCurrentMod = true;
-  checkAuthorStatus();
-  setupDOMObserver();
 })();
