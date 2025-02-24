@@ -60,7 +60,7 @@
         "6473",
         "327"
       ],
-      "INFORMATIVE": ["6183", "2922", "2037", "1950"]
+      "INFORMATIVE": ["6183", "2922", "2037", "1950", "213"]
     },
     "newvegas": {
       "BROKEN": [
@@ -279,6 +279,10 @@
       },
       "1950": {
         "reason": "Author has superseded this with two other mods. He has them listed in the mod description.",
+        "alternative": null
+      },
+      "213": {
+        "reason": "Hairs have no physics and don't have CC Icons.\n\nMake sure to install \"Icon and Race Patches for Tav's Hair Salon\" for the icons, at least.",
         "alternative": null
       }
     },
