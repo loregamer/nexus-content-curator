@@ -2282,9 +2282,13 @@
     // Create BBCode formatted message with list
     const bbCodeMessage = `[b]Mod Report:[/b] [url=https://www.nexusmods.com/${gameShortname}/mods/${modId}]${modTitle}[/url]
 [list]
-[*] Game: ${gameShortname}
-[*] Status: ${status}${reason ? `\n[*] Reason: ${reason}` : ""}${
-      alternative ? `\n[*] Alternative: ${alternative}` : ""
+[*] [size=85][b]Game:[/b] ${gameShortname}[/size]
+[*] [size=85][b]Status:[/b] ${status}[/size]${
+      reason ? `\n[*] [size=85][b]Reason:[/b] ${reason}[/size]` : ""
+    }${
+      alternative
+        ? `\n[*] [size=85][b]Alternative:[/b] ${alternative}[/size]`
+        : ""
     }
 [/list]
 
