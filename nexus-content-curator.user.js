@@ -652,20 +652,35 @@
       padding: 8px;
       background: #2a2a2a;
       border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
     }
 
-    .label-row > label {
+    .label-row:hover {
+      background: #333;
+    }
+
+    .label-row > .label-header {
       display: flex;
       align-items: center;
       gap: 8px;
       margin: 0;
-      cursor: pointer;
     }
 
     .label-row input[type="checkbox"] {
       width: 16px;
       height: 16px;
       margin: 0;
+      cursor: pointer;
+    }
+
+    .label-row label {
+      cursor: pointer;
+      user-select: none;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .label-details {
@@ -699,54 +714,6 @@
       width: 16px;
       height: 16px;
       object-fit: contain;
-    }
-
-    .label-row {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding: 8px;
-      background: #2a2a2a;
-      border-radius: 4px;
-    }
-
-    .label-row > .label-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0;
-      cursor: pointer;
-    }
-
-    .label-row input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      margin: 0;
-    }
-
-    .label-details {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      margin-left: 24px;
-      margin-top: 5px;
-    }
-
-    .label-details input {
-      width: 100%;
-      padding: 6px;
-      background: #444;
-      border: 1px solid #555;
-      border-radius: 3px;
-      color: white;
-    }
-
-    .label-details input::placeholder {
-      color: #888;
-    }
-
-    .label-text {
-      font-family: monospace;
     }
   `;
 
@@ -2311,7 +2278,7 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
     const labelRows = Object.entries(labels)
       .map(
         ([name, info]) => `
-        <div class="label-row">
+        <div class="label-row" data-label="${name}">
           <div class="label-header">
             <input type="checkbox" id="label-${name
               .toLowerCase()
@@ -2322,9 +2289,9 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
             </label>
           </div>
           <div class="label-details" style="display: none;">
-            <input type="text" class="label-text" placeholder="Custom label text (optional)" value="${
+            <input type="text" class="label-text" placeholder="Custom label text (optional, default: ${
               info.defaultLabel
-            }">
+            })">
             <input type="text" class="reference-link" placeholder="Reference link (optional)">
           </div>
         </div>
@@ -2521,18 +2488,43 @@ ${l.type}:${l.label ? `\n  Label: ${l.label}` : ""}${
     buttonContainer.appendChild(reportButton);
   }
 
-  // Add event handler to show/hide label details when checkbox is clicked
+  // Update the setupLabelDetailsToggle function
   function setupLabelDetailsToggle() {
-    document
-      .querySelectorAll('.label-row input[type="checkbox"]')
-      .forEach((checkbox) => {
-        checkbox.addEventListener("change", (e) => {
-          const details = e.target
-            .closest(".label-row")
-            .querySelector(".label-details");
-          details.style.display = e.target.checked ? "flex" : "none";
-        });
+    document.querySelectorAll(".label-row").forEach((row) => {
+      const checkbox = row.querySelector('input[type="checkbox"]');
+      const details = row.querySelector(".label-details");
+
+      // Function to handle state change
+      const toggleState = (checked) => {
+        checkbox.checked = checked;
+        details.style.display = checked ? "flex" : "none";
+      };
+
+      // Handle row click
+      row.addEventListener("click", (e) => {
+        // Don't toggle if clicking inside the details section or on input elements
+        if (
+          e.target.closest(".label-details") ||
+          e.target.tagName === "INPUT"
+        ) {
+          return;
+        }
+
+        toggleState(!checkbox.checked);
       });
+
+      // Handle checkbox change
+      checkbox.addEventListener("change", (e) => {
+        toggleState(e.target.checked);
+        // Stop propagation to prevent row click handler from firing
+        e.stopPropagation();
+      });
+
+      // Prevent clicks in the details section from triggering row click
+      details.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    });
   }
 
   // Run when the page loads
