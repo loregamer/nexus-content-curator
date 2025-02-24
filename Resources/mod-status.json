@@ -160,7 +160,7 @@
       "CAUTION": ["38844", "76009", "81185", "81332", "81010", "61173"]
     },
     "skyrimspecialedition": {
-      "BROKEN": ["266", "3038", "33746", "63000", "9358", "87707"],
+      "BROKEN": ["266", "3038", "33746", "63000", "9358", "87707", "43816"],
       "LAME": ["365", "276", "173", "2272"],
       "ABANDONED": [],
       "CAUTION": ["266"]
@@ -583,6 +583,10 @@
       "87707": {
         "reason": "You are entering a world of pain if you install this. Or any Open Cities mod, really. If you must, use \"SR Exterior Cities Series\"\n\nAlso, click Arthmoor's author tags and read up about the drama about this mod. Very informative!",
         "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/87954"
+      },
+      "43816": {
+        "reason": "Is what your dick will be if you keep trooning yourself.",
+        "alternative": null
       }
     }
   },
