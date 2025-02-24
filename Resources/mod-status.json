@@ -1,8 +1,20 @@
 {
   "Mod Statuses": {
     "baldursgate3": {
-      "BROKEN": ["899", "1420", "10", "492", "978"],
-      "LAME": ["2754", "205", "8295"],
+      "BROKEN": [
+        "899",
+        "1420",
+        "10",
+        "492",
+        "978",
+        "1646",
+        "2469",
+        "2750",
+        "2164",
+        "2051",
+        "3206"
+      ],
+      "LAME": ["2754", "205", "8295", "3479", "11939", "11172"],
       "ABANDONED": [],
       "CAUTION": [
         "141",
@@ -13,7 +25,8 @@
         "2435",
         "629",
         "9625",
-        "6473"
+        "6473",
+        "327"
       ]
     },
     "newvegas": {
@@ -103,7 +116,7 @@
         "reason": "Most of these fucking suck, and you have to download the whole pack to use the face you want."
       },
       "1058": {
-        "reason": "Only download the PAK format all-in-1. Loose files are always a bad idea to install."
+        "reason": "Recommended to download the PAK format all-in-1. Loose files are usually a bad idea to install and keep track of."
       },
       "1933": {
         "reason": "Make sure this PAK file goes at the BOTTOM of your load order, always."
@@ -130,6 +143,42 @@
       },
       "6473": {
         "reason": "This mod uses loose files. Normally, we suggest to NEVER mod your Data folder, but this one can be a rare exception. Especially since you may have different versions of the mod installed during multiplayer.\n\nJust remember this is the only mod you should have installed as a loose file."
+      },
+      "3479": {
+        "reason": "You shouldn't ever install any of those party limit extender mods for BG3. For a few reasons:\n\n1. You don't NEED a mod installed to set your party limit size. You can run the command yourself, once, and it'll work forever on that save.\nㅤ\n2. If you have everyone in your party at once, then the game will randomly select 4 of your companions that get used in dialogue. It does not add ALL companions to the dialogue.\nㅤ\n3. The game just will spazz out at some points and you will have to dismiss your companions\n\nCheck the \"View Alternative\" link for a guide on how to set up an uncapped party limit on your save through Script Extender console, then you'll never have to worry about it again.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/2066?tab=description"
+      },
+      "11939": {
+        "reason": "You shouldn't ever install any of those party limit extender mods for BG3. For a few reasons:\n\n1. You don't NEED a mod installed to set your party limit size. You can run the command yourself, once, and it'll work forever on that save.\nㅤ\n2. If you have everyone in your party at once, then the game will randomly select 4 of your companions that get used in dialogue. It does not add ALL companions to the dialogue.\nㅤ\n3. The game just will spazz out at some points and you will have to dismiss your companions\n\nCheck the \"View Alternative\" link for a guide on how to set up an uncapped party limit on your save through Script Extender console, then you'll never have to worry about it again.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/2066?tab=description"
+      },
+      "11172": {
+        "reason": "You shouldn't ever install any of those party limit extender mods for BG3. For a few reasons:\n\n1. You don't NEED a mod installed to set your party limit size. You can run the command yourself, once, and it'll work forever on that save.\nㅤ\n2. If you have everyone in your party at once, then the game will randomly select 4 of your companions that get used in dialogue. It does not add ALL companions to the dialogue.\nㅤ\n3. The game just will spazz out at some points and you will have to dismiss your companions\n\nCheck the \"View Alternative\" link for a guide on how to set up an uncapped party limit on your save through Script Extender console, then you'll never have to worry about it again.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/2066?tab=description"
+      },
+      "327": {
+        "reason": "If you are using this for the sake of playing a 5+ multiplayer campaign, this is the place to go. But you are in for a world of pain. Even the best and brightest of ModHQ couldn't stand all the debugging it took to get consistently working.\n\nAs for extending your party limit past 4, you shouldn't ever install any of those party limit extender mods for BG3. For a few reasons:\n\n1. You don't NEED a mod installed to set your party limit size. You can run the command yourself, once, and it'll work forever on that save.\nㅤ\n2. If you have everyone in your party at once, then the game will randomly select 4 of your companions that get used in dialogue. It does not add ALL companions to the dialogue.\nㅤ\n3. The game just will spazz out at some points and you will have to dismiss your companions\n\nCheck the \"View Alternative\" link for a guide on how to set up an uncapped party limit on your save through Script Extender console, then you'll never have to worry about it again.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/2066?tab=description"
+      },
+      "1646": {
+        "reason": "Was horribly coded to begin with. Now, it'll just break everything."
+      },
+      "2469": {
+        "reason": "This will cause your save file to take years to load, and it wasn't done via scripting.\n\nUse Transmog Enhanced instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/2922"
+      },
+      "2750": {
+        "reason": "Use Transmog Enhanced instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/2922"
+      },
+      "2164": {
+        "reason": "Requires a manual fix to make work, which can be found in the comments."
+      },
+      "2051": {
+        "reason": "Buggy mess, doesn't work on newest patch."
+      },
+      "3206": {
+        "reason": "Barely worked to begin with. Absolutely broken on later patches."
       }
     },
     "newvegas": {
