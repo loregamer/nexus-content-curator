@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.5.1
+// @version      1.5.2
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -2546,8 +2546,11 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
 
   // Function to show author report form
   function showAuthorReportForm() {
-    // Get author username from the profile page
-    const username = window.location.pathname.split("/").pop();
+    // Get author username from the profile page URL by splitting on slashes and taking the username part
+    const urlParts = window.location.pathname.split("/");
+    const usernameIndex = urlParts.indexOf("profile") + 1;
+    const username =
+      usernameIndex < urlParts.length ? urlParts[usernameIndex] : "";
 
     // Create and add form if it doesn't exist
     if (!document.querySelector(".form-overlay")) {
