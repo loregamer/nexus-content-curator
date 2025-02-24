@@ -763,17 +763,17 @@
     display: none;
     background: #2a2a2a;
     color: white;
-    padding: 12px 16px;
+    padding: 8px 12px;
     border-radius: 6px;
     font-size: 14px;
-    max-width: min(600px, 80vw); // Larger max width, but not more than 80% of viewport
+    max-width: min(600px, 80vw);
     min-width: 200px;
     width: auto;
     box-shadow: 0 3px 12px rgba(0,0,0,0.3);
     z-index: 10000;
     pointer-events: none;
     border: 1px solid #444;
-    line-height: 1.4;
+    line-height: 1.3;
     white-space: pre-line;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -812,18 +812,11 @@
       .replace(/\\n/g, "\n")
       .replace(/\((.*?)\)/g, '<span style="font-size: 0.85em;">($1)</span>');
 
-    return `
-      <div style="font-size: 14px; margin-bottom: 6px;">
-        ${formattedText}
-      </div>
-      ${
-        additionalInfo
-          ? `<div style="font-size: 12px; color: #aaa; margin-top: 4px; border-top: 1px solid #444; padding-top: 4px;">
-          ${additionalInfo}
-        </div>`
-          : ""
-      }
-    `;
+    return (
+      additionalInfo
+        ? `<div style="font-size: 14px; margin: 0; padding: 0;">${formattedText}</div><div style="font-size: 12px; color: #aaa; margin-top: 4px; border-top: 1px solid #444; padding-top: 4px;">${additionalInfo}</div>`
+        : `<div style="font-size: 14px; margin: 0; padding: 0;">${formattedText}</div>`
+    ).trim();
   }
 
   // Handle tooltip positioning
