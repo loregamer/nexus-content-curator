@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.6.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -2534,6 +2534,10 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
   function createAuthorReportFormHTML() {
     // Get the labels from author-status.json
     const labels = {
+      "Pride Flag Modder": {
+        icon: "https://f.rpghq.org/0BfQ7ahUIA7b.png",
+        defaultLabel: "Pride Flag Modder",
+      },
       Troon: {
         icon: "https://f.rpghq.org/b1PMDDCK0hrc.png",
         defaultLabel: "Troon",
@@ -2548,7 +2552,7 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
         defaultLabel: "Ignores bugs. Will deny they exist and not fix them",
       },
       Paywaller: {
-        icon: "https://f.rpghq.org/RPCaQVvTOu2c.png?n=pasted-file.png",
+        icon: "https://f.rpghq.org/ehg06weLrysL.png",
         defaultLabel: "Paywaller",
       },
       Copystriker: {
