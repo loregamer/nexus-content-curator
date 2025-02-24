@@ -1,10 +1,10 @@
 {
   "Mod Statuses": {
     "baldursgate3": {
-      "BROKEN": ["899", "1420", "10"],
+      "BROKEN": ["899", "1420", "10", "492", "978"],
       "LAME": ["2754", "205", "8295"],
       "ABANDONED": [],
-      "CAUTION": ["141", "880", "8993", "1058", "1933", "2435"]
+      "CAUTION": ["141", "880", "8993", "1058", "1933", "2435", "629", "9625"]
     },
     "newvegas": {
       "BROKEN": [
@@ -103,6 +103,20 @@
       },
       "8295": {
         "reason": "We suggest just using Tutorial Chest Summoning. Aether is a bad coder, and a Troon."
+      },
+      "629": {
+        "reason": "This mod gets a bit buggy in multiplayer. Sometimes your inspiration will get set back to 4."
+      },
+      "492": {
+        "reason": "Shields will start bouncing over the whole screen in cutscenes. Use the 2024 update version instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/9625?tab=posts"
+      },
+      "978": {
+        "reason": "Mod uses loose files. Bad. And it doesn't work anymore.\n\nUse the 2024 version.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/9625?tab=files"
+      },
+      "9625": {
+        "reason": "Use the PAK file version, not the loose files version.\n\nYou should pretty much never mess with loose files in your Data folder."
       }
     },
     "newvegas": {
@@ -200,6 +214,15 @@
         {
           "pattern": "Killable Children",
           "reason": "Might break quests :("
+        }
+      ]
+    },
+    "fallout3": {
+      "CAUTION": [
+        {
+          "pattern": "Fallout 3",
+          "reason": "It's generally recommended that you don't play Fallout 3 in its original form and release, but rather use Tale of Two Wastelands. It is Fallout 3 ported to the New Vegas engine, and is a much better experience. You'll also get access to a lot of mods that are exclusive to the New Vegas.",
+          "alternative": "https://thebestoftimes.moddinglinked.com/index.html"
         }
       ]
     }
