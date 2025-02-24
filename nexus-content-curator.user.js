@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.4.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1220,31 +1220,22 @@
     textContainer.className = "warning-text-container";
     textContainer.appendChild(banner);
 
-    // If this is a BROKEN status, make all banners severe and update Featured class
+    // Update the featured class based on warning type
     if (status.type === "BROKEN") {
       featured.className = "has-severe-warning";
-      bannerContainer.insertBefore(textContainer, bannerContainer.firstChild);
-    }
-    // Insert CLOSED_PERMISSIONS after BROKEN but before others
-    else if (status.type === "CLOSED_PERMISSIONS") {
+    } else if (status.type === "CLOSED_PERMISSIONS" || status.type === "LAME") {
       if (!featured.className.includes("has-severe-warning")) {
         featured.className = "has-warning";
-      }
-      const brokenBanner = bannerContainer.querySelector(
-        ".warning-text-container"
-      );
-      if (brokenBanner) {
-        bannerContainer.insertBefore(textContainer, brokenBanner.nextSibling);
-      } else {
-        bannerContainer.insertBefore(textContainer, bannerContainer.firstChild);
       }
     } else {
       if (!featured.className.includes("has-severe-warning")) {
         featured.className =
           status.type === "CAUTION" ? "has-caution" : "has-warning";
       }
-      bannerContainer.appendChild(textContainer);
     }
+
+    // Always append to maintain the order from the sorting
+    bannerContainer.appendChild(textContainer);
 
     console.log("[Debug] Banner added to featured element");
   }
@@ -2041,14 +2032,14 @@
         existingBanners.remove();
       }
 
-      // Add banners in order (BROKEN first, then CLOSED_PERMISSIONS, then others)
+      // Add banners in order (CLOSED_PERMISSIONS first, then BROKEN, then others)
       warnings
         .filter((warning) => warning && warning.type && !warning.skipBanner)
         .sort((a, b) => {
-          if (a.type === "BROKEN") return -1;
-          if (b.type === "BROKEN") return 1;
           if (a.type === "CLOSED_PERMISSIONS") return -1;
           if (b.type === "CLOSED_PERMISSIONS") return 1;
+          if (a.type === "BROKEN") return -1;
+          if (b.type === "BROKEN") return 1;
           return 0;
         })
         .forEach((warning) => {
