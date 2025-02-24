@@ -464,7 +464,6 @@
       align-items: center;
       gap: 4px;
       padding: 4px 8px;
-      border-radius: 3px;
       background: transparent;
       color: #888;
       transition: all 0.2s;
@@ -481,6 +480,9 @@
       width: 16px;
       height: 16px;
       fill: white;
+      stroke: white;
+      stroke-width: 1.5;
+      margin-right: 2px;
     }
 
     .comment-actions .copy-link-btn .flex-label {
