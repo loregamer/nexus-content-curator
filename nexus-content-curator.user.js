@@ -480,6 +480,7 @@
     .comment-actions .copy-link-btn .icon {
       width: 16px;
       height: 16px;
+      fill: white;
     }
 
     .comment-actions .copy-link-btn .flex-label {
