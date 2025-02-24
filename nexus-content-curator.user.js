@@ -2279,8 +2279,14 @@
         "Unknown Mod"
     );
 
-    // Create BBCode formatted message without quotes
+    // Create BBCode formatted message with list
     const bbCodeMessage = `[b]Mod Report:[/b] [url=https://www.nexusmods.com/${gameShortname}/mods/${modId}]${modTitle}[/url]
+[list]
+[*] Game: ${gameShortname}
+[*] Status: ${status}${reason ? `\n[*] Reason: ${reason}` : ""}${
+      alternative ? `\n[*] Alternative: ${alternative}` : ""
+    }
+[/list]
 
 [code]
 Game Shortname: ${gameShortname}
@@ -2562,8 +2568,20 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
         icon: row.querySelector(".label-icon").src,
       }));
 
-    // Create BBCode formatted message
+    // Create BBCode formatted message with list
     const bbCodeMessage = `[b]Author Report:[/b] [url=https://www.nexusmods.com/users/${username}]${username}[/url]
+[list]
+[*] Username: ${username}
+[*] Labels: ${selectedLabels.map((l) => l.type).join(", ")}
+${selectedLabels
+  .map(
+    (l) =>
+      `[*] ${l.type}:${l.label ? ` ${l.label}` : ""}${
+        l.referenceLink ? ` - [url=${l.referenceLink}]Reference[/url]` : ""
+      }`
+  )
+  .join("\n")}
+[/list]
 
 [code]
 Username: ${username}
