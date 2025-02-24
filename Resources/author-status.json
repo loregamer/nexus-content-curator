@@ -1,5 +1,23 @@
 {
   "Labels": {
+    "Pride Flag Modder": {
+      "label": "Pride Flag Modder",
+      "authors": [
+        "AnyaSweissman",
+        "evgirunslaad",
+        "InsanePixels",
+        "MushroomGobbler",
+        "themonsterundermystairs",
+        "TheSilverSpoonhead",
+        "XilaMonstrr",
+        "SkinnyPig2",
+        "Elianora",
+        "clonecam117",
+        "tedi6er",
+        "PalateSwap"
+      ],
+      "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
+    },
     "Troon": {
       "label": "Troon",
       "authors": [
@@ -16,11 +34,7 @@
         "noctilumi",
         "dinisis",
         "Happysparkles",
-        "tedi6er",
-        "JakeAlaimo",
-        "PalateSwap",
-        "BSJMODZ",
-        "clonecam117"
+        "JakeAlaimo"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -75,7 +89,9 @@
         "neonbutchery",
         "Zaldir",
         "MangoPunch",
-        "clonecam117"
+        "clonecam117",
+        "AnyaSweissman",
+        "BSJMODZ"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
