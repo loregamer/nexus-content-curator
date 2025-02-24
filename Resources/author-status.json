@@ -7,6 +7,7 @@
         "Eralyne",
         "jawstarion",
         "magnetuning",
+        "neonbutchery",
         "Padme4000",
         "pentapox",
         "Pearlina",
@@ -19,7 +20,14 @@
     },
     "Flight Risk": {
       "label": "Flight risk! (Will throw fit and leave if criticized too much)",
-      "authors": ["Eralyne", "Arthmoor", "Xilandro", "pentapox", "Caites"],
+      "authors": [
+        "Eralyne",
+        "Arthmoor",
+        "Xilandro",
+        "pentapox",
+        "Caites",
+        "neonbutchery"
+      ],
       "icon": "https://f.rpghq.org/nD9rLv9rzAZY.png"
     },
     "Bug Ignorer": {
@@ -38,7 +46,13 @@
     },
     "Paywaller": {
       "label": "Paywaller",
-      "authors": ["tashaweeds", "a9145056060904", "mantiiiss", "CobaltOwl1"],
+      "authors": [
+        "tashaweeds",
+        "a9145056060904",
+        "mantiiiss",
+        "CobaltOwl1",
+        "neonbutchery"
+      ],
       "icon": "https://f.rpghq.org/RPCaQVvTOu2c.png?n=pasted-file.png"
     },
     "Copystriker": {
@@ -48,7 +62,7 @@
     },
     "Incident": {
       "label": "Incident:",
-      "authors": ["magnetuning", "Xilandro", "Vessnelle"],
+      "authors": ["magnetuning", "Xilandro", "Vessnelle", "neonbutchery"],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
   },
@@ -113,6 +127,20 @@
       "Flight Risk": {
         "label": "Sensitive. Will stop updating his mods or become inactive if he finds a negative comment out of thousands of positive ones.",
         "referenceLink": null
+      }
+    },
+    "neonbutchery": {
+      "Flight Risk": {
+        "label": "Has had several meltdowns requiring extra Xanax doses due to ModHQ tomfoolery.",
+        "referenceLink": null
+      },
+      "Paywaller": {
+        "label": "Takes commissions and paywalls.",
+        "referenceLink": "https://neonbutchery.carrd.co/"
+      },
+      "Incident": {
+        "label": "Makes anti-chud mods out of spite, such as \"Slightly Older Shadowheart\". \n\nTheir exact words were: \"this was made in 1h 30min out of pure spite because i'm tired of the constant smooth facetune yassification of all the characters so why not make them all look middle-aged instead\"",
+        "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/3551"
       }
     }
   }
