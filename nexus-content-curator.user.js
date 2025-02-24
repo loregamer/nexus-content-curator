@@ -1047,10 +1047,11 @@
       color: "#ff4400",
       class: "warning",
     },
-    CAUTION: {
-      icons: ["⚠️"],
-      color: "#ffa500",
-      class: "warning",
+    // Change CAUTION to INFORMATIVE
+    INFORMATIVE: {
+      icons: ["ℹ️"],
+      color: "#0088ff",
+      class: "info",
     },
   };
 
@@ -1058,6 +1059,12 @@
   function createWarningBanner(status) {
     console.log("[Debug] Creating warning banner with status:", status);
     const banner = document.createElement("div");
+
+    // Map CAUTION to INFORMATIVE for backwards compatibility
+    if (status.type === "CAUTION") {
+      status.type = "INFORMATIVE";
+    }
+
     const statusType = STATUS_TYPES[status.type] || STATUS_TYPES.WARNING;
     console.log("[Debug] Using status type:", statusType);
 
@@ -1791,6 +1798,14 @@
       return;
     }
 
+    // Map CAUTION to INFORMATIVE before creating tags
+    warnings = warnings.map((warning) => {
+      if (warning && warning.type === "CAUTION") {
+        return { ...warning, type: "INFORMATIVE" };
+      }
+      return warning;
+    });
+
     // Get the first span that contains the visible tags
     let firstSpan = tagsContainer.querySelector("span:first-child");
     if (!firstSpan) {
@@ -1950,6 +1965,14 @@
   function addAllWarnings(warnings) {
     if (!warnings || warnings.length === 0) return;
 
+    // Map any CAUTION warnings to INFORMATIVE
+    warnings = warnings.map((warning) => {
+      if (warning && warning.type === "CAUTION") {
+        return { ...warning, type: "INFORMATIVE" };
+      }
+      return warning;
+    });
+
     const nofeature = document.querySelector("#nofeature");
 
     // Add warning icons to title only if nofeature is present
@@ -1965,8 +1988,8 @@
       warnings.some((w) => w.type === "CLOSED_PERMISSIONS" || w.type === "LAME")
     ) {
       gradientClass = "has-warning";
-    } else if (warnings.some((w) => w.type === "CAUTION")) {
-      gradientClass = "has-caution";
+    } else if (warnings.some((w) => w.type === "INFORMATIVE")) {
+      gradientClass = "has-info";
     } else if (warnings.some((w) => w.type === "OPEN_PERMISSIONS")) {
       gradientClass = "has-info";
     }
@@ -2123,7 +2146,7 @@
             <select id="modStatus">
               <option value="BROKEN">Broken</option>
               <option value="LAME">Sucks</option>
-              <option value="CAUTION">Caution</option>
+              <option value="INFORMATIVE">Informative</option>
             </select>
           </div>
           <div class="form-group">
