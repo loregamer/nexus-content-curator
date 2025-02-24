@@ -761,7 +761,7 @@
   tooltip.style.cssText = `
     position: fixed;
     display: none;
-    background: #2a2a2a;
+    background: #000;
     color: white;
     padding: 8px 12px;
     border-radius: 6px;
@@ -769,10 +769,10 @@
     max-width: min(600px, 80vw);
     min-width: 200px;
     width: auto;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.5);
     z-index: 10000;
     pointer-events: none;
-    border: 1px solid #444;
+    border: 1px solid #333;
     line-height: 1.3;
     white-space: pre-line;
     word-wrap: break-word;
