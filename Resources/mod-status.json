@@ -12,7 +12,8 @@
         "2750",
         "2164",
         "2051",
-        "3206"
+        "3206",
+        "2518"
       ],
       "LAME": ["2754", "205", "8295", "3479", "11939", "11172"],
       "ABANDONED": [],
@@ -27,7 +28,8 @@
         "9625",
         "6473",
         "327"
-      ]
+      ],
+      "INFORMATIVE": ["6183"]
     },
     "newvegas": {
       "BROKEN": [
@@ -179,6 +181,14 @@
       },
       "3206": {
         "reason": "Barely worked to begin with. Absolutely broken on later patches."
+      },
+      "2518": {
+        "reason": "Abandoned and broken. Use Sit This One Out 2 instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/6183"
+      },
+      "6183": {
+        "reason": "Don't use this on an honor mode run.\n\nAlso, you will still run into various bugs if you extend your party limit, no matter what, so proceed with caution.",
+        "alternative": null
       }
     },
     "newvegas": {
