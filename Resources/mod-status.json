@@ -577,6 +577,25 @@
     }
   },
   "Keyword Rules": {
+    "global": {
+      "LAME": [
+        {
+          "pattern": "Chubby",
+          "reason": "AHAHAHAHAHAHA",
+          "alternative": "https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html"
+        },
+        {
+          "pattern": "Plus Sized",
+          "reason": "AHAHAHAHAHAHA",
+          "alternative": "https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html"
+        },
+        {
+          "pattern": "BBW",
+          "reason": "AHAHAHAHAHAHA",
+          "alternative": "https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html"
+        }
+      ]
+    },
     "newvegas": {
       "BROKEN": [
         {
