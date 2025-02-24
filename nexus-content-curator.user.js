@@ -1989,6 +1989,13 @@
     }
   }
 
+  // Function to detect if user is on mobile
+  function isMobileDevice() {
+    return (
+      window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent)
+    );
+  }
+
   // Modify addAllWarnings function
   function addAllWarnings(warnings) {
     if (!warnings || warnings.length === 0) return;
@@ -2002,9 +2009,10 @@
     });
 
     const nofeature = document.querySelector("#nofeature");
+    const isMobile = isMobileDevice();
 
-    // Add warning icons to title only if nofeature is present
-    if (nofeature) {
+    // Add warning icons to title if nofeature is present or if on mobile
+    if (nofeature || isMobile) {
       addWarningIconsToTitle(warnings);
     }
 
@@ -2023,9 +2031,18 @@
     }
 
     // Apply gradient to either nofeature or featured element
-    if (nofeature) {
-      nofeature.className = gradientClass;
+    if (nofeature || isMobile) {
+      if (nofeature) {
+        nofeature.className = gradientClass;
+      } else {
+        // If on mobile but no nofeature, apply to featured
+        const featured = document.querySelector("#featured");
+        if (featured) {
+          featured.className = gradientClass;
+        }
+      }
     } else {
+      // Desktop view with featured element
       // Clear any existing warning banners
       const existingBanners = document.querySelector(".mod-warning-banners");
       if (existingBanners) {
