@@ -1,0 +1,123 @@
+---
+description: Notes on updating mod-status.json
+globs: mod-status.json
+---
+# Updating Mod Status JSON
+
+## Format Overview
+
+The `mod-status.json` file contains three main sections:
+
+- `Mod Statuses`: Lists mod IDs by game and status category
+- `Mod Descriptors`: Contains detailed information about each mod
+- `Keyword Rules`: Contains pattern-based rules for specific games
+
+## Adding/Updating a Mod Status
+
+When you have a mod status update in this format:
+
+```
+Game Shortname: <game>
+Mod ID: <id>
+Status: <status>
+Reason: <reason>
+Alternative: <alternative_url>
+```
+
+Follow these steps to update the JSON:
+
+1. First, add/update the mod ID in the appropriate status category under `Mod Statuses`:
+
+   ```json
+   {
+     "Mod Statuses": {
+       "<game>": {
+         "<STATUS>": ["<id>", ...]
+       }
+     }
+   }
+   ```
+
+2. Then, add/update the mod's descriptor information:
+   ```json
+   {
+     "Mod Descriptors": {
+       "<game>": {
+         "<id>": {
+           "reason": "<reason>",
+           "alternative": "<alternative_url or null>"
+         }
+       }
+     }
+   }
+   ```
+
+## Status Categories
+
+Available status categories:
+
+- `BROKEN`: For mods that are non-functional or cause serious issues
+- `LAME`: For mods that are poorly implemented or have significant drawbacks
+- `ABANDONED`: For mods that are no longer maintained
+- `CAUTION`: For mods that require special attention or have minor issues
+- `INFORMATIVE`: For mods that need important usage notes
+
+## Example
+
+For this mod status:
+
+```
+Game Shortname: baldursgate3
+Mod ID: 2518
+Status: BROKEN
+Reason: Abandoned and broken. Use Sit This One Out 2 instead.
+Alternative: https://www.nexusmods.com/baldursgate3/mods/6183
+```
+
+The JSON updates would be:
+
+1. Add to `Mod Statuses`:
+
+```json
+{
+  "Mod Statuses": {
+    "baldursgate3": {
+      "BROKEN": ["2518", ...]
+    }
+  }
+}
+```
+
+2. Add to `Mod Descriptors`:
+
+```json
+{
+  "Mod Descriptors": {
+    "baldursgate3": {
+      "2518": {
+        "reason": "Abandoned and broken. Use Sit This One Out 2 instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/6183"
+      }
+    }
+  }
+}
+```
+
+## Important Notes
+
+1. Always maintain proper JSON formatting
+2. Keep mod IDs as strings (with quotes)
+3. If there's no alternative URL, use `null` instead
+4. Ensure the game shortname matches existing entries
+5. Make sure the status category is in ALL CAPS
+6. Line breaks in reason text should be encoded as "\n" in the JSON
+7. Backup the JSON file before making changes
+
+## Validation
+
+After updating the JSON:
+
+1. Verify the JSON is valid using a JSON validator
+2. Check that the mod ID appears in both `Mod Statuses` and `Mod Descriptors`
+3. Ensure all required fields are present
+4. Verify the status category exists in the file
