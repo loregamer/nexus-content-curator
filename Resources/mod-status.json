@@ -621,6 +621,16 @@
           "pattern": "Femboi",
           "reason": "Reject the thigh socks. Embrace creatine."
         }
+      ],
+      "BROKEN": [
+        {
+          "pattern": "Pride Flag",
+          "reason": "Your PC will EXPLODE after you download this and you will DIE!"
+        },
+        {
+          "pattern": "Pride flag",
+          "reason": "Your PC will EXPLODE after you download this and you will DIE!"
+        }
       ]
     },
     "newvegas": {
