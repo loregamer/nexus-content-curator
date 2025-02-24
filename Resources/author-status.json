@@ -63,7 +63,14 @@
     },
     "Incident": {
       "label": "Incident:",
-      "authors": ["magnetuning", "Xilandro", "Vessnelle", "neonbutchery"],
+      "authors": [
+        "magnetuning",
+        "Xilandro",
+        "Vessnelle",
+        "neonbutchery",
+        "Zaldir",
+        "MangoPunch"
+      ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
   },
@@ -142,6 +149,18 @@
       "Incident": {
         "label": "Makes anti-chud mods out of spite, such as \"Slightly Older Shadowheart\". \n\nTheir exact words were: \"this was made in 1h 30min out of pure spite because i'm tired of the constant smooth facetune yassification of all the characters so why not make them all look middle-aged instead\"",
         "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/3551"
+      }
+    },
+    "Zaldir": {
+      "Incident": {
+        "label": "Obese janny who patrols the post sections of Plus-Size mods to BAN chud users making \"Big Chungus\" jokes.",
+        "referenceLink": null
+      }
+    },
+    "MangoPunch": {
+      "Incident": {
+        "label": "Obese",
+        "referenceLink": null
       }
     }
   }
