@@ -72,7 +72,8 @@
         "Vessnelle",
         "neonbutchery",
         "Zaldir",
-        "MangoPunch"
+        "MangoPunch",
+        "clonecam117"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -164,6 +165,12 @@
       "Incident": {
         "label": "Obese",
         "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/8843"
+      }
+    },
+    "clonecam117": {
+      "Incident": {
+        "label": "Bent the knee to the TROONS. Made a mod to add a silly flag replacer, but then said \"This mod does NOT replace or alter Pride flags in any way, shape or form. Homophobes suck.\"",
+        "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/178"
       }
     }
   }
