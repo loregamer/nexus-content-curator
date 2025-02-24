@@ -503,6 +503,9 @@
       color: white;
       font-family: monospace;
       font-size: 12px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
     }
 
     .mod-report-form .buttons {
@@ -585,7 +588,9 @@
       font-size: 12px;
       min-height: 80px;
       resize: vertical;
-      white-space: pre;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
   `;
 
