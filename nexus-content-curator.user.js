@@ -2568,17 +2568,16 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
         icon: row.querySelector(".label-icon").src,
       }));
 
-    // Create BBCode formatted message with list
+    // Create BBCode formatted message with nested lists
     const bbCodeMessage = `[b]Author Report:[/b] [url=https://www.nexusmods.com/users/${username}]${username}[/url]
 [list]
-[*] Username: ${username}
-[*] Labels: ${selectedLabels.map((l) => l.type).join(", ")}
 ${selectedLabels
   .map(
-    (l) =>
-      `[*] ${l.type}:${l.label ? ` ${l.label}` : ""}${
-        l.referenceLink ? ` - [url=${l.referenceLink}]Reference[/url]` : ""
-      }`
+    (l) => `[*] [b]${l.type}[/b]
+[list]
+[*] [size=85][b]Reason:[/b] ${l.label || "-"}[/size]
+[*] [size=85][b]Reference:[/b] ${l.referenceLink || "-"}[/size]
+[/list]`
   )
   .join("\n")}
 [/list]
