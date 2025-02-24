@@ -193,7 +193,8 @@
       "BROKEN": [
         {
           "pattern": "ENB",
-          "reason": "ENBs are extremely buggy in New Vegas and will cause loads of issues"
+          "reason": "ENBs are extremely buggy in New Vegas and will cause loads of issues",
+          "alternative": "https://dlpnd.github.io/nvr-wiki/"
         },
         {
           "pattern": "Project Nevada",

@@ -1407,6 +1407,7 @@
           return {
             type: statusType,
             reason: rule.reason,
+            alternative: rule.alternative, // Add this line to include alternative
             color: STATUS_TYPES[statusType]?.color || "#ff0000",
           };
         }
