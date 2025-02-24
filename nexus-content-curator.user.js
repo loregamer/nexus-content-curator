@@ -1662,7 +1662,6 @@
     tagBtn.style.cssText = `
       background: ${bgColor};
       border: 1px solid rgba(255, 255, 255, 0.2);
-      pointer-events: none;
       color: white;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
       height: 24px;
@@ -1672,6 +1671,7 @@
       display: inline-flex;
       align-items: center;
       white-space: nowrap;
+      cursor: help;
     `;
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -1701,6 +1701,23 @@
     tagBtn.appendChild(svg);
     tagBtn.appendChild(label);
     tagLi.appendChild(tagBtn);
+
+    // Add tooltip handlers
+    const showTooltip = (e) => {
+      tooltip.innerHTML = formatTooltipText(
+        `<strong>${status.type.replace(/_/g, " ")}:</strong> ${status.reason}`
+      );
+      tooltip.style.display = "block";
+      updateTooltipPosition(e);
+    };
+
+    const hideTooltip = () => {
+      tooltip.style.display = "none";
+    };
+
+    tagBtn.addEventListener("mouseover", showTooltip);
+    tagBtn.addEventListener("mousemove", updateTooltipPosition);
+    tagBtn.addEventListener("mouseout", hideTooltip);
 
     // Add tabindex to match regular tags
     tagBtn.setAttribute("tabindex", "0");
