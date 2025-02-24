@@ -56,7 +56,8 @@
         "7294",
         "856",
         "353",
-        "12727"
+        "12727",
+        "14757"
       ],
       "ABANDONED": [],
       "CAUTION": [
@@ -104,7 +105,10 @@
         "7037",
         "4741",
         "7922",
-        "7757"
+        "7757",
+        "11708",
+        "15024",
+        "4096"
       ]
     },
     "newvegas": {
@@ -448,6 +452,22 @@
       },
       "12727": {
         "reason": "This *looks* like a pretty comprehensive rules update from the sourcebook. Unfortunately the korean autist behind it has decided to also bundle in a shitty AI rework that breaks most magic encounters, turning them into counterspell/Sanctuary/CC spam that drag battles out forever. Of course, he autistically refuses to split the AI crap from the main mod.",
+        "alternative": null
+      },
+      "11708": {
+        "reason": "Pack includes DIVERSIFIED, ETHNICALLY MODERN Elf heads.",
+        "alternative": null
+      },
+      "14757": {
+        "reason": "LOL",
+        "alternative": null
+      },
+      "15024": {
+        "reason": "Pack includes DIVERSIFIED, ETHNICALLY MODERN Elf heads.",
+        "alternative": null
+      },
+      "4096": {
+        "reason": "Pack includes DIVERSIFIED, ETHNICALLY MODERN Elf heads..\n\nAuthor DARED speak ill on the glorious state of Israel in support of PALESTINE, which is a DISGRACE to the memory of the 6 million jews murdered by the Nazis.",
         "alternative": null
       }
     },
