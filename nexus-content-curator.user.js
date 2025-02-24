@@ -1811,6 +1811,9 @@
     warnings.forEach((warning) => {
       if (!warning || !warning.type) return;
 
+      // Skip adding icon for OPEN_PERMISSIONS
+      if (warning.type === "OPEN_PERMISSIONS") return;
+
       // Store alternative URL if present
       if (warning.alternative) {
         alternativeUrl = warning.alternative;
@@ -1827,9 +1830,6 @@
           break;
         case "CLOSED_PERMISSIONS":
           icon = "🔒";
-          break;
-        case "OPEN_PERMISSIONS":
-          icon = "🔓";
           break;
         case "CUSTOM_PERMISSIONS":
           icon = "⚖️";
