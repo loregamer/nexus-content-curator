@@ -1047,9 +1047,9 @@
       color: "#ff4400",
       class: "warning",
     },
-    // Change CAUTION to INFORMATIVE
+    // Update INFORMATIVE to use image instead of emoji
     INFORMATIVE: {
-      icons: ["ℹ️"],
+      icons: ["https://f.rpghq.org/nz5rQfuF3uwV.png"],
       color: "#0088ff",
       class: "info",
     },
@@ -1076,7 +1076,27 @@
     statusType.icons.forEach((icon) => {
       const span = document.createElement("span");
       span.className = "warning-icon";
-      span.textContent = icon;
+
+      // Check if icon is a URL
+      if (icon.startsWith("http")) {
+        const img = document.createElement("img");
+        img.src = icon;
+        img.style.width = "32px"; // Increased from 24px to match emoji visual size
+        img.style.height = "32px"; // Increased from 24px to match emoji visual size
+        img.style.verticalAlign = "middle";
+        img.style.objectFit = "contain";
+        img.style.margin = "-4px 0"; // Add negative margin to vertically center like emojis
+
+        // Fallback to text if image fails to load
+        img.onerror = () => {
+          span.textContent = "ℹ️";
+        };
+
+        span.appendChild(img);
+      } else {
+        span.textContent = icon;
+      }
+
       if (status.type === "CLOSED_PERMISSIONS") {
         // Add tooltip handlers
         const showTooltip = (e) => {
