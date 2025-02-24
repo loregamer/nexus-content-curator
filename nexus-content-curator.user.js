@@ -457,6 +457,45 @@
     .tags li[data-warning-tag] .flex-label {
       line-height: 24px !important;
     }
+
+    /* Copy link button styles */
+    .comment-actions .copy-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      background: transparent;
+      color: #888;
+      transition: all 0.2s;
+      text-decoration: none;
+      border: 1px solid #444;
+    }
+
+    .comment-actions .copy-link-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .comment-actions .copy-link-btn .icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .comment-actions .copy-link-btn .flex-label {
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    /* Copy success animation */
+    @keyframes copySuccess {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .copy-success {
+      animation: copySuccess 0.3s ease;
+    }
   `;
 
   // Add form styles
@@ -801,6 +840,7 @@
     hasCheckedCurrentMod = true;
     checkAuthorStatus();
     setupDOMObserver();
+    addCopyLinkButtons(); // Add this line
   }
 
   // Run init when DOM is ready
@@ -1379,6 +1419,9 @@
       checkTimeout = setTimeout(() => {
         // Add report button
         addReportButton();
+
+        // Add copy link buttons to any new comments
+        addCopyLinkButtons();
 
         // Check if we're on a mod page and haven't checked it yet
         const pageTitle = document.querySelector("#pagetitle");
@@ -2909,5 +2952,89 @@ ${l.type}:
       STORAGE_KEYS.AUTHOR_STATUS,
       processAuthorStatus
     );
+  }
+
+  // Function to add copy link buttons to comments
+  function addCopyLinkButtons() {
+    // Find all comment action lists
+    const commentActions = document.querySelectorAll(
+      ".comment-actions .actions"
+    );
+
+    commentActions.forEach((actionList) => {
+      // Skip if copy link button already exists
+      if (actionList.querySelector(".copy-link-btn")) return;
+
+      // Get the comment ID from the parent comment element
+      const commentElement = actionList.closest(".comment");
+      if (!commentElement) return;
+
+      const commentId = commentElement.id.replace("comment-", "");
+      if (!commentId) return;
+
+      // Create the copy link button
+      const li = document.createElement("li");
+      const button = document.createElement("a");
+      button.className = "btn inline-flex copy-link-btn";
+      button.href = "#";
+      button.setAttribute("data-comment-id", commentId);
+
+      // Create icon
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("class", "icon icon-link");
+      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      use.setAttributeNS(
+        "http://www.w3.org/1999/xlink",
+        "xlink:href",
+        "https://www.nexusmods.com/assets/images/icons/icons.svg#icon-link"
+      );
+      svg.appendChild(use);
+
+      // Create label
+      const label = document.createElement("span");
+      label.className = "flex-label";
+      label.textContent = "Copy Link";
+
+      button.appendChild(svg);
+      button.appendChild(label);
+      li.appendChild(button);
+
+      // Add click handler
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const url = new URL(window.location.href);
+        url.searchParams.set("jump_to_comment", commentId);
+
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(url.toString())
+          .then(() => {
+            button.classList.add("copy-success");
+            label.textContent = "Copied!";
+
+            // Reset after animation
+            setTimeout(() => {
+              button.classList.remove("copy-success");
+              label.textContent = "Copy Link";
+            }, 1500);
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+            label.textContent = "Failed to copy";
+
+            setTimeout(() => {
+              label.textContent = "Copy Link";
+            }, 1500);
+          });
+      });
+
+      // Insert before the last item (usually collapse button)
+      const lastItem = actionList.lastElementChild;
+      if (lastItem) {
+        actionList.insertBefore(li, lastItem);
+      } else {
+        actionList.appendChild(li);
+      }
+    });
   }
 })();
