@@ -2380,33 +2380,21 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
         icon: row.querySelector(".label-icon").src,
       }));
 
-    // Check if any labels have custom text or reference links
-    const hasCustomFields = selectedLabels.some(
-      (label) => label.label || label.referenceLink
-    );
-
     // Create BBCode formatted message
     const bbCodeMessage = `[b]Author Report:[/b] [url=https://www.nexusmods.com/users/${username}]${username}[/url]
 
-${
-  hasCustomFields
-    ? `[code]
+[code]
 Username: ${username}
 Labels: ${selectedLabels.map((l) => l.type).join(", ")}
 ${selectedLabels
   .map(
     (l) => `
-${l.type}:${l.label ? `\n  Label: ${l.label}` : ""}${
-      l.referenceLink ? `\n  Reference: ${l.referenceLink}` : ""
-    }`
+${l.type}:
+  Label: ${l.label || "-"}
+  Reference: ${l.referenceLink || "-"}`
   )
   .join("\n")}
-[/code]`
-    : `[code]
-Username: ${username}
-Labels: ${selectedLabels.map((l) => l.type).join(", ")}
-[/code]`
-}`;
+[/code]`;
 
     // Rest of the function remains the same...
     const jsonString = JSON.stringify(
