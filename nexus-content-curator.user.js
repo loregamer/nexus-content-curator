@@ -2478,6 +2478,7 @@ Labels: ${selectedLabels.map((l) => l.type).join(", ")}
     document.querySelectorAll(".label-row").forEach((row) => {
       const checkbox = row.querySelector('input[type="checkbox"]');
       const details = row.querySelector(".label-details");
+      const labelHeader = row.querySelector(".label-header");
 
       // Function to handle state change
       const toggleState = (checked) => {
@@ -2485,27 +2486,24 @@ Labels: ${selectedLabels.map((l) => l.type).join(", ")}
         details.style.display = checked ? "flex" : "none";
       };
 
-      // Handle row click
-      row.addEventListener("click", (e) => {
-        // Don't toggle if clicking inside the details section or on input elements
-        if (
-          e.target.closest(".label-details") ||
-          e.target.tagName === "INPUT"
-        ) {
+      // Handle label header click (the main row area)
+      labelHeader.addEventListener("click", (e) => {
+        // Don't toggle if clicking directly on the checkbox (let its native behavior work)
+        if (e.target === checkbox) {
           return;
         }
 
         toggleState(!checkbox.checked);
+        e.preventDefault();
+        e.stopPropagation();
       });
 
       // Handle checkbox change
       checkbox.addEventListener("change", (e) => {
         toggleState(e.target.checked);
-        // Stop propagation to prevent row click handler from firing
-        e.stopPropagation();
       });
 
-      // Prevent clicks in the details section from triggering row click
+      // Prevent clicks in the details section from toggling the checkbox
       details.addEventListener("click", (e) => {
         e.stopPropagation();
       });
