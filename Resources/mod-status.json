@@ -15,7 +15,7 @@
         "3206",
         "2518"
       ],
-      "LAME": ["2754", "205", "8295", "3479", "11939", "11172"],
+      "LAME": ["2754", "205", "8295", "3479", "11939", "11172", "7294"],
       "ABANDONED": [],
       "CAUTION": [
         "141",
@@ -192,6 +192,10 @@
       },
       "2922": {
         "reason": "Mod works well, but it requires finesse. Eralyne ignores bug reports, so don't bother reporting them.\n\nMake sure to save and reload every time you Transmog something.",
+        "alternative": null
+      },
+      "7294": {
+        "reason": "Pretty ironic \"Open Faerun\" has closed permissions, huh...",
         "alternative": null
       }
     },
