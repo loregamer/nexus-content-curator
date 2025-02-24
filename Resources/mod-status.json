@@ -626,6 +626,14 @@
         {
           "pattern": "Pride",
           "reason": "Your PC will EXPLODE after you download this and you will DIE!"
+        },
+        {
+          "pattern": "LGBT",
+          "reason": "Your PC will EXPLODE after you download this and you will DIE!"
+        },
+        {
+          "pattern": "LGBTQ",
+          "reason": "Your PC will EXPLODE after you download this and you will DIE!"
         }
       ]
     },
