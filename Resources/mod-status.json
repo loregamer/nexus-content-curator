@@ -109,7 +109,7 @@
       "CAUTION": ["38844", "76009", "81185", "81332", "81010", "61173"]
     },
     "skyrimspecialedition": {
-      "BROKEN": [],
+      "BROKEN": ["266", "3038", "33746", "63000"],
       "LAME": [],
       "ABANDONED": [],
       "CAUTION": ["266"]
@@ -348,6 +348,18 @@
       "266": {
         "reason": "This mod makes unnecessary changes that are outside of the scope of mere bug fixes. You will need a mod to undo its changes.",
         "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/72083"
+      },
+      "3038": {
+        "reason": "No longer supported. Superseded by \"Nemesis\"",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/60033"
+      },
+      "33746": {
+        "reason": "No longer supported. Superseded by \"Open Animation Replacer\"",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/92109"
+      },
+      "63000": {
+        "reason": "Broken unless you download \"TUDM Pandora Animation Patch\"",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/127728?tab=posts"
       }
     }
   },
