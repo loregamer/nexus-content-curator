@@ -55,7 +55,8 @@
         "11172",
         "7294",
         "856",
-        "353"
+        "353",
+        "12727"
       ],
       "ABANDONED": [],
       "CAUTION": [
@@ -297,6 +298,10 @@
       },
       "353": {
         "reason": "This mod exists because mod authors are too lazy to not override the entire \"Races.lsx\" file, so this is a sloppy, tranny-curated list of a bunch of mods put together into a Races.lsx. If Padme4000 doesn't personall sign off on the mod, then it isn't added to this.\n\nUnfortunately, the mod is likely still necessary unless the CC mods you want have a ModHQ cleaned up version of them. Ping @loregamer on the forum to make a patch, if you want. He has a script to automate this.",
+        "alternative": null
+      },
+      "12727": {
+        "reason": "This *looks* like a pretty comprehensive rules update from the sourcebook. Unfortunately the korean autist behind it has decided to also bundle in a shitty AI rework that breaks most magic encounters, turning them into counterspell/Sanctuary/CC spam that drag battles out forever. Of course, he autistically refuses to split the AI crap from the main mod.",
         "alternative": null
       }
     },
