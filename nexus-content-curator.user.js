@@ -2158,7 +2158,7 @@
       setTimeout(() => {
         // Now add all warnings after author status has been checked
         addAllWarnings(warnings);
-      }, 300);
+      }, 100);
     }
 
     // Always fetch fresh data first
