@@ -14,7 +14,7 @@
     },
     "Flight Risk": {
       "label": "Flight risk! (Will throw fit and leave if criticized too much)",
-      "authors": ["Eralyne", "Arthmoor", "Xilandro", "pentapox"],
+      "authors": ["Eralyne", "Arthmoor", "Xilandro", "pentapox", "Caites"],
       "icon": "https://f.rpghq.org/nD9rLv9rzAZY.png"
     },
     "Bug Ignorer": {
@@ -101,6 +101,12 @@
     "clintmich": {
       "Bug Ignorer": {
         "label": "Inactive. Mod bugs will not be fixed or updated to new patches.",
+        "referenceLink": null
+      }
+    },
+    "Caites": {
+      "Flight Risk": {
+        "label": "Sensitive. Will stop updating his mods or become inactive if he finds a negative comment out of thousands of positive ones.",
         "referenceLink": null
       }
     }
