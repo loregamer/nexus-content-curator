@@ -1094,11 +1094,21 @@
 
     const textContainer = document.createElement("div");
     textContainer.className = "warning-text";
-    // Format parenthetical text in warning banner
-    const formattedReason = status.reason.replace(
-      /\((.*?)\)/g,
-      '<span style="font-size: 0.85em;">($1)</span>'
-    );
+
+    // Count line breaks and adjust featured div height if needed
+    const lineBreakCount = (status.reason.match(/\n/g) || []).length;
+    if (lineBreakCount > 2) {
+      const featured = document.querySelector("#featured");
+      if (featured) {
+        const extraHeight = (lineBreakCount - 2) * 20; // 20px per extra line break
+        featured.style.minHeight = `calc(400px + ${extraHeight}px)`; // 400px is default height
+      }
+    }
+
+    // Format parenthetical text in warning banner and handle line breaks
+    const formattedReason = status.reason
+      .replace(/\((.*?)\)/g, '<span style="font-size: 0.85em;">($1)</span>')
+      .replace(/\n/g, "<br>"); // Replace actual newlines with <br> tags
     // Replace underscores with spaces in status type
     const formattedType = status.type.replace(/_/g, " ");
     textContainer.innerHTML = `<strong>${formattedType}:</strong> ${formattedReason}`;
@@ -1113,15 +1123,6 @@
       altLink.textContent = "View Alternative";
       altLink.target = "_blank";
       actionsContainer.appendChild(altLink);
-    }
-
-    if (status.url) {
-      const moreInfoLink = document.createElement("a");
-      moreInfoLink.href = status.url;
-      moreInfoLink.className = "warning-button";
-      moreInfoLink.textContent = "More Info";
-      moreInfoLink.target = "_blank";
-      actionsContainer.appendChild(moreInfoLink);
     }
 
     banner.appendChild(iconContainer);
