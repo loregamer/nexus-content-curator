@@ -1266,7 +1266,7 @@
     modActions.appendChild(reportLi);
   }
 
-  // Modify setupDOMObserver to skip mod tile checks
+  // Modify setupDOMObserver to handle different page types
   function setupDOMObserver() {
     let checkTimeout;
     const observer = new MutationObserver((mutations) => {
@@ -1297,30 +1297,25 @@
           hasCheckedCurrentMod = true;
         }
 
-        /* Temporarily disabled mod tile checks
-        const modTiles = document.querySelectorAll(".mod-tile, .tile");
-        modTiles.forEach((tile) => {
-          if (!tile.querySelector(".mod-warning-banner")) {
-            checkModTileStatus(tile);
+        // Check which type of page we're on and run appropriate checks
+        if (window.location.href.includes("next.nexusmods.com/profile/")) {
+          // Next.js profile page
+          addReportButtonToProfile();
+          addAuthorStatusToNextProfile();
+        } else {
+          // Regular pages
+          const authorLinks = document.querySelectorAll("a[href*='/users/']");
+          const unlabeledAuthors = Array.from(authorLinks).some(
+            (link) =>
+              !link.nextElementSibling?.classList.contains(
+                "author-status-container"
+              )
+          );
+
+          if (unlabeledAuthors) {
+            checkAuthorStatus();
           }
-        });
-        */
-
-        // Only check author status if we don't have all labels yet
-        const authorLinks = document.querySelectorAll("a[href*='/users/']");
-        const unlabeledAuthors = Array.from(authorLinks).some(
-          (link) =>
-            !link.nextElementSibling?.classList.contains(
-              "author-status-container"
-            )
-        );
-
-        if (unlabeledAuthors) {
-          checkAuthorStatus();
         }
-
-        // Add profile page check
-        addReportButtonToProfile();
       }, 100);
     });
 
@@ -2496,6 +2491,164 @@ ${l.type}:
         e.stopPropagation();
       });
     });
+  }
+
+  // Add new function to handle next.nexusmods.com profile layout
+  function addAuthorStatusToNextProfile() {
+    // Check if we're on next.nexusmods.com profile page
+    if (!window.location.href.includes("next.nexusmods.com/profile/")) return;
+
+    // Find the container div that holds the profile info
+    const profileContainer = document.querySelector(
+      ".flex.flex-col.items-center.gap-y-3.sm\\:flex-row.sm\\:items-center.sm\\:gap-x-6"
+    );
+    if (!profileContainer) return;
+
+    // Find the div containing the username
+    const usernameContainer = profileContainer.querySelector("h1");
+    if (!usernameContainer) return;
+
+    // More thorough check for existing status indicators
+    const existingContainers = usernameContainer.querySelectorAll(
+      ".author-status-container"
+    );
+    if (existingContainers.length > 0) {
+      // Remove any duplicate containers if they exist
+      Array.from(existingContainers)
+        .slice(1)
+        .forEach((container) => container.remove());
+      return;
+    }
+
+    const username = usernameContainer.textContent.trim();
+
+    // Function to process author status data
+    function processAuthorStatus(authorStatus) {
+      if (!authorStatus) return;
+
+      // Create container for status indicators
+      const container = document.createElement("div");
+      container.className =
+        "author-status-container flex gap-1 items-center mt-1";
+      container.style.cssText = `
+        display: inline-flex;
+        gap: 2px;
+        align-items: center;
+        vertical-align: middle;
+        line-height: 1;
+        height: 16px;
+        margin-left: 5px;
+      `;
+
+      let hasLabels = false;
+
+      // Check each label to see if this author is included
+      for (const [labelKey, labelData] of Object.entries(authorStatus.Labels)) {
+        if (labelData.authors.includes(username)) {
+          hasLabels = true;
+
+          const wrapper = document.createElement("span");
+          wrapper.style.cssText = `
+            display: inline-flex;
+            align-items: center;
+            height: 16px;
+            vertical-align: middle;
+          `;
+
+          const indicator = document.createElement("span");
+          indicator.style.cssText = `
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 16px;
+            cursor: help;
+            vertical-align: middle;
+            line-height: 1;
+          `;
+
+          // Create either an image or fallback text icon
+          if (labelData.icon && labelData.icon.startsWith("http")) {
+            const img = document.createElement("img");
+            img.style.cssText = `
+              width: 16px;
+              height: 16px;
+              vertical-align: middle;
+              object-fit: contain;
+              display: block;
+            `;
+            img.src = labelData.icon;
+
+            // Fallback to emoji if image fails to load
+            img.onerror = () => {
+              indicator.textContent = DEFAULT_ICONS[labelData.type] || "⚠️";
+              indicator.style.color = labelData.color || "orange";
+              indicator.style.fontSize = "14px";
+            };
+
+            indicator.appendChild(img);
+          } else {
+            indicator.textContent = DEFAULT_ICONS[labelData.type] || "⚠️";
+            indicator.style.color = labelData.color || "orange";
+            indicator.style.fontSize = "14px";
+          }
+
+          // Add hover effect
+          indicator.style.transition = "transform 0.2s";
+
+          // Add tooltip
+          const tooltipText =
+            authorStatus.Tooltips?.[username]?.[labelKey]?.label ||
+            labelData.label;
+          const referenceLink =
+            authorStatus.Tooltips?.[username]?.[labelKey]?.referenceLink;
+
+          const showTooltip = (e) => {
+            indicator.style.transform = "scale(1.2)";
+            tooltip.innerHTML = formatTooltipText(
+              tooltipText,
+              referenceLink ? "Click to learn more" : ""
+            );
+            tooltip.style.display = "block";
+            updateTooltipPosition(e);
+          };
+
+          const hideTooltip = () => {
+            indicator.style.transform = "scale(1)";
+            tooltip.style.display = "none";
+          };
+
+          indicator.addEventListener("mouseover", showTooltip);
+          indicator.addEventListener("mousemove", updateTooltipPosition);
+          indicator.addEventListener("mouseout", hideTooltip);
+
+          if (referenceLink) {
+            const link = document.createElement("a");
+            link.href = referenceLink;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.style.textDecoration = "none";
+            link.appendChild(indicator);
+            wrapper.appendChild(link);
+          } else {
+            wrapper.appendChild(indicator);
+          }
+
+          container.appendChild(wrapper);
+        }
+      }
+
+      if (hasLabels) {
+        // Insert the container after the username
+        usernameContainer.appendChild(container);
+      }
+    }
+
+    // Always fetch fresh data first
+    fetchAndStoreJSON(
+      AUTHOR_STATUS_URL,
+      STORAGE_KEYS.AUTHOR_STATUS,
+      processAuthorStatus
+    );
   }
 
   // Run when the page loads
