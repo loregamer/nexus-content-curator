@@ -666,6 +666,14 @@
           "alternative": "https://thebestoftimes.moddinglinked.com/index.html"
         }
       ]
+    },
+    "marvelrivals": {
+      "BROKEN": [
+        {
+          "pattern": "Marvel Rivals",
+          "reason": "Modding methods are being patched, and the workarounds are becoming more and more esoteric. They'll likely start banning people who are STILL modding. Use an alt account."
+        }
+      ]
     }
   }
 }
