@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.4.3
+// @version      1.5
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -2617,7 +2617,7 @@ ${l.type}:
         localStorage.setItem("lastAuthorReportJson", jsonString);
 
         const forumWindow = window.open(
-          "https://rpghq.org/forums/posting.php?mode=reply&t=3504",
+          "https://rpghq.org/forums/posting.php?mode=reply&t=3511",
           "_blank"
         );
 
