@@ -1,10 +1,10 @@
 {
   "Mod Statuses": {
     "baldursgate3": {
-      "BROKEN": ["899", "1420"],
-      "LAME": ["2754"],
+      "BROKEN": ["899", "1420", "10"],
+      "LAME": ["2754", "205", "8295"],
       "ABANDONED": [],
-      "CAUTION": ["141", "880", "8993"]
+      "CAUTION": ["141", "880", "8993", "1058", "1933", "2435"]
     },
     "newvegas": {
       "BROKEN": [
@@ -84,6 +84,25 @@
       "8993": {
         "reason": "This mod author adds poorly balanced drawbacks to his mods, but the real problem is that he intentionally avoids documenting them, so users will get ass-raped when they don't play with his exact build. Basically a minefield.\n\nMoney quote: \"I made a deliberate choice not to explain how it works, but it's really not that bad once you figure it out.\" This was in reference to a hidden damage trigger that kills you very quickly unless you happen to be running a high-INT build (there is no way to find this out before triggering the damage, and the readme does not even mention the existence of this trigger.)",
         "alternative": "https://www.nexusmods.com/baldursgate3/mods/5105"
+      },
+      "10": {
+        "reason": "Horribly outdated. Use the Patch 7 version.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/12111"
+      },
+      "205": {
+        "reason": "Most of these fucking suck, and you have to download the whole pack to use the face you want."
+      },
+      "1058": {
+        "reason": "Only download the PAK format all-in-1. Loose files are always a bad idea to install."
+      },
+      "1933": {
+        "reason": "Make sure this PAK file goes at the BOTTOM of your load order, always."
+      },
+      "2435": {
+        "reason": "Good mod, but it will have some friendly fires and sell stuff you didn't want sold.\n\nPeople have asked for a few unique portraits of DoS 2 characters to not be auto-sold, but the author has ignored it."
+      },
+      "8295": {
+        "reason": "We suggest just using Tutorial Chest Summoning. Aether is a bad coder, and a Troon."
       }
     },
     "newvegas": {
