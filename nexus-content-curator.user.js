@@ -2578,7 +2578,7 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
       }));
 
     // Create BBCode formatted message with nested lists
-    const bbCodeMessage = `[b]Author Report:[/b] [url=https://www.nexusmods.com/users/${username}]${username}[/url]
+    const bbCodeMessage = `[b]Author Report:[/b] [url=https://next.nexusmods.com/profile/${username}]${username}[/url]
 [list]
 ${selectedLabels
   .map(
