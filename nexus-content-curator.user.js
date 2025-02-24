@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.5.2
+// @version      1.6
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1421,8 +1421,12 @@
 
   // Function to check if a mod matches any keyword rules
   function checkKeywordRules(modStatusData, gameName, modTitle) {
+    // Get global and game-specific rules
+    const globalRules = modStatusData["Keyword Rules"]?.["global"];
     const gameRules = modStatusData["Keyword Rules"]?.[gameName];
-    if (!gameRules) return null;
+
+    // If no rules exist, return null
+    if (!globalRules && !gameRules) return null;
 
     // Get all text from breadcrumb categories
     const breadcrumbText = Array.from(
@@ -1443,18 +1447,35 @@
     const fullText =
       `${breadcrumbText} ${h1Title} ${modTitle} ${categoryText}`.toLowerCase();
 
-    for (const [statusType, rules] of Object.entries(gameRules)) {
-      for (const rule of rules) {
-        if (fullText.includes(rule.pattern.toLowerCase())) {
-          return {
-            type: statusType,
-            reason: rule.reason,
-            alternative: rule.alternative, // Add this line to include alternative
-            color: STATUS_TYPES[statusType]?.color || "#ff0000",
-          };
+    // Helper function to check rules
+    const checkRules = (rules) => {
+      for (const [statusType, ruleList] of Object.entries(rules)) {
+        for (const rule of ruleList) {
+          if (fullText.includes(rule.pattern.toLowerCase())) {
+            return {
+              type: statusType,
+              reason: rule.reason,
+              alternative: rule.alternative,
+              color: STATUS_TYPES[statusType]?.color || "#ff0000",
+            };
+          }
         }
       }
+      return null;
+    };
+
+    // Check game-specific rules first (they take precedence)
+    if (gameRules) {
+      const gameMatch = checkRules(gameRules);
+      if (gameMatch) return gameMatch;
     }
+
+    // Then check global rules
+    if (globalRules) {
+      const globalMatch = checkRules(globalRules);
+      if (globalMatch) return globalMatch;
+    }
+
     return null;
   }
 
