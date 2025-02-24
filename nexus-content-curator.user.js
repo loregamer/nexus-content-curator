@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.5.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -215,6 +215,13 @@
       background: linear-gradient(45deg, rgba(255, 0, 0, 0.08), rgba(255, 0, 0, 0.15));
       border: 2px solid rgba(255, 0, 0, 0.4);
       box-shadow: inset 0 0 30px rgba(255, 0, 0, 0.15);
+    }
+
+    /* Make info gradient more visible on nofeature */
+    #nofeature.has-info {
+      background: linear-gradient(45deg, rgba(0, 136, 255, 0.08), rgba(0, 136, 255, 0.15));
+      border: 2px solid rgba(0, 136, 255, 0.4);
+      box-shadow: inset 0 0 30px rgba(0, 136, 255, 0.15);
     }
 
     .warning-icon-container {
@@ -880,7 +887,8 @@
   const DEFAULT_ICONS = {
     MALICIOUS: "⛔",
     WARNING: "⚡",
-    CAUTION: "⚠️",
+    INFORMATIVE: "ℹ️",
+    CAUTION: "ℹ️",
   };
 
   // Add status indicator to author name
@@ -1740,6 +1748,10 @@
         bgColor =
           "linear-gradient(45deg, rgba(136, 136, 136, 0.8), rgba(136, 136, 136, 0.9))";
         break;
+      case "INFORMATIVE":
+        bgColor =
+          "linear-gradient(45deg, rgba(0, 136, 255, 0.8), rgba(0, 136, 255, 0.9))";
+        break;
       default:
         bgColor =
           "linear-gradient(45deg, rgba(0, 136, 255, 0.8), rgba(0, 136, 255, 0.9))";
@@ -1915,6 +1927,9 @@
         case "AUTHOR_SUCKS":
           icon = "👿";
           break;
+        case "INFORMATIVE":
+          icon = "ℹ️";
+          break;
       }
       iconWrapper.textContent = icon;
 
@@ -1993,16 +2008,21 @@
   function addAllWarnings(warnings) {
     if (!warnings || warnings.length === 0) return;
 
-    // Map any CAUTION warnings to INFORMATIVE
+    const nofeature = document.querySelector("#nofeature");
+    const isMobile = isMobileDevice();
+
+    // Map any CAUTION warnings to INFORMATIVE, especially for nofeature mods
     warnings = warnings.map((warning) => {
       if (warning && warning.type === "CAUTION") {
-        return { ...warning, type: "INFORMATIVE" };
+        return {
+          ...warning,
+          type: "INFORMATIVE",
+          // If it's a nofeature mod, update the class to info
+          class: nofeature ? "info" : warning.class,
+        };
       }
       return warning;
     });
-
-    const nofeature = document.querySelector("#nofeature");
-    const isMobile = isMobileDevice();
 
     // Add warning icons to title if nofeature is present or if on mobile
     if (nofeature || isMobile) {
@@ -2014,7 +2034,10 @@
     if (warnings.some((w) => w.type === "BROKEN")) {
       gradientClass = "has-severe-warning";
     } else if (
-      warnings.some((w) => w.type === "CLOSED_PERMISSIONS" || w.type === "LAME")
+      warnings.some(
+        (w) => w.type === "CLOSED_PERMISSIONS" || w.type === "LAME"
+      ) &&
+      !warnings.some((w) => w.type === "INFORMATIVE" && nofeature) // Don't override INFORMATIVE on nofeature
     ) {
       gradientClass = "has-warning";
     } else if (warnings.some((w) => w.type === "INFORMATIVE")) {
