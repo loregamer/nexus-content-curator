@@ -20,6 +20,7 @@
     "Bug Ignorer": {
       "label": "Ignores bugs. Will deny they exist and not fix them",
       "authors": [
+        "Aether",
         "Arthmoor",
         "Eralyne",
         "Xilandro",
@@ -46,6 +47,12 @@
     }
   },
   "Tooltips": {
+    "Aether": {
+      "Bug Ignorer": {
+        "label": "Disables the Bugs and Posts section on mods that are buggy.",
+        "referenceLink": null
+      }
+    },
     "Eralyne": {
       "Flight Risk": {
         "label": "Flight risk! (Will throw fit and leave if criticized too much)\n\nWas also involved in that lame Open Faerun garbage",
