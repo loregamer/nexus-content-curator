@@ -1019,8 +1019,8 @@
     },
     LAME: {
       icons: ["👎"],
-      color: "#ffa500",
-      class: "warning",
+      color: "#ff0000",
+      class: "severe",
     },
     CLOSED_PERMISSIONS: {
       icons: ["🔒"],
@@ -1692,7 +1692,7 @@
       case "CLOSED_PERMISSIONS":
       case "LAME":
         bgColor =
-          "linear-gradient(45deg, rgba(255, 165, 0, 0.8), rgba(255, 165, 0, 0.9))";
+          "linear-gradient(45deg, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0.9))";
         break;
       case "CAUTION":
         bgColor =
