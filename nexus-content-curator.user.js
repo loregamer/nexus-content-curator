@@ -443,10 +443,9 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       z-index: 10000;
-      width: 500px;
+      width: 400px;
       max-width: 90vw;
       color: white;
-      font-size: 13px;
     }
 
     .mod-report-form.active {
@@ -456,7 +455,6 @@
     .mod-report-form h2 {
       margin: 0 0 20px;
       color: white;
-      font-size: 16px;
     }
 
     .mod-report-form .form-group {
@@ -467,7 +465,6 @@
       display: block;
       margin-bottom: 5px;
       color: #ddd;
-      font-size: 12px;
     }
 
     .mod-report-form input[type="text"],
@@ -479,8 +476,6 @@
       border-radius: 4px;
       background: #333;
       color: white;
-      font-family: monospace;
-      font-size: 12px;
     }
 
     .mod-report-form .buttons {
@@ -550,20 +545,6 @@
 
     .mod-report-form .readonly-input:focus {
       outline: 1px solid #444;
-    }
-
-    .mod-report-form textarea {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #444;
-      border-radius: 4px;
-      background: #333;
-      color: white;
-      font-family: monospace;
-      font-size: 12px;
-      min-height: 80px;
-      resize: vertical;
-      white-space: pre;
     }
   `;
 
@@ -1939,23 +1920,24 @@
     const reason = document.querySelector("#modReason").value;
     const alternative = document.querySelector("#modAlternative").value;
 
+    // Get the mod title from the page and strip emojis
     const modTitle = stripEmojis(
       document.querySelector("#pagetitle h1")?.textContent.trim() ||
         "Unknown Mod"
     );
 
-    // Create BBCode formatted message without quotes
+    // Create BBCode formatted message
     const bbCodeMessage = `[b]Mod Report:[/b] [url=https://www.nexusmods.com/${gameShortname}/mods/${modId}]${modTitle}[/url]
 
 [code]
-Game Shortname: ${gameShortname}
-Mod ID: ${modId}
-Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
-      alternative ? `\nAlternative: ${alternative}` : ""
+Game Shortname: "${gameShortname}"
+Mod ID: "${modId}"
+Status: "${status}"${reason ? `\nReason: "${reason}"` : ""}${
+      alternative ? `\nAlternative: "${alternative}"` : ""
     }
 [/code]`;
 
-    // Create JSON data without quotes in values
+    // Also create JSON data for database
     let jsonData = {
       "Mod Statuses": {
         [gameShortname]: {
