@@ -19,7 +19,7 @@
     },
     "Bug Ignorer": {
       "label": "Ignores bugs. Will deny they exist and not fix them",
-      "authors": ["Arthmoor", "Eralyne", "Xilandro", "Vessnelle"],
+      "authors": ["Arthmoor", "Eralyne", "Xilandro", "Vessnelle", "5ilentNote"],
       "icon": "https://f.rpghq.org/H8CVupxrNCt3.png"
     },
     "Paywaller": {
