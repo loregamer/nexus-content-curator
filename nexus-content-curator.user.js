@@ -1774,16 +1774,28 @@
     const pageTitle = document.querySelector("#pagetitle h1");
     if (!pageTitle) return;
 
-    // Remove any existing warning icons
+    // Remove any existing warning icons and alternative buttons
     const existingIcons = pageTitle.querySelector(".title-warning-icons");
     if (existingIcons) existingIcons.remove();
+    const existingAltButton = pageTitle.querySelector(
+      ".title-alternative-button"
+    );
+    if (existingAltButton) existingAltButton.remove();
 
     // Create container for icons
     const iconsContainer = document.createElement("span");
     iconsContainer.className = "title-warning-icons";
 
+    // Track if we have an alternative URL to show
+    let alternativeUrl = null;
+
     warnings.forEach((warning) => {
       if (!warning || !warning.type) return;
+
+      // Store alternative URL if present
+      if (warning.alternative) {
+        alternativeUrl = warning.alternative;
+      }
 
       const iconWrapper = document.createElement("span");
       iconWrapper.className = "title-warning-icon";
@@ -1837,6 +1849,43 @@
 
     // Insert icons before the title text
     pageTitle.insertBefore(iconsContainer, pageTitle.firstChild);
+
+    // Add alternative button if we have an alternative URL
+    if (alternativeUrl) {
+      const altButton = document.createElement("a");
+      altButton.href = alternativeUrl;
+      altButton.className = "title-alternative-button";
+      altButton.target = "_blank";
+      altButton.rel = "noopener noreferrer";
+      altButton.textContent = "View Alternative";
+      altButton.style.cssText = `
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        margin-left: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.2s;
+        vertical-align: middle;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      `;
+
+      // Add hover effect
+      altButton.addEventListener("mouseenter", () => {
+        altButton.style.background = "rgba(255, 255, 255, 0.2)";
+        altButton.style.transform = "translateY(-1px)";
+      });
+
+      altButton.addEventListener("mouseleave", () => {
+        altButton.style.background = "rgba(255, 255, 255, 0.1)";
+        altButton.style.transform = "translateY(0)";
+      });
+
+      pageTitle.appendChild(altButton);
+    }
   }
 
   // Modify addAllWarnings function
