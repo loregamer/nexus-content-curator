@@ -624,11 +624,7 @@
       ],
       "BROKEN": [
         {
-          "pattern": "Pride Flag",
-          "reason": "Your PC will EXPLODE after you download this and you will DIE!"
-        },
-        {
-          "pattern": "Pride flag",
+          "pattern": "Pride",
           "reason": "Your PC will EXPLODE after you download this and you will DIE!"
         }
       ]
