@@ -399,19 +399,51 @@ class StatusUpdaterGUI(QMainWindow):
             QMessageBox.warning(self, "Warning", "Please enter author reports to parse.")
             return
         
-        # Split by blank lines to get individual reports
-        raw_reports = []
-        current_report = ""
+        # Debug print
+        print("Parsing author reports:")
+        print(f"Raw input: {repr(bulk_text)}")
         
-        for line in bulk_text.split("\n"):
-            if line.strip():
-                current_report += line + "\n"
-            elif current_report:
-                raw_reports.append(current_report.strip())
-                current_report = ""
+        # Split by double blank lines to get individual reports
+        # This allows for a single blank line within a report
+        raw_reports = []
+        lines = bulk_text.split("\n")
+        current_report = []
+        blank_line_count = 0
+        
+        for line in lines:
+            if not line.strip():
+                blank_line_count += 1
+                if blank_line_count >= 2:  # Two or more consecutive blank lines separate reports
+                    if current_report:
+                        raw_reports.append("\n".join(current_report))
+                        current_report = []
+                    blank_line_count = 0
+                else:
+                    current_report.append(line)  # Keep single blank lines within a report
+            else:
+                blank_line_count = 0
+                current_report.append(line)
         
         if current_report:
-            raw_reports.append(current_report.strip())
+            raw_reports.append("\n".join(current_report))
+        
+        # If no reports were found using double blank lines, try the original method
+        if not raw_reports:
+            # Original parsing logic as fallback
+            raw_reports = []
+            current_report = ""
+            
+            for line in bulk_text.split("\n"):
+                if line.strip():
+                    current_report += line + "\n"
+                elif current_report:
+                    raw_reports.append(current_report.strip())
+                    current_report = ""
+            
+            if current_report:
+                raw_reports.append(current_report.strip())
+        
+        print(f"Raw reports: {raw_reports}")
         
         self.parsed_author_reports = []
         preview_text = ""
@@ -420,35 +452,54 @@ class StatusUpdaterGUI(QMainWindow):
             lines = raw_report.split("\n")
             report = {"labels": {}}
             current_label = None
+            username = None
+            label_list = None
+            
+            print(f"Processing report: {raw_report}")
             
             for i, line in enumerate(lines):
+                print(f"Line {i}: {repr(line)}")
                 if ":" in line and not line.startswith("  "):
                     key, value = line.split(":", 1)
                     key = key.strip()
                     value = value.strip()
+                    print(f"Found key-value: {key} = {value}")
                     
                     if key == "Username":
                         report["username"] = value
+                        username = value
                     elif key == "Labels":
-                        report["label_list"] = [label.strip() for label in value.split(",")]
+                        labels = [label.strip() for label in value.split(",")]
+                        report["label_list"] = labels
+                        label_list = labels
+                        print(f"Label list: {report['label_list']}")
                     else:
                         # This is a label section
                         current_label = key
                         report["labels"][current_label] = {"label": "", "referenceLink": None}
+                        print(f"Found label section: {current_label}")
                 
                 elif line.strip().startswith("Label:") and current_label:
                     _, value = line.split(":", 1)
                     report["labels"][current_label]["label"] = value.strip()
+                    print(f"Set label description for {current_label}: {value.strip()}")
                 
                 elif line.strip().startswith("Reference:") and current_label:
                     _, value = line.split(":", 1)
                     value = value.strip()
                     if value and value != "-":
                         report["labels"][current_label]["referenceLink"] = value
+                        print(f"Set reference link for {current_label}: {value}")
             
             # Validate report
+            print(f"Final report: {report}")
+            print(f"Has username: {'username' in report}")
+            print(f"Has label_list: {'label_list' in report}")
+            print(f"Has labels: {bool(report['labels'])}")
+            
             if "username" in report and "label_list" in report and report["labels"]:
                 self.parsed_author_reports.append(report)
+                print("Report is valid and added to parsed_author_reports")
                 
                 # Add to preview
                 preview_text += f"Username: {report['username']}\n"
@@ -466,6 +517,8 @@ class StatusUpdaterGUI(QMainWindow):
                     preview_text += "\n"
                 
                 preview_text += "-" * 40 + "\n\n"
+            else:
+                print("Report is invalid and will be skipped")
         
         if not self.parsed_author_reports:
             QMessageBox.warning(self, "Warning", "No valid author reports found. Please check the format.")
