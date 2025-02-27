@@ -578,11 +578,36 @@ class StatusUpdaterGUI(QMainWindow):
         except Exception as e:
             QMessageBox.warning(self, "Warning", f"Could not create backup: {str(e)}")
         
+        # Track skipped and processed mods
+        skipped_mods = []
+        processed_mods = []
+        
         # Update the JSON data
         for report in self.parsed_mod_reports:
             game = report["game"]
             mod_id = report["id"]
             status = report["status"]
+            
+            # Check if mod already exists in any status category
+            mod_exists = False
+            if game in self.mod_status_data["Mod Statuses"]:
+                for status_category, mod_ids in self.mod_status_data["Mod Statuses"][game].items():
+                    if mod_id in mod_ids:
+                        mod_exists = True
+                        skipped_mods.append(f"{game}/{mod_id} (Status: {status_category})")
+                        print(f"Skipping existing mod: {game}/{mod_id} (Status: {status_category})")
+                        break
+            
+            # Also check if mod exists in Mod Descriptors
+            if not mod_exists and game in self.mod_status_data["Mod Descriptors"] and mod_id in self.mod_status_data["Mod Descriptors"][game]:
+                mod_exists = True
+                skipped_mods.append(f"{game}/{mod_id}")
+                print(f"Skipping existing mod: {game}/{mod_id}")
+            
+            if mod_exists:
+                continue
+            
+            processed_mods.append(f"{game}/{mod_id}")
             
             # Ensure game exists in both sections
             if game not in self.mod_status_data["Mod Statuses"]:
@@ -614,7 +639,12 @@ class StatusUpdaterGUI(QMainWindow):
             with open(self.mod_status_path, 'w', encoding='utf-8') as f:
                 json.dump(self.mod_status_data, f, indent=2, default=lambda o: None if isinstance(o, str) and o.lower() == "null" else o)
             
-            QMessageBox.information(self, "Success", f"Successfully saved {len(self.parsed_mod_reports)} mod reports to {self.mod_status_path}")
+            # Prepare result message
+            result_message = f"Successfully saved {len(processed_mods)} mod reports to {self.mod_status_path}"
+            if skipped_mods:
+                result_message += f"\n\nSkipped {len(skipped_mods)} existing mods:\n- " + "\n- ".join(skipped_mods)
+            
+            QMessageBox.information(self, "Success", result_message)
             self.parsed_mod_reports = []
             self.mod_preview.clear()
             self.mod_bulk_input.clear()
@@ -638,10 +668,32 @@ class StatusUpdaterGUI(QMainWindow):
         except Exception as e:
             QMessageBox.warning(self, "Warning", f"Could not create backup: {str(e)}")
         
+        # Track skipped authors
+        skipped_authors = []
+        processed_authors = []
+        
         # Update the JSON data
         for report in self.parsed_author_reports:
             username = report["username"]
             print(f"Processing report for username: {username}")
+            
+            # Check if author already exists in any label
+            author_exists = False
+            for label_name, label_data in self.author_status_data.get("Labels", {}).items():
+                if "authors" in label_data and username in label_data["authors"]:
+                    author_exists = True
+                    break
+            
+            # Also check if author exists in Tooltips
+            if not author_exists and username in self.author_status_data.get("Tooltips", {}):
+                author_exists = True
+            
+            if author_exists:
+                print(f"Skipping existing author: {username}")
+                skipped_authors.append(username)
+                continue
+            
+            processed_authors.append(username)
             
             # Add author to each label
             for label_name in report["label_list"]:
@@ -677,7 +729,12 @@ class StatusUpdaterGUI(QMainWindow):
             with open(self.author_status_path, 'w', encoding='utf-8') as f:
                 json.dump(self.author_status_data, f, indent=2, default=lambda o: None if isinstance(o, str) and o.lower() == "null" else o)
             
-            QMessageBox.information(self, "Success", f"Successfully saved {len(self.parsed_author_reports)} author reports to {self.author_status_path}")
+            # Prepare result message
+            result_message = f"Successfully saved {len(processed_authors)} author reports to {self.author_status_path}"
+            if skipped_authors:
+                result_message += f"\n\nSkipped {len(skipped_authors)} existing authors:\n- " + "\n- ".join(skipped_authors)
+            
+            QMessageBox.information(self, "Success", result_message)
             self.parsed_author_reports = []
             self.author_preview.clear()
             self.author_bulk_input.clear()
