@@ -403,31 +403,49 @@ class StatusUpdaterGUI(QMainWindow):
         print("Parsing author reports:")
         print(f"Raw input: {repr(bulk_text)}")
         
-        # Split by double blank lines to get individual reports
-        # This allows for a single blank line within a report
+        # Split by separator lines (multiple dashes) to get individual reports
         raw_reports = []
-        lines = bulk_text.split("\n")
         current_report = []
-        blank_line_count = 0
         
+        lines = bulk_text.split("\n")
         for line in lines:
-            if not line.strip():
-                blank_line_count += 1
-                if blank_line_count >= 2:  # Two or more consecutive blank lines separate reports
-                    if current_report:
-                        raw_reports.append("\n".join(current_report))
-                        current_report = []
-                    blank_line_count = 0
-                else:
-                    current_report.append(line)  # Keep single blank lines within a report
+            # Check if this is a separator line (multiple dashes)
+            if line.strip() and all(c == '-' for c in line.strip()):
+                if current_report:
+                    raw_reports.append("\n".join(current_report))
+                    current_report = []
             else:
-                blank_line_count = 0
                 current_report.append(line)
         
+        # Add the last report if there is one
         if current_report:
             raw_reports.append("\n".join(current_report))
         
-        # If no reports were found using double blank lines, try the original method
+        # If no reports were found using separator lines, try the double blank line method
+        if not raw_reports:
+            # Split by double blank lines to get individual reports
+            raw_reports = []
+            current_report = []
+            blank_line_count = 0
+            
+            for line in lines:
+                if not line.strip():
+                    blank_line_count += 1
+                    if blank_line_count >= 2:  # Two or more consecutive blank lines separate reports
+                        if current_report:
+                            raw_reports.append("\n".join(current_report))
+                            current_report = []
+                        blank_line_count = 0
+                    else:
+                        current_report.append(line)  # Keep single blank lines within a report
+                else:
+                    blank_line_count = 0
+                    current_report.append(line)
+            
+            if current_report:
+                raw_reports.append("\n".join(current_report))
+        
+        # If still no reports were found, try the original method
         if not raw_reports:
             # Original parsing logic as fallback
             raw_reports = []
@@ -443,7 +461,7 @@ class StatusUpdaterGUI(QMainWindow):
             if current_report:
                 raw_reports.append(current_report.strip())
         
-        print(f"Raw reports: {raw_reports}")
+        print(f"Found {len(raw_reports)} raw reports")
         
         self.parsed_author_reports = []
         preview_text = ""
@@ -458,12 +476,18 @@ class StatusUpdaterGUI(QMainWindow):
             print(f"Processing report: {raw_report}")
             
             for i, line in enumerate(lines):
+                line_text = line.strip()
+                if not line_text:
+                    continue
+                    
                 print(f"Line {i}: {repr(line)}")
-                if ":" in line and not line.startswith("  "):
-                    key, value = line.split(":", 1)
+                
+                # Check if this is a main key-value line (not indented)
+                if ":" in line_text and not line.startswith(" ") and not line.startswith("\t"):
+                    key, value = line_text.split(":", 1)
                     key = key.strip()
                     value = value.strip()
-                    print(f"Found key-value: {key} = {value}")
+                    print(f"Found main key-value: {key} = {value}")
                     
                     if key == "Username":
                         report["username"] = value
@@ -476,26 +500,30 @@ class StatusUpdaterGUI(QMainWindow):
                     else:
                         # This is a label section
                         current_label = key
-                        report["labels"][current_label] = {"label": "", "referenceLink": None}
+                        report["labels"][current_label] = {"label": None, "referenceLink": None}
                         print(f"Found label section: {current_label}")
                 
-                elif line.strip().startswith("Label:") and current_label:
-                    _, value = line.split(":", 1)
-                    value = value.strip()
-                    if value and value.lower() != "null":
-                        report["labels"][current_label]["label"] = value
-                    else:
-                        report["labels"][current_label]["label"] = None
-                    print(f"Set label description for {current_label}: {value}")
-                
-                elif line.strip().startswith("Reference:") and current_label:
-                    _, value = line.split(":", 1)
-                    value = value.strip()
-                    if value and value != "-" and value.lower() != "null":
-                        report["labels"][current_label]["referenceLink"] = value
-                    else:
-                        report["labels"][current_label]["referenceLink"] = None
-                    print(f"Set reference link for {current_label}: {value}")
+                # Check if this is an indented property line
+                elif line.startswith(" ") or line.startswith("\t"):
+                    if ":" in line_text and current_label:
+                        prop_key, prop_value = line_text.split(":", 1)
+                        prop_key = prop_key.strip()
+                        prop_value = prop_value.strip()
+                        print(f"Found indented property: {prop_key} = {prop_value}")
+                        
+                        if prop_key == "Label":
+                            if prop_value and prop_value.lower() != "null":
+                                report["labels"][current_label]["label"] = prop_value
+                            else:
+                                report["labels"][current_label]["label"] = None
+                            print(f"Set label description for {current_label}: {prop_value}")
+                        
+                        elif prop_key == "Reference":
+                            if prop_value and prop_value != "-" and prop_value.lower() != "null":
+                                report["labels"][current_label]["referenceLink"] = prop_value
+                            else:
+                                report["labels"][current_label]["referenceLink"] = None
+                            print(f"Set reference link for {current_label}: {prop_value}")
             
             # Validate report
             print(f"Final report: {report}")
@@ -522,7 +550,7 @@ class StatusUpdaterGUI(QMainWindow):
                     
                     preview_text += "\n"
                 
-                preview_text += ""
+                preview_text += "----------------------------------------\n\n"
             else:
                 print("Report is invalid and will be skipped")
         
@@ -613,22 +641,32 @@ class StatusUpdaterGUI(QMainWindow):
         # Update the JSON data
         for report in self.parsed_author_reports:
             username = report["username"]
+            print(f"Processing report for username: {username}")
             
             # Add author to each label
             for label_name in report["label_list"]:
+                print(f"Adding {username} to label: {label_name}")
+                
                 if label_name in self.author_status_data["Labels"]:
                     if "authors" not in self.author_status_data["Labels"][label_name]:
                         self.author_status_data["Labels"][label_name]["authors"] = []
                     
                     if username not in self.author_status_data["Labels"][label_name]["authors"]:
                         self.author_status_data["Labels"][label_name]["authors"].append(username)
+                        print(f"Added {username} to {label_name} authors list")
+                else:
+                    print(f"Warning: Label {label_name} not found in author_status_data")
             
             # Add tooltip details
             if report["labels"]:
+                if "Tooltips" not in self.author_status_data:
+                    self.author_status_data["Tooltips"] = {}
+                    
                 if username not in self.author_status_data["Tooltips"]:
                     self.author_status_data["Tooltips"][username] = {}
                 
                 for label_name, details in report["labels"].items():
+                    print(f"Adding tooltip for {username} under {label_name}")
                     self.author_status_data["Tooltips"][username][label_name] = {
                         "label": details["label"],
                         "referenceLink": details["referenceLink"]
