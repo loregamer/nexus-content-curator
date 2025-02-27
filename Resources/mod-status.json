@@ -110,7 +110,8 @@
         "7757",
         "11708",
         "15024",
-        "4096"
+        "4096",
+        "8298"
       ]
     },
     "newvegas": {
@@ -501,6 +502,9 @@
       "1515": {
         "reason": "Outdated minthara recruitment mod. No longer needs to be used since Minthara can be recruited without killing the tieflings (Larian made this workaround in later patches).",
         "alternative": null
+      },
+      "8298": {
+        "reason": "Allows male characters to wear bras. Pronounce user as well."
       }
     },
     "newvegas": {
