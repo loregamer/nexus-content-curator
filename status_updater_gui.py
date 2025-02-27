@@ -616,8 +616,6 @@ class StatusUpdaterGUI(QMainWindow):
                     
                     if username not in self.author_status_data["Labels"][label_name]["authors"]:
                         self.author_status_data["Labels"][label_name]["authors"].append(username)
-                        # Try to maintain alphabetical order
-                        self.author_status_data["Labels"][label_name]["authors"].sort()
             
             # Add tooltip details
             if report["labels"]:
