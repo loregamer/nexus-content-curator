@@ -626,7 +626,9 @@ class StatusUpdaterGUI(QMainWindow):
         # Save the updated data
         try:
             with open(self.mod_status_path, 'w', encoding='utf-8') as f:
-                json.dump(self.mod_status_data, f, indent=2, default=lambda o: None if isinstance(o, str) and o.lower() == "null" else o)
+                # Use custom encoder to handle None values properly
+                json.dump(self.mod_status_data, f, indent=2, ensure_ascii=False, 
+                         default=lambda o: None if o is None or (isinstance(o, str) and (o.lower() == "null" or o == "\u3164")) else o)
             
             # Prepare result message
             result_message = f"Successfully saved {len(processed_mods)} mod reports to {self.mod_status_path}"
@@ -697,15 +699,27 @@ class StatusUpdaterGUI(QMainWindow):
                 
                 for label_name, details in report["labels"].items():
                     print(f"Adding tooltip for {username} under {label_name}")
+                    # Clean up any potential invisible characters
+                    label_text = details["label"]
+                    reference_link = details["referenceLink"]
+                    
+                    # Remove the invisible character if present
+                    if isinstance(label_text, str):
+                        label_text = label_text.replace("\u3164", "")
+                    if isinstance(reference_link, str):
+                        reference_link = reference_link.replace("\u3164", "")
+                    
                     self.author_status_data["Tooltips"][username][label_name] = {
-                        "label": details["label"],
-                        "referenceLink": details["referenceLink"]
+                        "label": label_text,
+                        "referenceLink": reference_link
                     }
         
         # Save the updated data
         try:
             with open(self.author_status_path, 'w', encoding='utf-8') as f:
-                json.dump(self.author_status_data, f, indent=2, default=lambda o: None if isinstance(o, str) and o.lower() == "null" else o)
+                # Use custom encoder to handle None values properly and prevent invisible characters
+                json.dump(self.author_status_data, f, indent=2, ensure_ascii=False,
+                         default=lambda o: None if o is None or (isinstance(o, str) and (o.lower() == "null" or o == "\u3164")) else o)
             
             # Prepare result message
             result_message = f"Successfully saved {len(processed_authors)} author reports to {self.author_status_path}"
