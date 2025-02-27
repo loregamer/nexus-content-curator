@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.6.2
+// @version      1.7
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1071,8 +1071,10 @@
             // Check if there's a custom tooltip for this author and label
             if (authorStatus.Tooltips?.[authorName]?.[labelKey]) {
               const tooltip = authorStatus.Tooltips[authorName][labelKey];
-              label.tooltip = tooltip.label;
-              label.url = tooltip.referenceLink;
+              // Use default label if tooltip.label is null
+              label.tooltip = tooltip.label === null ? labelData.label : tooltip.label;
+              // Only set URL if referenceLink is not null
+              label.url = tooltip.referenceLink === null ? null : tooltip.referenceLink;
             } else {
               label.tooltip = labelData.label;
             }
@@ -2915,8 +2917,8 @@ ${l.type}:
           const showTooltip = (e) => {
             indicator.style.transform = "scale(1.2)";
             tooltip.innerHTML = formatTooltipText(
-              tooltipText,
-              referenceLink ? "Click to learn more" : ""
+              tooltipText === null ? labelData.label : tooltipText,
+              referenceLink && referenceLink !== null ? "Click to learn more" : ""
             );
             tooltip.style.display = "block";
             updateTooltipPosition(e);
@@ -2931,7 +2933,7 @@ ${l.type}:
           indicator.addEventListener("mousemove", updateTooltipPosition);
           indicator.addEventListener("mouseout", hideTooltip);
 
-          if (referenceLink) {
+          if (referenceLink && referenceLink !== null) {
             const link = document.createElement("a");
             link.href = referenceLink;
             link.target = "_blank";
