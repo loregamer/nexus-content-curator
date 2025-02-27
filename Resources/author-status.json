@@ -17,7 +17,28 @@
         "PalateSwap",
         "Sankese",
         "Trashly",
-        "SnowisQueer"
+        "SnowisQueer",
+        "nuupon",
+        "JinxxShadows",
+        "ErikaCAT",
+        "NoraCharles",
+        "plantsandprose",
+        "xiddav",
+        "BogWyytch",
+        "sapphicsaph",
+        "DGlaky",
+        "Mycenia",
+        "martincudek",
+        "katriex",
+        "Amchro",
+        "pokegirlgamer22",
+        "jltaylor1",
+        "EchosBento",
+        "junimods",
+        "circecil",
+        "spotteddotted",
+        "Queina1",
+        "eorrl"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -40,7 +61,11 @@
         "JakeAlaimo",
         "Sankese",
         "Trashly",
-        "SnowisQueer"
+        "SnowisQueer",
+        "EnbyFelix",
+        "zaoux",
+        "Symtrkl",
+        "VinillaBean"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -210,6 +235,156 @@
       "Incident": {
         "label": "Bent the knee to the TROONS.\n\n Made a mod to add a silly flag replacer, but was too scared to replace the Pride flags.",
         "referenceLink": "https://www.nexusmods.com/marvelsspidermanremastered/mods/223"
+      }
+    },
+    "nuupon": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/22921"
+      }
+    },
+    "JinxxShadows": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/30221"
+      }
+    },
+    "ErikaCAT": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/27300"
+      }
+    },
+    "NoraCharles": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/25049"
+      }
+    },
+    "plantsandprose": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/24992"
+      }
+    },
+    "xiddav": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/9792"
+      }
+    },
+    "BogWyytch": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/24793"
+      }
+    },
+    "sapphicsaph": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/20099"
+      }
+    },
+    "DGlaky": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/24529"
+      }
+    },
+    "EnbyFelix": {
+      "Troon": {
+        "label": "Uses fucking Neo-Pronouns (Xe) in bio.",
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/16897"
+      }
+    },
+    "zaoux": {
+      "Troon": {
+        "label": "Check Bio. Confirmed Troon.",
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/23959"
+      }
+    },
+    "Symtrkl": {
+      "Troon": {
+        "label": "Confirmed Troon in bio. Is \"Transfeminine\" - WTF.",
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/8001"
+      }
+    },
+    "Mycenia": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/4148"
+      }
+    },
+    "martincudek": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/20259"
+      }
+    },
+    "VinillaBean": {
+      "Troon": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/16863"
+      }
+    },
+    "katriex": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/20045"
+      }
+    },
+    "Amchro": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/9575"
+      }
+    },
+    "pokegirlgamer22": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/17068"
+      }
+    },
+    "jltaylor1": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/15944"
+      }
+    },
+    "EchosBento": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/16824"
+      }
+    },
+    "junimods": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/14764"
+      }
+    },
+    "circecil": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/12987"
+      }
+    },
+    "spotteddotted": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/13539"
+      }
+    },
+    "Queina1": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/13017"
+      }
+    },
+    "eorrl": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/8276"
       }
     }
   }
