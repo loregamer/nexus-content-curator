@@ -383,7 +383,7 @@ class StatusUpdaterGUI(QMainWindow):
                     else:
                         preview_text += "Alternative: None\n"
                 
-                preview_text += "\n" + "-" * 40 + "\n\n"
+                preview_text += "\n"
         
         if not self.parsed_mod_reports:
             QMessageBox.warning(self, "Warning", "No valid mod reports found. Please check the format.")
@@ -516,7 +516,7 @@ class StatusUpdaterGUI(QMainWindow):
                     
                     preview_text += "\n"
                 
-                preview_text += "-" * 40 + "\n\n"
+                preview_text += ""
             else:
                 print("Report is invalid and will be skipped")
         
