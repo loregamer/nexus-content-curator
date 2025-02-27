@@ -360,7 +360,7 @@ class StatusUpdaterGUI(QMainWindow):
                     elif key == "Reason":
                         report["reason"] = value
                     elif key == "Alternative":
-                        if value and value != "-":
+                        if value and value != "-" and value.lower() != "null":
                             report["alternative"] = value
                         else:
                             report["alternative"] = None
@@ -481,15 +481,21 @@ class StatusUpdaterGUI(QMainWindow):
                 
                 elif line.strip().startswith("Label:") and current_label:
                     _, value = line.split(":", 1)
-                    report["labels"][current_label]["label"] = value.strip()
-                    print(f"Set label description for {current_label}: {value.strip()}")
+                    value = value.strip()
+                    if value and value.lower() != "null":
+                        report["labels"][current_label]["label"] = value
+                    else:
+                        report["labels"][current_label]["label"] = None
+                    print(f"Set label description for {current_label}: {value}")
                 
                 elif line.strip().startswith("Reference:") and current_label:
                     _, value = line.split(":", 1)
                     value = value.strip()
-                    if value and value != "-":
+                    if value and value != "-" and value.lower() != "null":
                         report["labels"][current_label]["referenceLink"] = value
-                        print(f"Set reference link for {current_label}: {value}")
+                    else:
+                        report["labels"][current_label]["referenceLink"] = None
+                    print(f"Set reference link for {current_label}: {value}")
             
             # Validate report
             print(f"Final report: {report}")
@@ -578,7 +584,7 @@ class StatusUpdaterGUI(QMainWindow):
         # Save the updated data
         try:
             with open(self.mod_status_path, 'w', encoding='utf-8') as f:
-                json.dump(self.mod_status_data, f, indent=2)
+                json.dump(self.mod_status_data, f, indent=2, default=lambda o: None if isinstance(o, str) and o.lower() == "null" else o)
             
             QMessageBox.information(self, "Success", f"Successfully saved {len(self.parsed_mod_reports)} mod reports to {self.mod_status_path}")
             self.parsed_mod_reports = []
@@ -631,7 +637,7 @@ class StatusUpdaterGUI(QMainWindow):
         # Save the updated data
         try:
             with open(self.author_status_path, 'w', encoding='utf-8') as f:
-                json.dump(self.author_status_data, f, indent=2)
+                json.dump(self.author_status_data, f, indent=2, default=lambda o: None if isinstance(o, str) and o.lower() == "null" else o)
             
             QMessageBox.information(self, "Success", f"Successfully saved {len(self.parsed_author_reports)} author reports to {self.author_status_path}")
             self.parsed_author_reports = []
