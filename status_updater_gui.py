@@ -646,17 +646,6 @@ class StatusUpdaterGUI(QMainWindow):
             QMessageBox.warning(self, "Warning", "No author reports to save. Please parse reports first.")
             return
         
-        # Make a backup of the original file
-        try:
-            with open(self.author_status_path, 'r', encoding='utf-8') as f:
-                original_data = json.load(f)
-                
-            backup_path = self.author_status_path + ".bak"
-            with open(backup_path, 'w', encoding='utf-8') as f:
-                json.dump(original_data, f, indent=2)
-        except Exception as e:
-            QMessageBox.warning(self, "Warning", f"Could not create backup: {str(e)}")
-        
         # Track skipped authors
         skipped_authors = []
         processed_authors = []
