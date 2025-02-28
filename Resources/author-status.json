@@ -51,7 +51,22 @@
         "surodmg",
         "yveslight",
         "HeartsWires",
-        "AstralSprout"
+        "AstralSprout",
+        "NukaNocturne",
+        "radbeetle",
+        "TheBottomhoodofSteel",
+        "MarMobius",
+        "PreeminentLexa",
+        "NexDev",
+        "NekoRabu",
+        "Assathoth",
+        "hardeepgill247",
+        "Nimrout512",
+        "OpheliaNeoma",
+        "Bennzoor",
+        "mojavesuave",
+        "OrgasmicSneeze",
+        "vd1942"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -493,8 +508,98 @@
     },
     "AstralSprout": {
       "Pride Flag Modder": {
-        "label": "Please be gentle with this Queer \ud83c\udf31 Disabled \ud83c\udf31 Autistic person.",
+        "label": "Please be gentle with this Queer 🌱 Disabled 🌱 Autistic person.",
         "referenceLink": null
+      }
+    },
+    "NukaNocturne": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/87226"
+      }
+    },
+    "radbeetle": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/39671"
+      }
+    },
+    "TheBottomhoodofSteel": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/72534"
+      }
+    },
+    "MarMobius": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/72348"
+      }
+    },
+    "PreeminentLexa": {
+      "Pride Flag Modder": {
+        "label": "Fucking Canadian",
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/72307"
+      }
+    },
+    "NexDev": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/71987"
+      }
+    },
+    "NekoRabu": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/71986"
+      }
+    },
+    "Assathoth": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/61604"
+      }
+    },
+    "hardeepgill247": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/53179"
+      }
+    },
+    "Nimrout512": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/47682"
+      }
+    },
+    "OpheliaNeoma": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/32136"
+      }
+    },
+    "Bennzoor": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout4/mods/24922"
+      }
+    },
+    "mojavesuave": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/83773"
+      }
+    },
+    "OrgasmicSneeze": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/88314"
+      }
+    },
+    "vd1942": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/81780"
       }
     }
   }
