@@ -210,7 +210,8 @@
         "365",
         "276",
         "173",
-        "2272"
+        "2272",
+        "32161"
       ],
       "ABANDONED": [],
       "CAUTION": [
@@ -728,6 +729,10 @@
       "12604": {
         "reason": "Hasn't been updated in a long time.\n\nMake sure to download bug fixes, like \"SkyUI SE - Flashing Savegames Fix\"",
         "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/20406"
+      },
+      "32161": {
+        "reason": "This is not an \"Add-On\", but a brutal character assassination and horrible reimagining of Serana. New voice actress also isn't great.\n\nFor an alternative, check \"Serana Expanded - Dialogue Additions\"",
+        "alternative": "https://rpghq.org/forums/viewtopic.php?t=2019-serana-expanded-dialogue-additions-1-1-skyrim-special-edition"
       }
     },
     "site": {
