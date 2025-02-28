@@ -66,7 +66,14 @@
         "Bennzoor",
         "mojavesuave",
         "OrgasmicSneeze",
-        "vd1942"
+        "vd1942",
+        "AltoidAtronach",
+        "kylemarshiku",
+        "FinalFrog",
+        "Deleted89738208User",
+        "Scouter408",
+        "charmingfellow",
+        "elleoellie"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -95,7 +102,11 @@
         "Symtrkl",
         "VinillaBean",
         "acearohippo",
-        "yishaqeni"
+        "yishaqeni",
+        "WitchWeed",
+        "Tathrin",
+        "Sorckoty",
+        "Sylvie1025"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -600,6 +611,72 @@
       "Pride Flag Modder": {
         "label": null,
         "referenceLink": "https://www.nexusmods.com/newvegas/mods/81780"
+      }
+    },
+    "AltoidAtronach": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/81377"
+      }
+    },
+    "kylemarshiku": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/77030"
+      }
+    },
+    "FinalFrog": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/67215"
+      }
+    },
+    "Deleted89738208User": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/74918"
+      }
+    },
+    "Scouter408": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/newvegas/mods/72334"
+      }
+    },
+    "charmingfellow": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/skyrimspecialedition/mods/138077"
+      }
+    },
+    "WitchWeed": {
+      "Troon": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stardewvalley/mods/25324"
+      }
+    },
+    "elleoellie": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/skyrimspecialedition/mods/61627"
+      }
+    },
+    "Tathrin": {
+      "Troon": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/skyrimspecialedition/mods/41145"
+      }
+    },
+    "Sorckoty": {
+      "Troon": {
+        "label": null,
+        "referenceLink": "https://next.nexusmods.com/profile/Sorckoty?gameId=130"
+      }
+    },
+    "Sylvie1025": {
+      "Troon": {
+        "label": null,
+        "referenceLink": "https://next.nexusmods.com/profile/Sylvie1025?gameId=130"
       }
     }
   }
