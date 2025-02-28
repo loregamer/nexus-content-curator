@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.8
+// @version      1.8.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -69,19 +69,7 @@
   function fetchAndStoreJSON(url, storageKey, callback) {
     console.log(`[Debug] Fetching JSON from ${url}`);
 
-    // Check if we have valid cached data
-    if (isCacheValid()) {
-      const cachedData = getStoredData(storageKey);
-      if (cachedData) {
-        console.log(`[Debug] Using cached data for ${storageKey}`);
-        if (callback && typeof callback === "function") {
-          callback(cachedData);
-        }
-        return;
-      }
-    }
-
-    // Fetch fresh data
+    // Fetch fresh data first
     GM_xmlhttpRequest({
       method: "GET",
       url: url,
@@ -95,20 +83,20 @@
           }
         } catch (error) {
           console.error(`[Debug] Error parsing JSON from ${url}:`, error);
-          // Try to use cached data as fallback even if it's expired
+          // Try to use cached data as fallback
           const cachedData = getStoredData(storageKey);
           if (cachedData && callback && typeof callback === "function") {
-            console.log(`[Debug] Using expired cached data as fallback for ${storageKey}`);
+            console.log(`[Debug] Using cached data as fallback for ${storageKey}`);
             callback(cachedData);
           }
         }
       },
       onerror: function (error) {
         console.error(`[Debug] Error fetching JSON from ${url}:`, error);
-        // Try to use cached data as fallback even if it's expired
+        // Try to use cached data as fallback
         const cachedData = getStoredData(storageKey);
         if (cachedData && callback && typeof callback === "function") {
-          console.log(`[Debug] Using expired cached data as fallback for ${storageKey}`);
+          console.log(`[Debug] Using cached data as fallback for ${storageKey}`);
           callback(cachedData);
         }
       },
