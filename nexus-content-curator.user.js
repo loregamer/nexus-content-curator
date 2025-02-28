@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.7.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -105,7 +105,7 @@
     .tiles .author {
       overflow: visible !important;
     }
-      
+
     .mod-warning-banner {
       position: absolute;
       top: 0;
