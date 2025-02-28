@@ -536,7 +536,7 @@
       "7061": {},
       "4728": {},
       "1529": {
-        "reason": "Look at the bug count."
+        "reason": "Look at the bug count.\n\nAuthor needs to redo the mod's implementation with a better solution, especially now that the toolkit is unlocked."
       }
     },
     "newvegas": {
