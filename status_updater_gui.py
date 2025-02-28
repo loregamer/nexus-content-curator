@@ -327,13 +327,52 @@ class StatusUpdaterGUI(QMainWindow):
             QMessageBox.warning(self, "Warning", "Please enter mod reports to parse.")
             return
         
-        # Split by blank lines
-        reports = []
-        current_report = {}
-        current_field = None
+        # Split by separator lines (multiple dashes) to get individual reports
+        raw_reports = []
+        current_report = []
         
-        # Split the input into reports (separated by blank lines)
-        raw_reports = bulk_text.split("\n\n")
+        lines = bulk_text.split("\n")
+        for line in lines:
+            # Check if this is a separator line (multiple dashes)
+            if line.strip() and all(c == '-' for c in line.strip()):
+                if current_report:
+                    raw_reports.append("\n".join(current_report))
+                    current_report = []
+            else:
+                current_report.append(line)
+        
+        # Add the last report if there is one
+        if current_report:
+            raw_reports.append("\n".join(current_report))
+        
+        # If no reports were found using separator lines, try the double blank line method
+        if not raw_reports:
+            # Split by double blank lines to get individual reports
+            raw_reports = []
+            current_report = []
+            blank_line_count = 0
+            
+            for line in lines:
+                if not line.strip():
+                    blank_line_count += 1
+                    if blank_line_count >= 2:  # Two or more consecutive blank lines separate reports
+                        if current_report:
+                            raw_reports.append("\n".join(current_report))
+                            current_report = []
+                        blank_line_count = 0
+                    else:
+                        current_report.append(line)  # Keep single blank lines within a report
+                else:
+                    blank_line_count = 0
+                    current_report.append(line)
+            
+            if current_report:
+                raw_reports.append("\n".join(current_report))
+        
+        # If still no reports were found, try the original method (split by \n\n)
+        if not raw_reports:
+            raw_reports = bulk_text.split("\n\n")
+            raw_reports = [report for report in raw_reports if report.strip()]
         
         self.parsed_mod_reports = []
         preview_text = ""
@@ -344,26 +383,55 @@ class StatusUpdaterGUI(QMainWindow):
                 
             lines = raw_report.strip().split("\n")
             report = {}
+            current_key = None
+            current_value = ""
             
             for line in lines:
-                if ":" in line:
-                    key, value = line.split(":", 1)
-                    key = key.strip()
-                    value = value.strip()
+                # Check if this is a new key-value pair
+                if ":" in line and not line.startswith(" ") and not line.startswith("\t"):
+                    # Save the previous key-value pair if there was one
+                    if current_key:
+                        if current_key == "Game Shortname":
+                            report["game"] = current_value
+                        elif current_key == "Mod ID":
+                            report["id"] = current_value
+                        elif current_key == "Status":
+                            report["status"] = current_value
+                        elif current_key == "Reason":
+                            report["reason"] = current_value
+                        elif current_key == "Alternative":
+                            if current_value and current_value != "-" and current_value.lower() != "null":
+                                report["alternative"] = current_value
+                            else:
+                                report["alternative"] = None
                     
-                    if key == "Game Shortname":
-                        report["game"] = value
-                    elif key == "Mod ID":
-                        report["id"] = value
-                    elif key == "Status":
-                        report["status"] = value
-                    elif key == "Reason":
-                        report["reason"] = value
-                    elif key == "Alternative":
-                        if value and value != "-" and value.lower() != "null":
-                            report["alternative"] = value
+                    # Start a new key-value pair
+                    key, value = line.split(":", 1)
+                    current_key = key.strip()
+                    current_value = value.strip()
+                else:
+                    # This is a continuation of the previous value
+                    if current_key:
+                        if current_value:
+                            current_value += "\n" + line
                         else:
-                            report["alternative"] = None
+                            current_value = line.strip()
+            
+            # Save the last key-value pair
+            if current_key:
+                if current_key == "Game Shortname":
+                    report["game"] = current_value
+                elif current_key == "Mod ID":
+                    report["id"] = current_value
+                elif current_key == "Status":
+                    report["status"] = current_value
+                elif current_key == "Reason":
+                    report["reason"] = current_value
+                elif current_key == "Alternative":
+                    if current_value and current_value != "-" and current_value.lower() != "null":
+                        report["alternative"] = current_value
+                    else:
+                        report["alternative"] = None
             
             # Validate report
             if "game" in report and "id" in report and "status" in report:
