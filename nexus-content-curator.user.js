@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.8.1
+// @version      1.9
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -2624,38 +2624,54 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
   // Function to create author report form HTML
   function createAuthorReportFormHTML() {
     // Get the labels from author-status.json
-    const labels = {
-      "Pride Flag Modder": {
-        icon: "https://f.rpghq.org/0BfQ7ahUIA7b.png",
-        defaultLabel: "Pride Flag Modder",
-      },
-      Troon: {
-        icon: "https://f.rpghq.org/b1PMDDCK0hrc.png",
-        defaultLabel: "Troon",
-      },
-      "Flight Risk": {
-        icon: "https://f.rpghq.org/nD9rLv9rzAZY.png",
-        defaultLabel:
-          "Flight risk! (Will throw fit and leave if criticized too much)",
-      },
-      "Bug Ignorer": {
-        icon: "https://f.rpghq.org/H8CVupxrNCt3.png",
-        defaultLabel: "Ignores bugs. Will deny they exist and not fix them",
-      },
-      Paywaller: {
-        icon: "https://f.rpghq.org/ehg06weLrysL.png",
-        defaultLabel: "Paywaller",
-      },
-      Copystriker: {
-        icon: "https://f.rpghq.org/JxQfA8F2nAnr.png",
-        defaultLabel:
-          "Viciously gets patches and reuploads of mods taken down. Retardedly believes they own their mod legally.",
-      },
-      Incident: {
-        icon: "https://f.rpghq.org/xjhpiEPNoOV6.png",
-        defaultLabel: "Incident:",
-      },
-    };
+    const authorStatusData = getStoredData(STORAGE_KEYS.AUTHOR_STATUS);
+    
+    let labels = {};
+    
+    // If we have author status data, use the Labels from it
+    if (authorStatusData && authorStatusData.Labels) {
+      // Convert the Labels from author-status.json to the format expected by the form
+      Object.entries(authorStatusData.Labels).forEach(([name, labelData]) => {
+        labels[name] = {
+          icon: labelData.icon,
+          defaultLabel: labelData.label
+        };
+      });
+    } else {
+      // Fallback to hardcoded labels if author status data is not available
+      labels = {
+        "Pride Flag Modder": {
+          icon: "https://f.rpghq.org/0BfQ7ahUIA7b.png",
+          defaultLabel: "Pride Flag Modder",
+        },
+        Troon: {
+          icon: "https://f.rpghq.org/b1PMDDCK0hrc.png",
+          defaultLabel: "Troon",
+        },
+        "Flight Risk": {
+          icon: "https://f.rpghq.org/nD9rLv9rzAZY.png",
+          defaultLabel:
+            "Flight risk! (Will throw fit and leave if criticized too much)",
+        },
+        "Bug Ignorer": {
+          icon: "https://f.rpghq.org/H8CVupxrNCt3.png",
+          defaultLabel: "Ignores bugs. Will deny they exist and not fix them",
+        },
+        Paywaller: {
+          icon: "https://f.rpghq.org/ehg06weLrysL.png",
+          defaultLabel: "Paywaller",
+        },
+        Copystriker: {
+          icon: "https://f.rpghq.org/JxQfA8F2nAnr.png",
+          defaultLabel:
+            "Viciously gets patches and reuploads of mods taken down. Retardedly believes they own their mod legally.",
+        },
+        Incident: {
+          icon: "https://f.rpghq.org/xjhpiEPNoOV6.png",
+          defaultLabel: "Incident:",
+        },
+      };
+    }
 
     const labelRows = Object.entries(labels)
       .map(
