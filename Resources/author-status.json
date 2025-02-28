@@ -135,7 +135,8 @@
         "Vessnelle",
         "5ilentNote",
         "Raizans",
-        "Bububull"
+        "Bububull",
+        "vyrelis"
       ],
       "icon": "https://f.rpghq.org/H8CVupxrNCt3.png"
     },
@@ -153,7 +154,8 @@
         "Lyniara",
         "Bububull",
         "OneEyeAskew",
-        "Scouter408"
+        "Scouter408",
+        "PseudoKociara"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -772,6 +774,18 @@
       "Copystriker": {
         "label": "Guy who made \"Serana Dialogue Add-On\", a horrible reimagining of Serana.\n\nHe simps for the voice actress for the mod and does false takedown requests of patches that turn her voice back into Laura Bailey.",
         "referenceLink": "https://rpghq.org/forums/viewtopic.php?p=213400-video-game-modification-ownership#p213400"
+      }
+    },
+    "vyrelis": {
+      "Bug Ignorer": {
+        "label": "Author is currently not updating any mods for Patch 7.",
+        "referenceLink": null
+      }
+    },
+    "PseudoKociara": {
+      "Paywaller": {
+        "label": "Patreon shill.",
+        "referenceLink": null
       }
     }
   }
