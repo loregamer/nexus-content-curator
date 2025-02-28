@@ -73,7 +73,8 @@
         "Deleted89738208User",
         "Scouter408",
         "charmingfellow",
-        "elleoellie"
+        "elleoellie",
+        "EmeraldTechno"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -132,7 +133,8 @@
         "Xilandro",
         "Vessnelle",
         "5ilentNote",
-        "Raizans"
+        "Raizans",
+        "Bububull"
       ],
       "icon": "https://f.rpghq.org/H8CVupxrNCt3.png"
     },
@@ -146,7 +148,10 @@
         "neonbutchery",
         "DarthRen",
         "Hijimare",
-        "plaemon"
+        "plaemon",
+        "Lyniara",
+        "Bububull",
+        "OneEyeAskew"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -180,7 +185,8 @@
         "AnyaSweissman",
         "BSJMODZ",
         "yveslight",
-        "Hijimare"
+        "Hijimare",
+        "Bububull"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -704,6 +710,38 @@
     "Aimryax": {
       "Brave Social Activist!": {
         "label": "Brave Social Activist! (Palestine Shill in bio.)",
+        "referenceLink": null
+      }
+    },
+    "Lyniara": {
+      "Paywaller": {
+        "label": "Patreon and commissions shill.",
+        "referenceLink": null
+      }
+    },
+    "EmeraldTechno": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Bububull": {
+      "Bug Ignorer": {
+        "label": "Author refused to update to Patch 7 leading to all mods be untested. Has no plans to update game for future patches either.",
+        "referenceLink": null
+      },
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      },
+      "Incident": {
+        "label": "Author has multiple instances of clothing mods allowing FEMALE entries like dresses and heels to be worn by MALES. Author is always praised for this stunning act of bravery.",
+        "referenceLink": null
+      }
+    },
+    "OneEyeAskew": {
+      "Paywaller": {
+        "label": null,
         "referenceLink": null
       }
     }

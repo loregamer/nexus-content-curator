@@ -55,7 +55,8 @@
         "1284",
         "7061",
         "4728",
-        "1529"
+        "1529",
+        "6148"
       ],
       "LAME": [
         "2754",
@@ -70,7 +71,16 @@
         "12727",
         "14757",
         "8844",
-        "5706"
+        "5706",
+        "9741",
+        "3355",
+        "8093",
+        "8741",
+        "13775",
+        "10387",
+        "5747",
+        "5100",
+        "5011"
       ],
       "ABANDONED": [],
       "CAUTION": [
@@ -125,7 +135,12 @@
         "8298",
         "3546",
         "11450",
-        "10692"
+        "10692",
+        "13185",
+        "11170",
+        "8908",
+        "5468",
+        "5397"
       ]
     },
     "newvegas": {
@@ -553,6 +568,51 @@
       },
       "10692": {
         "reason": "Pack includes DIVERSIFIED, ETHNICALLY MODERN Elf heads."
+      },
+      "9741": {
+        "reason": "Mod includes mostly caricaturish heads with cartoony proportions. Pack includes DIVERSIFIED, ETHNICALLY MODERN Elf heads."
+      },
+      "3355": {
+        "reason": "Mod includes mostly caricaturish heads with cartoony proportions. Author is not updating this mod anymore either."
+      },
+      "8093": {
+        "reason": "Literally... just why? Top surgery scars add-on as well."
+      },
+      "8741": {
+        "reason": "A trans Wyll edit with top surgery scars AND add Greek Mythology disrespect on top of it."
+      },
+      "6148": {
+        "reason": "Author refused to update this mod any further because \"someone stole their work\"."
+      },
+      "13775": {
+        "reason": "Allows male characters to wear dresses. Mod was made and tested for Patch 6 ONLY."
+      },
+      "13185": {
+        "reason": "Mod was made and tested for Patch 6 ONLY."
+      },
+      "11170": {
+        "reason": "Mod was made and tested for Patch 6 ONLY."
+      },
+      "10387": {
+        "reason": "Allows male characters to wear dresses. Mod was made and tested for Patch 6 ONLY."
+      },
+      "8908": {
+        "reason": "Mod was made and tested for Patch 6 ONLY."
+      },
+      "5747": {
+        "reason": "Allows male characters to wear dresses. Mod was made and tested for Patch 6 ONLY."
+      },
+      "5468": {
+        "reason": "Mod was made and tested for Patch 6 ONLY."
+      },
+      "5397": {
+        "reason": "Mod was made and tested for Patch 6 ONLY."
+      },
+      "5100": {
+        "reason": "Allows male characters to wear dresses and female styled thigh-high heels. Mod was made and tested for Patch 6 ONLY."
+      },
+      "5011": {
+        "reason": "Allows male characters to wear dresses. Mod was made and tested for Patch 6 ONLY."
       }
     },
     "newvegas": {
