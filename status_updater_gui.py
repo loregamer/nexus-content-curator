@@ -601,7 +601,7 @@ class StatusUpdaterGUI(QMainWindow):
                 if existing_status == status and existing_reason == report.get("reason"):
                     skip_message += " (Duplicate report - same status and reason)"
                 else:
-                    skip_message += f" (Already exists with status: {existing_status}, reason: {existing_reason})"
+                    skip_message += f"\n    Status: {existing_status}\n    Reason: {existing_reason}"
                 skipped_mods.append(skip_message)
                 print(f"Skipping mod: {skip_message}")
                 continue
@@ -643,7 +643,44 @@ class StatusUpdaterGUI(QMainWindow):
             # Prepare result message
             result_message = f"Successfully saved {len(processed_mods)} mod reports to {self.mod_status_path}"
             if skipped_mods:
-                result_message += f"\n\nSkipped {len(skipped_mods)} existing mods:\n- " + "\n- ".join(skipped_mods)
+                # Group skipped mods by game
+                skipped_by_game = {}
+                # Also track duplicate reports separately
+                duplicate_by_game = {}
+                
+                for mod in skipped_mods:
+                    game_id = mod.split('/')[0]
+                    mod_id = mod.split('/')[1].split(' ')[0]  # Extract just the mod ID
+                    
+                    # Check if this is a duplicate report
+                    if "(Duplicate report - same status and reason)" in mod:
+                        if game_id not in duplicate_by_game:
+                            duplicate_by_game[game_id] = []
+                        duplicate_by_game[game_id].append(mod_id)
+                    else:
+                        # Regular skipped mod with different status/reason
+                        if game_id not in skipped_by_game:
+                            skipped_by_game[game_id] = []
+                        skipped_by_game[game_id].append(mod)
+                
+                # Format the skipped mods message
+                result_message += f"\n\nSkipped {len(skipped_mods)} existing mods:"
+                
+                # First list duplicate reports in a compact format
+                if duplicate_by_game:
+                    result_message += "\n\nDuplicate reports (same status and reason):"
+                    for game, mod_ids in sorted(duplicate_by_game.items()):
+                        result_message += f"\n{game}: {', '.join(mod_ids)}"
+                
+                # Then list other skipped mods with different status/reason
+                if skipped_by_game:
+                    result_message += "\n\nMods with different status/reason:"
+                    for game, mods in sorted(skipped_by_game.items()):
+                        result_message += f"\n\n{game}:"
+                        for mod in mods:
+                            # Remove the game prefix from each entry since we're grouping by game
+                            mod_entry = mod.replace(f"{game}/", "")
+                            result_message += f"\n  - {mod_entry}"
             
             QMessageBox.information(self, "Success", result_message)
             self.parsed_mod_reports = []
@@ -693,10 +730,10 @@ class StatusUpdaterGUI(QMainWindow):
                 if new_labels == existing_label_set and self._compare_tooltips(existing_tooltips, report["labels"]):
                     skip_message += " (Duplicate report - same labels and details)"
                 else:
-                    skip_message += "\nExisting labels: " + ", ".join(existing_labels) if existing_labels else "No existing labels"
-                    skip_message += "\nNew labels: " + ", ".join(report["label_list"])
+                    skip_message += "\n    Existing labels: " + (", ".join(existing_labels) if existing_labels else "None")
+                    skip_message += "\n    New labels: " + ", ".join(report["label_list"])
                     if existing_tooltips:
-                        skip_message += "\nExisting tooltips present with different details"
+                        skip_message += "\n    Note: Existing tooltips have different details"
                 
                 skipped_authors.append(skip_message)
                 print(f"Skipping author: {skip_message}")
@@ -753,7 +790,31 @@ class StatusUpdaterGUI(QMainWindow):
             # Prepare result message
             result_message = f"Successfully saved {len(processed_authors)} author reports to {self.author_status_path}"
             if skipped_authors:
-                result_message += f"\n\nSkipped {len(skipped_authors)} existing authors:\n- " + "\n- ".join(skipped_authors)
+                # Sort and categorize skipped authors
+                duplicate_authors = []
+                different_authors = []
+                
+                for author in skipped_authors:
+                    if "(Duplicate report - same labels and details)" in author:
+                        # Just get the username without the explanation
+                        username = author.split(" (Duplicate")[0]
+                        duplicate_authors.append(username)
+                    else:
+                        different_authors.append(author)
+                
+                # Format the skipped authors message
+                result_message += f"\n\nSkipped {len(skipped_authors)} existing authors:"
+                
+                # First list duplicate reports in a compact format
+                if duplicate_authors:
+                    result_message += "\n\nDuplicate reports (same labels and details):"
+                    result_message += f"\n{', '.join(sorted(duplicate_authors))}"
+                
+                # Then list other skipped authors with different labels/details
+                if different_authors:
+                    result_message += "\n\nAuthors with different labels/details:"
+                    for author in sorted(different_authors):
+                        result_message += f"\n  - {author}"
             
             QMessageBox.information(self, "Success", result_message)
             self.parsed_author_reports = []
