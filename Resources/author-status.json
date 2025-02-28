@@ -119,6 +119,7 @@
         "Xilandro",
         "pentapox",
         "Caites",
+        "pavelk",
         "neonbutchery"
       ],
       "icon": "https://f.rpghq.org/vmGUvrmZuOFz.png?n=pasted-file.png"
@@ -250,6 +251,12 @@
       }
     },
     "Caites": {
+      "Flight Risk": {
+        "label": "Sensitive. Will stop updating his mods or become inactive if he finds a negative comment out of thousands of positive ones.",
+        "referenceLink": null
+      }
+    },
+    "pavelk": {
       "Flight Risk": {
         "label": "Sensitive. Will stop updating his mods or become inactive if he finds a negative comment out of thousands of positive ones.",
         "referenceLink": null
