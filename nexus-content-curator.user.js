@@ -347,7 +347,29 @@
       z-index: 1;
     }
 
+    /* Blue highlight for informative mods */
+    .mod-tile.has-informative-warning {
+      position: relative;
+    }
+
+    .mod-tile.has-informative-warning::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(0, 136, 255, 0.03), rgba(0, 136, 255, 0.08));
+      border: 2px solid rgba(0, 136, 255, 0.2);
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .mod-tile.has-broken-warning .mod-image {
+      position: relative;
+    }
+
+    .mod-tile.has-informative-warning .mod-image {
       position: relative;
     }
 
@@ -366,6 +388,27 @@
     }
 
     .mod-tile.has-broken-warning .warning-text {
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      font-weight: bold;
+      color: white;
+      font-size: 1.2em;
+    }
+
+    .mod-tile.has-informative-warning .mod-warning-banner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 4px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .mod-tile.has-informative-warning .warning-text {
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
       font-weight: bold;
       color: white;
@@ -1374,8 +1417,10 @@
       imageContainer.appendChild(banner);
       
       // Add warning class to tile for highlighting
-      if (status.type === "BROKEN" || status.type === "LAME" || status.type === "INFORMATIVE") {
+      if (status.type === "BROKEN" || status.type === "LAME") {
         modTile.classList.add("has-broken-warning");
+      } else if (status.type === "INFORMATIVE") {
+        modTile.classList.add("has-informative-warning");
       }
     }
     
