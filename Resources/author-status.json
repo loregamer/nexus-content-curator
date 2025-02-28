@@ -144,7 +144,9 @@
         "mantiiiss",
         "CobaltOwl1",
         "neonbutchery",
-        "DarthRen"
+        "DarthRen",
+        "Hijimare",
+        "plaemon"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -170,7 +172,8 @@
         "clonecam117",
         "AnyaSweissman",
         "BSJMODZ",
-        "yveslight"
+        "yveslight",
+        "Hijimare"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -673,6 +676,22 @@
       "Troon": {
         "label": null,
         "referenceLink": "https://next.nexusmods.com/profile/Sylvie1025?gameId=130"
+      }
+    },
+    "Hijimare": {
+      "Paywaller": {
+        "label": "Patreon shill.",
+        "referenceLink": null
+      },
+      "Incident": {
+        "label": "Had one epic moment of glory where they released a \"whitewashing\" Wyll mod and refused to apologize. But then they made a mod to make Shadowheart black to compensate. Confusing individual!",
+        "referenceLink": "https://rpghq.org/forums/viewtopic.php?p=213271-nexus-mods-content-curator-1-8-userscript#p213271"
+      }
+    },
+    "plaemon": {
+      "Paywaller": {
+        "label": "Patreon shill.",
+        "referenceLink": null
       }
     }
   }
