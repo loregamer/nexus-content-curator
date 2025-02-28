@@ -764,8 +764,9 @@ class StatusUpdaterGUI(QMainWindow):
             return
         
         # Track skipped and processed authors
-        skipped_authors = []
+        skipped_labels = []  # Track skipped labels instead of authors
         processed_authors = []
+        processed_labels = []  # Track processed labels
         
         # Update the JSON data
         for report in self.parsed_author_reports:
@@ -788,29 +789,42 @@ class StatusUpdaterGUI(QMainWindow):
                 author_exists = True
                 existing_tooltips = self.author_status_data["Tooltips"][username]
             
-            if author_exists:
-                skip_message = f"{username}"
-                
-                # Compare labels and tooltips
-                new_labels = set(report["label_list"])
-                existing_label_set = set(existing_labels)
-                
-                if new_labels == existing_label_set and self._compare_tooltips(existing_tooltips, report["labels"]):
-                    skip_message += " (Duplicate report - same labels and details)"
-                else:
-                    skip_message += "\n    Existing labels: " + (", ".join(existing_labels) if existing_labels else "None")
-                    skip_message += "\n    New labels: " + ", ".join(report["label_list"])
-                    if existing_tooltips:
-                        skip_message += "\n    Note: Existing tooltips have different details"
-                
-                skipped_authors.append(skip_message)
-                print(f"Skipping author: {skip_message}")
-                continue
-            
-            processed_authors.append(username)
-            
-            # Add author to each label
+            # Process each label individually
             for label_name in report["label_list"]:
+                # Check if this label already exists for this author
+                if label_name in existing_labels:
+                    # Check if tooltip details are the same
+                    if (label_name in existing_tooltips and 
+                        label_name in report["labels"] and 
+                        self._compare_single_tooltip(existing_tooltips[label_name], report["labels"][label_name])):
+                        skip_message = f"{username}/{label_name} (Duplicate label - same details)"
+                        skipped_labels.append(skip_message)
+                        print(f"Skipping label: {skip_message}")
+                        continue
+                    elif label_name in existing_tooltips and label_name in report["labels"]:
+                        # Label exists but with different details - update it
+                        print(f"Updating tooltip for {username} under {label_name}")
+                        # Clean up any potential invisible characters
+                        label_text = report["labels"][label_name]["label"]
+                        reference_link = report["labels"][label_name]["referenceLink"]
+                        
+                        # Remove the invisible character if present
+                        if isinstance(label_text, str):
+                            label_text = label_text.replace("\u3164", "")
+                        if isinstance(reference_link, str):
+                            reference_link = reference_link.replace("\u3164", "")
+                        
+                        self.author_status_data["Tooltips"][username][label_name] = {
+                            "label": label_text,
+                            "referenceLink": reference_link
+                        }
+                        processed_labels.append(f"{username}/{label_name} (Updated details)")
+                        continue
+                
+                # Add this label for the author
+                processed_labels.append(f"{username}/{label_name}")
+                
+                # Add author to the label
                 print(f"Adding {username} to label: {label_name}")
                 
                 if label_name in self.author_status_data["Labels"]:
@@ -822,20 +836,22 @@ class StatusUpdaterGUI(QMainWindow):
                         print(f"Added {username} to {label_name} authors list")
                 else:
                     print(f"Warning: Label {label_name} not found in author_status_data")
-            
-            # Add tooltip details
-            if report["labels"]:
-                if "Tooltips" not in self.author_status_data:
-                    self.author_status_data["Tooltips"] = {}
-                    
-                if username not in self.author_status_data["Tooltips"]:
-                    self.author_status_data["Tooltips"][username] = {}
+                    # Create the label if it doesn't exist
+                    self.author_status_data["Labels"][label_name] = {"authors": [username]}
+                    print(f"Created new label {label_name} and added {username}")
                 
-                for label_name, details in report["labels"].items():
+                # Add tooltip details for this label
+                if label_name in report["labels"]:
+                    if "Tooltips" not in self.author_status_data:
+                        self.author_status_data["Tooltips"] = {}
+                        
+                    if username not in self.author_status_data["Tooltips"]:
+                        self.author_status_data["Tooltips"][username] = {}
+                    
                     print(f"Adding tooltip for {username} under {label_name}")
                     # Clean up any potential invisible characters
-                    label_text = details["label"]
-                    reference_link = details["referenceLink"]
+                    label_text = report["labels"][label_name]["label"]
+                    reference_link = report["labels"][label_name]["referenceLink"]
                     
                     # Remove the invisible character if present
                     if isinstance(label_text, str):
@@ -847,6 +863,10 @@ class StatusUpdaterGUI(QMainWindow):
                         "label": label_text,
                         "referenceLink": reference_link
                     }
+            
+            # Add to processed authors if not already there
+            if username not in processed_authors:
+                processed_authors.append(username)
         
         # Save the updated data
         try:
@@ -856,33 +876,21 @@ class StatusUpdaterGUI(QMainWindow):
                          default=lambda o: None if o is None or (isinstance(o, str) and (o.lower() == "null" or o == "\u3164")) else o)
             
             # Prepare result message
-            result_message = f"Successfully saved {len(processed_authors)} author reports to {self.author_status_path}"
-            if skipped_authors:
-                # Sort and categorize skipped authors
-                duplicate_authors = []
-                different_authors = []
+            result_message = f"Successfully saved {len(processed_labels)} labels for {len(processed_authors)} authors to {self.author_status_path}"
+            if skipped_labels:
+                # Format the skipped labels message
+                result_message += f"\n\nSkipped {len(skipped_labels)} existing labels:"
                 
-                for author in skipped_authors:
-                    if "(Duplicate report - same labels and details)" in author:
-                        # Just get the username without the explanation
-                        username = author.split(" (Duplicate")[0]
-                        duplicate_authors.append(username)
-                    else:
-                        different_authors.append(author)
+                # Group by author for better readability
+                skipped_by_author = {}
+                for label in skipped_labels:
+                    author = label.split('/')[0]
+                    if author not in skipped_by_author:
+                        skipped_by_author[author] = []
+                    skipped_by_author[author].append(label.split('/')[1])
                 
-                # Format the skipped authors message
-                result_message += f"\n\nSkipped {len(skipped_authors)} existing authors:"
-                
-                # First list duplicate reports in a compact format
-                if duplicate_authors:
-                    result_message += "\n\nDuplicate reports (same labels and details):"
-                    result_message += f"\n{', '.join(sorted(duplicate_authors))}"
-                
-                # Then list other skipped authors with different labels/details
-                if different_authors:
-                    result_message += "\n\nAuthors with different labels/details:"
-                    for author in sorted(different_authors):
-                        result_message += f"\n  - {author}"
+                for author, labels in sorted(skipped_by_author.items()):
+                    result_message += f"\n{author}: {', '.join(labels)}"
             
             QMessageBox.information(self, "Success", result_message)
             self.parsed_author_reports = []
@@ -890,6 +898,14 @@ class StatusUpdaterGUI(QMainWindow):
             self.author_bulk_input.clear()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to save author reports: {str(e)}")
+    
+    def _compare_single_tooltip(self, existing_tooltip, new_tooltip):
+        """Helper method to compare a single tooltip's contents"""
+        if not existing_tooltip and not new_tooltip:
+            return True
+            
+        return (existing_tooltip.get("label") == new_tooltip.get("label") and
+                existing_tooltip.get("referenceLink") == new_tooltip.get("referenceLink"))
     
     def change_file_path(self, file_type):
         """Change the file path for mod or author status JSON"""
@@ -909,25 +925,6 @@ class StatusUpdaterGUI(QMainWindow):
                 self.author_status_path = file_path
                 self.author_path_label.setText(file_path)
                 self.load_json_data()
-    
-    def _compare_tooltips(self, existing_tooltips, new_tooltips):
-        """Helper method to compare tooltip contents"""
-        if not existing_tooltips and not new_tooltips:
-            return True
-            
-        if set(existing_tooltips.keys()) != set(new_tooltips.keys()):
-            return False
-            
-        for label, details in new_tooltips.items():
-            if label not in existing_tooltips:
-                return False
-                
-            existing_details = existing_tooltips[label]
-            if (existing_details.get("label") != details.get("label") or
-                existing_details.get("referenceLink") != details.get("referenceLink")):
-                return False
-                
-        return True
 
 def main():
     app = QApplication(sys.argv)
