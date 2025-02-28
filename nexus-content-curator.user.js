@@ -102,6 +102,10 @@
 
   // Enhanced warning styles
   const styles = `
+    .tiles .author {
+      overflow: visible !important;
+    }
+      
     .mod-warning-banner {
       position: absolute;
       top: 0;
