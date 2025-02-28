@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      1.9.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -489,7 +489,7 @@
     .tags span:first-child {
       display: inline-flex !important;
       flex-wrap: wrap !important;
-      gap: 4px !important;
+      gap: 6px !important;
       margin: -2px !important;
       padding: 2px !important;
     }
@@ -1003,7 +1003,7 @@
     container.style.cssText = `
       margin-left: 5px;
       display: inline-flex;
-      gap: 2px;
+      gap: 4px;
       align-items: center;
       vertical-align: middle;
       line-height: 1;
