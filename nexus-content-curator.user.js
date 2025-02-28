@@ -1047,7 +1047,7 @@
         align-items: center;
         justify-content: center;
         height: 24px;
-        cursor: help;
+        cursor: ${label.url && label.url !== null ? "pointer" : "help"};
         vertical-align: middle;
         line-height: 1;
       `;
@@ -3022,6 +3022,11 @@ ${l.type}:
           const referenceLink =
             authorStatus.Tooltips?.[username]?.[labelKey]?.referenceLink;
 
+          // Update cursor style if there's a reference link
+          if (referenceLink && referenceLink !== null) {
+            indicator.style.cursor = "pointer";
+          }
+
           const showTooltip = (e) => {
             indicator.style.transform = "scale(1.3)";
             tooltip.innerHTML = formatTooltipText(
@@ -3051,6 +3056,7 @@ ${l.type}:
             link.style.alignItems = "center";
             link.style.height = "24px";
             link.style.verticalAlign = "middle";
+            link.style.cursor = "pointer";
             link.appendChild(indicator);
             wrapper.appendChild(link);
           } else {
