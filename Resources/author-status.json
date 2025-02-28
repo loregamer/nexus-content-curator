@@ -74,7 +74,10 @@
         "Scouter408",
         "charmingfellow",
         "elleoellie",
-        "EmeraldTechno"
+        "EmeraldTechno",
+        "frozenoj",
+        "Moonlilia",
+        "alcomol"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -107,7 +110,11 @@
         "WitchWeed",
         "Tathrin",
         "Sorckoty",
-        "Sylvie1025"
+        "Sylvie1025",
+        "frozenoj",
+        "HyenaDingo",
+        "Moonlilia",
+        "alcomol"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -790,6 +797,42 @@
     "PseudoKociara": {
       "Paywaller": {
         "label": "Patreon shill.",
+        "referenceLink": null
+      }
+    },
+    "frozenoj": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "HyenaDingo": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Moonlilia": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/3246"
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "alcomol": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/12061"
+      },
+      "Troon": {
+        "label": null,
         "referenceLink": null
       }
     }
