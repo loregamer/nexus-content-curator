@@ -67,33 +67,48 @@
 
   // Function to fetch and store JSON data
   function fetchAndStoreJSON(url, storageKey, callback) {
+    console.log(`[Debug] Fetching JSON from ${url}`);
+
+    // Check if we have valid cached data
+    if (isCacheValid()) {
+      const cachedData = getStoredData(storageKey);
+      if (cachedData) {
+        console.log(`[Debug] Using cached data for ${storageKey}`);
+        if (callback && typeof callback === "function") {
+          callback(cachedData);
+        }
+        return;
+      }
+    }
+
+    // Fetch fresh data
     GM_xmlhttpRequest({
       method: "GET",
       url: url,
       onload: function (response) {
         try {
           const data = JSON.parse(response.responseText);
+          console.log(`[Debug] Successfully fetched and parsed JSON from ${url}`);
           storeData(storageKey, data);
-          callback(data);
+          if (callback && typeof callback === "function") {
+            callback(data);
+          }
         } catch (error) {
-          console.error(
-            `[Debug] Error fetching/parsing JSON from ${url}:`,
-            error
-          );
-          // Fall back to cached data
+          console.error(`[Debug] Error parsing JSON from ${url}:`, error);
+          // Try to use cached data as fallback even if it's expired
           const cachedData = getStoredData(storageKey);
-          if (cachedData) {
-            console.log(`[Debug] Using cached data for ${storageKey}`);
+          if (cachedData && callback && typeof callback === "function") {
+            console.log(`[Debug] Using expired cached data as fallback for ${storageKey}`);
             callback(cachedData);
           }
         }
       },
       onerror: function (error) {
-        console.error(`[Debug] Error fetching ${url}:`, error);
-        // Fall back to cached data
+        console.error(`[Debug] Error fetching JSON from ${url}:`, error);
+        // Try to use cached data as fallback even if it's expired
         const cachedData = getStoredData(storageKey);
-        if (cachedData) {
-          console.log(`[Debug] Using cached data for ${storageKey}`);
+        if (cachedData && callback && typeof callback === "function") {
+          console.log(`[Debug] Using expired cached data as fallback for ${storageKey}`);
           callback(cachedData);
         }
       },
@@ -846,6 +861,19 @@
     checkModStatus();
     hasCheckedCurrentMod = true;
     checkAuthorStatus();
+    
+    // Process all mod tiles on page load
+    const cachedData = getStoredData(STORAGE_KEYS.MOD_STATUS);
+    if (cachedData) {
+      addModStatusToTiles(cachedData);
+    } else {
+      fetchAndStoreJSON(
+        MOD_STATUS_URL,
+        STORAGE_KEYS.MOD_STATUS,
+        addModStatusToTiles
+      );
+    }
+    
     setupDOMObserver();
     addCopyLinkButtons(); // Add this line
   }
@@ -1336,12 +1364,18 @@
     banner.style.cursor = "help";
 
     // Add banner to tile's image
-    modTile.querySelector(".mod-image")?.appendChild(banner);
-
-    // Add warning class to tile for highlighting
-    if (status.type === "BROKEN") {
-      modTile.classList.add("has-broken-warning");
+    const imageContainer = modTile.querySelector(".mod-image");
+    if (imageContainer) {
+      imageContainer.appendChild(banner);
+      
+      // Add warning class to tile for highlighting
+      if (status.type === "BROKEN") {
+        modTile.classList.add("has-broken-warning");
+      }
     }
+    
+    // Always mark the tile as processed
+    modTile.classList.add('status-processed');
   }
 
   // Function to replace download buttons with report button
@@ -1443,6 +1477,22 @@
           hasCheckedCurrentMod = true;
         }
 
+        // Check for unprocessed mod tiles and process them in batch
+        const unprocessedTiles = document.querySelectorAll('.mod-tile:not(.status-processed)');
+        if (unprocessedTiles.length > 0) {
+          // Use cached data if available, otherwise fetch fresh data
+          const cachedData = getStoredData(STORAGE_KEYS.MOD_STATUS);
+          if (cachedData) {
+            addModStatusToTiles(cachedData);
+          } else {
+            fetchAndStoreJSON(
+              MOD_STATUS_URL,
+              STORAGE_KEYS.MOD_STATUS,
+              addModStatusToTiles
+            );
+          }
+        }
+
         // Check which type of page we're on and run appropriate checks
         if (window.location.href.includes("next.nexusmods.com/profile/")) {
           // Next.js profile page
@@ -1533,23 +1583,23 @@
 
   // Modify checkModTileStatus to do nothing for now
   function checkModTileStatus(modTile) {
-    // Temporarily disabled
-    return;
-    /* 
+    // Re-enable and update this function to use the new approach
     const titleLink = modTile.querySelector(".tile-name a");
     if (!titleLink) {
       console.warn("[Debug] Could not find title link in tile");
-      return;
+      return null;
     }
 
     const match = titleLink.href.match(/nexusmods\.com\/([^\/]+)\/mods\/(\d+)/);
     if (!match) {
       console.warn("[Debug] Could not parse game/mod ID from URL");
-      return;
+      return null;
     }
 
-    // Rest of the function...
-    */
+    const gameId = match[1];
+    const modId = match[2];
+
+    return { gameId, modId };
   }
 
   // Function to clean permission title
@@ -3049,5 +3099,94 @@ ${l.type}:
         actionList.appendChild(li);
       }
     });
+  }
+
+  // Add new function to process all mod tiles at once
+  function addModStatusToTiles(modStatusData) {
+    if (!modStatusData) {
+      console.warn("[Debug] No mod status data available");
+      return;
+    }
+
+    console.log("[Debug] Adding mod status to all tiles");
+    
+    // Get all mod tiles that haven't been processed yet
+    const modTiles = document.querySelectorAll('.mod-tile:not(.status-processed)');
+    if (modTiles.length === 0) {
+      console.log("[Debug] No unprocessed mod tiles found");
+      return;
+    }
+    
+    console.log(`[Debug] Found ${modTiles.length} unprocessed mod tiles`);
+    
+    // For each tile, extract the mod ID and check if it has a status
+    modTiles.forEach(tile => {
+      // Get game and mod ID from the tile
+      const modInfo = checkModTileStatus(tile);
+      if (!modInfo) {
+        // Mark tile as processed even if we couldn't get mod info
+        tile.classList.add('status-processed');
+        return;
+      }
+      
+      const { gameId, modId } = modInfo;
+      
+      // Look for an explicit status for this mod
+      const gameStatuses = modStatusData["Mod Statuses"]?.[gameId];
+      let foundStatus = null;
+      let statusType = null;
+      
+      if (gameStatuses) {
+        for (const [type, modList] of Object.entries(gameStatuses)) {
+          if (modList.includes(modId)) {
+            foundStatus = type;
+            statusType = type;
+            break;
+          }
+        }
+      }
+      
+      if (foundStatus) {
+        // Create status object
+        const status = {
+          type: statusType,
+          reason: `This mod is marked as ${statusType.toLowerCase()}`,
+          color: STATUS_TYPES[statusType]?.color || "#ff0000",
+        };
+        
+        // Check if we have additional descriptor info
+        const modDescriptor = modStatusData["Mod Descriptors"]?.[gameId]?.[modId];
+        if (modDescriptor) {
+          if (modDescriptor.reason) status.reason = modDescriptor.reason;
+          if (modDescriptor.alternative) status.alternative = modDescriptor.alternative;
+          if (modDescriptor.url) status.url = modDescriptor.url;
+          if (modDescriptor.icon) status.icon = modDescriptor.icon;
+        }
+        
+        // Add warning banner to the tile
+        addWarningBannerToTile(tile, status);
+      } else {
+        // If no explicit status was found, check keyword rules
+        const titleElement = tile.querySelector(".tile-name");
+        if (titleElement) {
+          const modTitle = titleElement.textContent.trim();
+          
+          // Check keyword rules
+          const keywordStatus = checkKeywordRules(modStatusData, gameId, modTitle);
+          if (keywordStatus) {
+            console.log("[Debug] Found keyword match for tile:", keywordStatus);
+            addWarningBannerToTile(tile, keywordStatus);
+          } else {
+            // Mark tile as processed even if no status was found
+            tile.classList.add('status-processed');
+          }
+        } else {
+          // Mark tile as processed even if no title element was found
+          tile.classList.add('status-processed');
+        }
+      }
+    });
+    
+    console.log("[Debug] Finished processing mod tiles");
   }
 })();
