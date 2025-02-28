@@ -155,7 +155,8 @@
         "Bububull",
         "OneEyeAskew",
         "Scouter408",
-        "PseudoKociara"
+        "PseudoKociara",
+        "Martimius"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -774,6 +775,10 @@
       "Copystriker": {
         "label": "Guy who made \"Serana Dialogue Add-On\", a horrible reimagining of Serana.\n\nHe simps for the voice actress for the mod and does false takedown requests of patches that turn her voice back into Laura Bailey.",
         "referenceLink": "https://rpghq.org/forums/viewtopic.php?p=213400-video-game-modification-ownership#p213400"
+      },
+      "Paywaller": {
+        "label": "E-begger",
+        "referenceLink": null
       }
     },
     "vyrelis": {
