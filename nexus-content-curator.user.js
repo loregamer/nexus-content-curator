@@ -1046,8 +1046,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        height: 16px;
-        cursor: ${label.url ? "pointer" : "help"};
+        height: 24px;
+        cursor: help;
         vertical-align: middle;
         line-height: 1;
       `;
@@ -2315,9 +2315,9 @@
       if (foundStatus) {
         // Create status object
         const status = {
-          type: statusType === "CAUTION" ? "INFORMATIVE" : statusType,
-          reason: `This mod is marked as ${statusType.toLowerCase()}`,
-          color: STATUS_TYPES[statusType === "CAUTION" ? "INFORMATIVE" : statusType]?.color || "#ff0000",
+          type: foundStatus === "CAUTION" ? "INFORMATIVE" : foundStatus,
+          reason: `This mod is marked as ${foundStatus.toLowerCase()}`,
+          color: STATUS_TYPES[foundStatus === "CAUTION" ? "INFORMATIVE" : foundStatus]?.color || "#ff0000",
         };
         
         // Check if we have additional descriptor info
@@ -2921,6 +2921,11 @@ ${l.type}:
     const usernameContainer = profileContainer.querySelector("h1");
     if (!usernameContainer) return;
 
+    // Ensure the username container has the right display style for inline badges
+    usernameContainer.style.display = "flex";
+    usernameContainer.style.alignItems = "center";
+    usernameContainer.style.flexWrap = "wrap";
+
     // More thorough check for existing status indicators
     const existingContainers = usernameContainer.querySelectorAll(
       ".author-status-container"
@@ -2942,15 +2947,15 @@ ${l.type}:
       // Create container for status indicators
       const container = document.createElement("div");
       container.className =
-        "author-status-container flex gap-1 items-center mt-1";
+        "author-status-container flex gap-1 items-center";
       container.style.cssText = `
         display: inline-flex;
-        gap: 2px;
+        gap: 4px;
         align-items: center;
         vertical-align: middle;
         line-height: 1;
-        height: 16px;
-        margin-left: 5px;
+        height: 24px;
+        margin-left: 10px;
       `;
 
       let hasLabels = false;
@@ -2964,8 +2969,10 @@ ${l.type}:
           wrapper.style.cssText = `
             display: inline-flex;
             align-items: center;
-            height: 16px;
+            justify-content: center;
+            height: 24px;
             vertical-align: middle;
+            margin: 0 1px;
           `;
 
           const indicator = document.createElement("span");
@@ -2973,7 +2980,7 @@ ${l.type}:
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 16px;
+            height: 24px;
             cursor: help;
             vertical-align: middle;
             line-height: 1;
@@ -2983,8 +2990,8 @@ ${l.type}:
           if (labelData.icon && labelData.icon.startsWith("http")) {
             const img = document.createElement("img");
             img.style.cssText = `
-              width: 16px;
-              height: 16px;
+              width: 24px;
+              height: 24px;
               vertical-align: middle;
               object-fit: contain;
               display: block;
@@ -2995,14 +3002,14 @@ ${l.type}:
             img.onerror = () => {
               indicator.textContent = DEFAULT_ICONS[labelData.type] || "⚠️";
               indicator.style.color = labelData.color || "orange";
-              indicator.style.fontSize = "14px";
+              indicator.style.fontSize = "20px";
             };
 
             indicator.appendChild(img);
           } else {
             indicator.textContent = DEFAULT_ICONS[labelData.type] || "⚠️";
             indicator.style.color = labelData.color || "orange";
-            indicator.style.fontSize = "14px";
+            indicator.style.fontSize = "20px";
           }
 
           // Add hover effect
@@ -3016,7 +3023,7 @@ ${l.type}:
             authorStatus.Tooltips?.[username]?.[labelKey]?.referenceLink;
 
           const showTooltip = (e) => {
-            indicator.style.transform = "scale(1.2)";
+            indicator.style.transform = "scale(1.3)";
             tooltip.innerHTML = formatTooltipText(
               tooltipText === null ? labelData.label : tooltipText,
               referenceLink && referenceLink !== null ? "Click to learn more" : ""
@@ -3040,6 +3047,10 @@ ${l.type}:
             link.target = "_blank";
             link.rel = "noopener noreferrer";
             link.style.textDecoration = "none";
+            link.style.display = "inline-flex";
+            link.style.alignItems = "center";
+            link.style.height = "24px";
+            link.style.verticalAlign = "middle";
             link.appendChild(indicator);
             wrapper.appendChild(link);
           } else {
@@ -3053,6 +3064,9 @@ ${l.type}:
       if (hasLabels) {
         // Insert the container after the username
         usernameContainer.appendChild(container);
+        
+        // No need to change the username container's display style
+        // as we want to keep everything on the same line
       }
     }
 
@@ -3196,9 +3210,9 @@ ${l.type}:
       if (foundStatus) {
         // Create status object
         const status = {
-          type: statusType === "CAUTION" ? "INFORMATIVE" : statusType,
-          reason: `This mod is marked as ${statusType.toLowerCase()}`,
-          color: STATUS_TYPES[statusType === "CAUTION" ? "INFORMATIVE" : statusType]?.color || "#ff0000",
+          type: foundStatus === "CAUTION" ? "INFORMATIVE" : foundStatus,
+          reason: `This mod is marked as ${foundStatus.toLowerCase()}`,
+          color: STATUS_TYPES[foundStatus === "CAUTION" ? "INFORMATIVE" : foundStatus]?.color || "#ff0000",
         };
         
         // Check if we have additional descriptor info
