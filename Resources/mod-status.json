@@ -46,7 +46,13 @@
         "7686",
         "4743",
         "1713",
-        "1515"
+        "1515",
+        "692",
+        "1279",
+        "1281",
+        "1282",
+        "1283",
+        "1284"
       ],
       "LAME": [
         "2754",
@@ -111,7 +117,8 @@
         "11708",
         "15024",
         "4096",
-        "8298"
+        "8298",
+        "3546"
       ]
     },
     "newvegas": {
@@ -510,7 +517,19 @@
       },
       "8298": {
         "reason": "Allows male characters to wear bras. Pronounce user as well."
-      }
+      },
+      "692": {
+        "reason": "Outdated. Use \"Improved World Tooltips\" instead.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/5342"
+      },
+      "3546": {
+        "reason": "Download the PAK file version. Loose files are hard to manage."
+      },
+      "1279": {},
+      "1281": {},
+      "1282": {},
+      "1283": {},
+      "1284": {}
     },
     "newvegas": {
       "34832": {
