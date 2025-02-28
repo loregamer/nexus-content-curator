@@ -1329,6 +1329,11 @@
       existingBanner.remove();
     }
 
+    // Map CAUTION to INFORMATIVE for tiles
+    if (status.type === "CAUTION") {
+      status.type = "INFORMATIVE";
+    }
+
     // Create a simplified banner for tiles
     const banner = document.createElement("div");
     banner.className = `mod-warning-banner ${status.type.toLowerCase()}`;
@@ -1554,11 +1559,13 @@
       for (const [statusType, ruleList] of Object.entries(rules)) {
         for (const rule of ruleList) {
           if (fullText.includes(rule.pattern.toLowerCase())) {
+            // Convert CAUTION to INFORMATIVE
+            const finalStatusType = statusType === "CAUTION" ? "INFORMATIVE" : statusType;
             return {
-              type: statusType,
+              type: finalStatusType,
               reason: rule.reason,
               alternative: rule.alternative,
-              color: STATUS_TYPES[statusType]?.color || "#ff0000",
+              color: STATUS_TYPES[finalStatusType]?.color || "#ff0000",
             };
           }
         }
@@ -2261,27 +2268,24 @@
       }
 
       if (foundStatus) {
-        // Create base status object
-        const indicatorStatus = {
-          type: foundStatus,
-          reason: `This mod is marked as ${foundStatus.toLowerCase()}`,
-          color: STATUS_TYPES[foundStatus]?.color || "#ff0000",
+        // Create status object
+        const status = {
+          type: statusType === "CAUTION" ? "INFORMATIVE" : statusType,
+          reason: `This mod is marked as ${statusType.toLowerCase()}`,
+          color: STATUS_TYPES[statusType === "CAUTION" ? "INFORMATIVE" : statusType]?.color || "#ff0000",
         };
-
+        
         // Check if we have additional descriptor info
-        const modDescriptor =
-          modStatusData["Mod Descriptors"]?.[gameId]?.[modId];
+        const modDescriptor = modStatusData["Mod Descriptors"]?.[gameId]?.[modId];
         if (modDescriptor) {
-          if (modDescriptor.reason)
-            indicatorStatus.reason = modDescriptor.reason;
-          if (modDescriptor.alternative)
-            indicatorStatus.alternative = modDescriptor.alternative;
-          if (modDescriptor.url) indicatorStatus.url = modDescriptor.url;
-          if (modDescriptor.icon) indicatorStatus.icon = modDescriptor.icon;
+          if (modDescriptor.reason) status.reason = modDescriptor.reason;
+          if (modDescriptor.alternative) status.alternative = modDescriptor.alternative;
+          if (modDescriptor.url) status.url = modDescriptor.url;
+          if (modDescriptor.icon) status.icon = modDescriptor.icon;
         }
 
-        console.log("[Debug] Created indicator status:", indicatorStatus);
-        warnings.push(indicatorStatus);
+        console.log("[Debug] Created indicator status:", status);
+        warnings.push(status);
       } else {
         // Check keyword rules if no explicit status was found
         const keywordStatus = checkKeywordRules(
@@ -3147,9 +3151,9 @@ ${l.type}:
       if (foundStatus) {
         // Create status object
         const status = {
-          type: statusType,
+          type: statusType === "CAUTION" ? "INFORMATIVE" : statusType,
           reason: `This mod is marked as ${statusType.toLowerCase()}`,
-          color: STATUS_TYPES[statusType]?.color || "#ff0000",
+          color: STATUS_TYPES[statusType === "CAUTION" ? "INFORMATIVE" : statusType]?.color || "#ff0000",
         };
         
         // Check if we have additional descriptor info
@@ -3173,6 +3177,11 @@ ${l.type}:
           const keywordStatus = checkKeywordRules(modStatusData, gameId, modTitle);
           if (keywordStatus) {
             console.log("[Debug] Found keyword match for tile:", keywordStatus);
+            // Ensure CAUTION is converted to INFORMATIVE
+            if (keywordStatus.type === "CAUTION") {
+              keywordStatus.type = "INFORMATIVE";
+              keywordStatus.color = STATUS_TYPES["INFORMATIVE"]?.color || "#0088ff";
+            }
             addWarningBannerToTile(tile, keywordStatus);
           } else {
             // Mark tile as processed even if no status was found
