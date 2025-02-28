@@ -78,7 +78,11 @@
         "frozenoj",
         "Moonlilia",
         "alcomol",
-        "jawstarion"
+        "jawstarion",
+        "FluffySpider",
+        "Cerberry",
+        "Joell560",
+        "magnetuning"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -228,6 +232,10 @@
       "Incident": {
         "label": "This guy made a mod to \"fix\" villain characters having crooked, \"Jewish\" noses, since he found that OUTDATED.\nHe's also very combative.",
         "referenceLink": "https://rpghq.org/forums/viewtopic.php?p=207873-mod-seethe-thread-formerly-nexus-seethe-thread#p207873"
+      },
+      "Pride Flag Modder": {
+        "label": "Use of suggestive to borderline explicit LGBT screenshots in mods.",
+        "referenceLink": null
       }
     },
     "Xilandro": {
@@ -840,6 +848,24 @@
     "jawstarion": {
       "Pride Flag Modder": {
         "label": null,
+        "referenceLink": null
+      }
+    },
+    "FluffySpider": {
+      "Pride Flag Modder": {
+        "label": "Use of suggestive to borderline explicit LGBT screenshots in mods.",
+        "referenceLink": null
+      }
+    },
+    "Cerberry": {
+      "Pride Flag Modder": {
+        "label": "Use of suggestive to borderline explicit LGBT screenshots in mods.",
+        "referenceLink": null
+      }
+    },
+    "Joell560": {
+      "Pride Flag Modder": {
+        "label": "Use of suggestive to borderline explicit LGBT screenshots in mods.",
         "referenceLink": null
       }
     }
