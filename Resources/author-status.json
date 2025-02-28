@@ -152,7 +152,8 @@
         "plaemon",
         "Lyniara",
         "Bububull",
-        "OneEyeAskew"
+        "OneEyeAskew",
+        "Scouter408"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -170,7 +171,8 @@
       "label": "Brave Social Activist!",
       "authors": [
         "Aimryax",
-        "neonbutchery"
+        "neonbutchery",
+        "Aether"
       ],
       "icon": "https://f.rpghq.org/Z0IbrSn4rcDN.png?n=pasted-file.png"
     },
@@ -197,6 +199,10 @@
     "Aether": {
       "Bug Ignorer": {
         "label": "Disables the Bugs and Posts section on mods that are buggy.",
+        "referenceLink": null
+      },
+      "Brave Social Activist!": {
+        "label": "Asks to \"Consider donating to Direct Aid for Gaza\".",
         "referenceLink": null
       }
     },
@@ -665,6 +671,10 @@
       "Pride Flag Modder": {
         "label": null,
         "referenceLink": "https://www.nexusmods.com/newvegas/mods/72334"
+      },
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
       }
     },
     "charmingfellow": {
