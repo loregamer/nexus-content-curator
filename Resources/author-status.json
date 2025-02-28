@@ -77,7 +77,8 @@
         "EmeraldTechno",
         "frozenoj",
         "Moonlilia",
-        "alcomol"
+        "alcomol",
+        "jawstarion"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -832,6 +833,12 @@
         "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/12061"
       },
       "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "jawstarion": {
+      "Pride Flag Modder": {
         "label": null,
         "referenceLink": null
       }
