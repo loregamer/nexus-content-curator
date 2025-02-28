@@ -160,6 +160,13 @@
       ],
       "icon": "https://f.rpghq.org/3Cw645Okhqi6.png?n=pasted-file.png"
     },
+    "Brave Social Activist!": {
+      "label": "Brave Social Activist!",
+      "authors": [
+        "Aimryax"
+      ],
+      "icon": "https://f.rpghq.org/XlP0lQAOtEvS.png?n=pasted-file.png"
+    },
     "Incident": {
       "label": "Incident:",
       "authors": [
@@ -691,6 +698,12 @@
     "plaemon": {
       "Paywaller": {
         "label": "Patreon shill.",
+        "referenceLink": null
+      }
+    },
+    "Aimryax": {
+      "Brave Social Activist!": {
+        "label": "Palestine Shill in bio.",
         "referenceLink": null
       }
     }
