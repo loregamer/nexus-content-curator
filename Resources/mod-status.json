@@ -140,7 +140,8 @@
         "11170",
         "8908",
         "5468",
-        "5397"
+        "5397",
+        "10066"
       ]
     },
     "newvegas": {
@@ -204,7 +205,8 @@
         "63000",
         "9358",
         "87707",
-        "43816"
+        "43816",
+        "69993"
       ],
       "LAME": [
         "365",
@@ -218,7 +220,9 @@
         "266"
       ],
       "INFORMATIVE": [
-        "12604"
+        "12604",
+        "6194",
+        "22306"
       ]
     },
     "site": {
@@ -617,6 +621,9 @@
       },
       "5011": {
         "reason": "Allows male characters to wear dresses. Mod was made and tested for Patch 6 ONLY."
+      },
+      "10066": {
+        "reason": "Uses suggestive LGBT screenshots."
       }
     },
     "newvegas": {
@@ -733,6 +740,17 @@
       "32161": {
         "reason": "This is not an \"Add-On\", but a brutal character assassination and horrible reimagining of Serana. New voice actress also isn't great.\n\nFor an alternative, check \"Serana Expanded - Dialogue Additions\"",
         "alternative": "https://rpghq.org/forums/viewtopic.php?t=2019-serana-expanded-dialogue-additions-1-1-skyrim-special-edition"
+      },
+      "6194": {
+        "reason": "We suggest downloading this on GitHub instead of Nexus. It's easier and you get access to early versions.",
+        "alternative": "https://github.com/Modorganizer2/modorganizer/releases"
+      },
+      "22306": {
+        "reason": "If you are looking to just add your body to first person, use \"Improved Camera\"",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/93962"
+      },
+      "69993": {
+        "reason": "Buggy mess. Don't expect to use this for a serious playthrough."
       }
     },
     "site": {
