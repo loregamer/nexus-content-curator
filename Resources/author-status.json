@@ -163,7 +163,8 @@
         "Arthmoor",
         "Xilandro",
         "Vessnelle",
-        "pentapox"
+        "pentapox",
+        "Martimius"
       ],
       "icon": "https://f.rpghq.org/3Cw645Okhqi6.png?n=pasted-file.png"
     },
@@ -765,6 +766,12 @@
       "Paywaller": {
         "label": null,
         "referenceLink": null
+      }
+    },
+    "Martimius": {
+      "Copystriker": {
+        "label": "Guy who made \"Serana Dialogue Add-On\", a horrible reimagining of Serana.\n\nHe simps for the voice actress for the mod and does false takedown requests of patches that turn her voice back into Laura Bailey.",
+        "referenceLink": "https://rpghq.org/forums/viewtopic.php?p=213400-video-game-modification-ownership#p213400"
       }
     }
   }
