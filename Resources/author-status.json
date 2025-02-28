@@ -168,7 +168,8 @@
     "Brave Social Activist!": {
       "label": "Brave Social Activist!",
       "authors": [
-        "Aimryax"
+        "Aimryax",
+        "neonbutchery"
       ],
       "icon": "https://f.rpghq.org/Z0IbrSn4rcDN.png?n=pasted-file.png"
     },
@@ -265,6 +266,10 @@
       "Incident": {
         "label": "Makes anti-chud mods out of spite, such as \"Slightly Older Shadowheart\". \n\nTheir exact words were: \"this was made in 1h 30min out of pure spite because i'm tired of the constant smooth facetune yassification of all the characters so why not make them all look middle-aged instead\"",
         "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/3551"
+      },
+      "Brave Social Activist!": {
+        "label": "Brave Social Activist!\n\nAsks to \"help Palestinian families survive the ongoing !!! GENOCIDE !!!\".",
+        "referenceLink": null
       }
     },
     "Zaldir": {
