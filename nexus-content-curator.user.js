@@ -2956,6 +2956,7 @@ ${l.type}:
         line-height: 1;
         height: 24px;
         margin-left: 10px;
+        margin-top: 5px;
       `;
 
       let hasLabels = false;
