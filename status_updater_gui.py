@@ -579,21 +579,31 @@ class StatusUpdaterGUI(QMainWindow):
             
             # Check if mod already exists in any status category
             mod_exists = False
+            existing_status = None
+            existing_reason = None
+            
             if game in self.mod_status_data["Mod Statuses"]:
                 for status_category, mod_ids in self.mod_status_data["Mod Statuses"][game].items():
                     if mod_id in mod_ids:
                         mod_exists = True
-                        skipped_mods.append(f"{game}/{mod_id} (Status: {status_category})")
-                        print(f"Skipping existing mod: {game}/{mod_id} (Status: {status_category})")
+                        existing_status = status_category
+                        if game in self.mod_status_data["Mod Descriptors"] and mod_id in self.mod_status_data["Mod Descriptors"][game]:
+                            existing_reason = self.mod_status_data["Mod Descriptors"][game][mod_id].get("reason", "No reason provided")
                         break
             
             # Also check if mod exists in Mod Descriptors
             if not mod_exists and game in self.mod_status_data["Mod Descriptors"] and mod_id in self.mod_status_data["Mod Descriptors"][game]:
                 mod_exists = True
-                skipped_mods.append(f"{game}/{mod_id}")
-                print(f"Skipping existing mod: {game}/{mod_id}")
+                existing_reason = self.mod_status_data["Mod Descriptors"][game][mod_id].get("reason", "No reason provided")
             
             if mod_exists:
+                skip_message = f"{game}/{mod_id}"
+                if existing_status == status and existing_reason == report.get("reason"):
+                    skip_message += " (Duplicate report - same status and reason)"
+                else:
+                    skip_message += f" (Already exists with status: {existing_status}, reason: {existing_reason})"
+                skipped_mods.append(skip_message)
+                print(f"Skipping mod: {skip_message}")
                 continue
             
             processed_mods.append(f"{game}/{mod_id}")
@@ -648,7 +658,7 @@ class StatusUpdaterGUI(QMainWindow):
             QMessageBox.warning(self, "Warning", "No author reports to save. Please parse reports first.")
             return
         
-        # Track skipped authors
+        # Track skipped and processed authors
         skipped_authors = []
         processed_authors = []
         
@@ -659,18 +669,37 @@ class StatusUpdaterGUI(QMainWindow):
             
             # Check if author already exists in any label
             author_exists = False
+            existing_labels = []
+            existing_tooltips = {}
+            
+            # Check existing labels
             for label_name, label_data in self.author_status_data.get("Labels", {}).items():
                 if "authors" in label_data and username in label_data["authors"]:
                     author_exists = True
-                    break
+                    existing_labels.append(label_name)
             
-            # Also check if author exists in Tooltips
-            if not author_exists and username in self.author_status_data.get("Tooltips", {}):
+            # Check existing tooltips
+            if username in self.author_status_data.get("Tooltips", {}):
                 author_exists = True
+                existing_tooltips = self.author_status_data["Tooltips"][username]
             
             if author_exists:
-                print(f"Skipping existing author: {username}")
-                skipped_authors.append(username)
+                skip_message = f"{username}"
+                
+                # Compare labels and tooltips
+                new_labels = set(report["label_list"])
+                existing_label_set = set(existing_labels)
+                
+                if new_labels == existing_label_set and self._compare_tooltips(existing_tooltips, report["labels"]):
+                    skip_message += " (Duplicate report - same labels and details)"
+                else:
+                    skip_message += "\nExisting labels: " + ", ".join(existing_labels) if existing_labels else "No existing labels"
+                    skip_message += "\nNew labels: " + ", ".join(report["label_list"])
+                    if existing_tooltips:
+                        skip_message += "\nExisting tooltips present with different details"
+                
+                skipped_authors.append(skip_message)
+                print(f"Skipping author: {skip_message}")
                 continue
             
             processed_authors.append(username)
@@ -751,6 +780,25 @@ class StatusUpdaterGUI(QMainWindow):
                 self.author_status_path = file_path
                 self.author_path_label.setText(file_path)
                 self.load_json_data()
+    
+    def _compare_tooltips(self, existing_tooltips, new_tooltips):
+        """Helper method to compare tooltip contents"""
+        if not existing_tooltips and not new_tooltips:
+            return True
+            
+        if set(existing_tooltips.keys()) != set(new_tooltips.keys()):
+            return False
+            
+        for label, details in new_tooltips.items():
+            if label not in existing_tooltips:
+                return False
+                
+            existing_details = existing_tooltips[label]
+            if (existing_details.get("label") != details.get("label") or
+                existing_details.get("referenceLink") != details.get("referenceLink")):
+                return False
+                
+        return True
 
 def main():
     app = QApplication(sys.argv)
