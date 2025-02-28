@@ -1299,9 +1299,9 @@
     textContainer.appendChild(banner);
 
     // Update the featured class based on warning type
-    if (status.type === "BROKEN") {
+    if (status.type === "BROKEN" || status.type === "LAME" || status.type === "INFORMATIVE") {
       featured.className = "has-severe-warning";
-    } else if (status.type === "CLOSED_PERMISSIONS" || status.type === "LAME") {
+    } else if (status.type === "CLOSED_PERMISSIONS") {
       if (!featured.className.includes("has-severe-warning")) {
         featured.className = "has-warning";
       }
@@ -1369,7 +1369,7 @@
       imageContainer.appendChild(banner);
       
       // Add warning class to tile for highlighting
-      if (status.type === "BROKEN") {
+      if (status.type === "BROKEN" || status.type === "LAME" || status.type === "INFORMATIVE") {
         modTile.classList.add("has-broken-warning");
       }
     }
@@ -2154,17 +2154,15 @@
 
     // Apply gradient effect based on most severe warning
     let gradientClass = "";
-    if (warnings.some((w) => w.type === "BROKEN")) {
+    if (warnings.some((w) => w.type === "BROKEN" || w.type === "LAME" || w.type === "INFORMATIVE")) {
       gradientClass = "has-severe-warning";
     } else if (
       warnings.some(
-        (w) => w.type === "CLOSED_PERMISSIONS" || w.type === "LAME"
+        (w) => w.type === "CLOSED_PERMISSIONS"
       ) &&
       !warnings.some((w) => w.type === "INFORMATIVE" && nofeature) // Don't override INFORMATIVE on nofeature
     ) {
       gradientClass = "has-warning";
-    } else if (warnings.some((w) => w.type === "INFORMATIVE")) {
-      gradientClass = "has-info";
     } else if (warnings.some((w) => w.type === "OPEN_PERMISSIONS")) {
       gradientClass = "has-info";
     }
@@ -2188,14 +2186,14 @@
         existingBanners.remove();
       }
 
-      // Add banners in order (CLOSED_PERMISSIONS first, then BROKEN, then others)
+      // Add banners in order (CLOSED_PERMISSIONS first, then BROKEN/LAME/INFORMATIVE, then others)
       warnings
         .filter((warning) => warning && warning.type && !warning.skipBanner)
         .sort((a, b) => {
           if (a.type === "CLOSED_PERMISSIONS") return -1;
           if (b.type === "CLOSED_PERMISSIONS") return 1;
-          if (a.type === "BROKEN") return -1;
-          if (b.type === "BROKEN") return 1;
+          if (a.type === "BROKEN" || a.type === "LAME" || a.type === "INFORMATIVE") return -1;
+          if (b.type === "BROKEN" || b.type === "LAME" || b.type === "INFORMATIVE") return 1;
           return 0;
         })
         .forEach((warning) => {
