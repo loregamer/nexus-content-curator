@@ -137,7 +137,24 @@
         "ASH0001",
         "RastrumAndQuill",
         "WardenAnders",
-        "rondeeno"
+        "rondeeno",
+        "AspenCrow",
+        "HMCascade",
+        "XKILLJOY98",
+        "th3rm0pyl43",
+        "MiluaSolena",
+        "BasementDenizen",
+        "Squidfest",
+        "xghoulia",
+        "vidyagamesarecool",
+        "DuncanWasHere",
+        "tayelshase",
+        "78XXPixy",
+        "ExpensiveLadder",
+        "MissEmlizB",
+        "GoesOnGhost",
+        "LeahTheUnknown",
+        "JakeAlaimo"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -213,7 +230,14 @@
         "LocationKingGRP",
         "SammyTheModder",
         "Erebuni",
-        "HGHydra"
+        "HGHydra",
+        "XKILLJOY98",
+        "th3rm0pyl43",
+        "MiluaSolena",
+        "BasementDenizen",
+        "btsoft2",
+        "GoesOnGhost",
+        "LeahTheUnknown"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -1705,7 +1729,139 @@
     },
     "rondeeno": {
       "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "AspenCrow": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "HMCascade": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "XKILLJOY98": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": "Furry",
+        "referenceLink": null
+      }
+    },
+    "th3rm0pyl43": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": "They/Them Pronouns",
+        "referenceLink": null
+      }
+    },
+    "MiluaSolena": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      },
+      "Troon": {
         "label": null,
+        "referenceLink": null
+      }
+    },
+    "BasementDenizen": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Squidfest": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "xghoulia": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "btsoft2": {
+      "Troon": {
+        "label": "Made \"Female Pronouns for Geralt\"",
+        "referenceLink": null
+      }
+    },
+    "vidyagamesarecool": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "DuncanWasHere": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "tayelshase": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "78XXPixy": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "ExpensiveLadder": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "MissEmlizB": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "GoesOnGhost": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "LeahTheUnknown": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "JakeAlaimo": {
+      "Pride Flag Modder": {
+        "label": "Mods games to have more pronoun options.",
         "referenceLink": null
       }
     }
