@@ -85,7 +85,9 @@
         "magnetuning",
         "RandoRuda",
         "Cranchbluewolf",
-        "AirynS"
+        "AirynS",
+        "FafnyB",
+        "Nathyiel"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -132,7 +134,9 @@
         "Lumaterian",
         "Volitio",
         "MissCorruption",
-        "Cranchbluewolf"
+        "Cranchbluewolf",
+        "johauna",
+        "Volno"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -146,7 +150,8 @@
         "Caites",
         "pavelk",
         "neonbutchery",
-        "sothasimp"
+        "sothasimp",
+        "FafnyB"
       ],
       "icon": "https://f.rpghq.org/vmGUvrmZuOFz.png?n=pasted-file.png"
     },
@@ -198,7 +203,15 @@
         "ahzidaljun",
         "FrancisLouis",
         "Misberave",
-        "AirynS"
+        "AirynS",
+        "JobiWanUK",
+        "krembrule",
+        "4thUnknown",
+        "Volitio",
+        "Lordcobra12",
+        "xBernos",
+        "MaskedRPGFan",
+        "AkElka"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -220,7 +233,8 @@
         "Aimryax",
         "neonbutchery",
         "Aether",
-        "tepkunset"
+        "tepkunset",
+        "Mandragorasprouts"
       ],
       "icon": "https://f.rpghq.org/Z0IbrSn4rcDN.png?n=pasted-file.png"
     },
@@ -1024,6 +1038,10 @@
       "Troon": {
         "label": "Member of Aether's Troon social circle. Maintains his mods for him.",
         "referenceLink": "https://f.rpghq.org/OYdVl9r88x8X.png?n=pasted-file.png"
+      },
+      "Paywaller": {
+        "label": "Literally has \"support me ko-fi\" AND crypto wallets in the About Me section right away.",
+        "referenceLink": null
       }
     },
     "VeegeeAlvarez": {
@@ -1097,6 +1115,82 @@
       },
       "Paywaller": {
         "label": "Paywalls and commissions.",
+        "referenceLink": null
+      }
+    },
+    "JobiWanUK": {
+      "Paywaller": {
+        "label": "Paywalls content.",
+        "referenceLink": null
+      }
+    },
+    "krembrule": {
+      "Paywaller": {
+        "label": "Paywalls via early access releases.",
+        "referenceLink": null
+      }
+    },
+    "FafnyB": {
+      "Pride Flag Modder": {
+        "label": "Pronouns in bio.",
+        "referenceLink": null
+      },
+      "Flight Risk": {
+        "label": "W*man",
+        "referenceLink": null
+      }
+    },
+    "4thUnknown": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Mandragorasprouts": {
+      "Brave Social Activist!": {
+        "label": "Major f*male nutjob case.",
+        "referenceLink": null
+      }
+    },
+    "johauna": {
+      "Troon": {
+        "label": "\"An autist\" and a \"Sassy little s***\" that likes to make boys out of girls.",
+        "referenceLink": null
+      }
+    },
+    "Lordcobra12": {
+      "Paywaller": {
+        "label": "Commissions.",
+        "referenceLink": null
+      }
+    },
+    "xBernos": {
+      "Paywaller": {
+        "label": "Commissions.",
+        "referenceLink": null
+      }
+    },
+    "MaskedRPGFan": {
+      "Paywaller": {
+        "label": "Shills every possible donations website.",
+        "referenceLink": null
+      }
+    },
+    "Volno": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "AkElka": {
+      "Paywaller": {
+        "label": "Patreon shill.",
+        "referenceLink": null
+      }
+    },
+    "Nathyiel": {
+      "Pride Flag Modder": {
+        "label": "\"Baldur's Gay Modding Community\" | MODS - FUN - CATS",
         "referenceLink": null
       }
     }
