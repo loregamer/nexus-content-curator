@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Open Uploader Links in New Tab
 // @namespace    http://tampermonkey.net/
-// @version      1.0.3
+// @version      1.0
 // @description  Opens uploader links in new tabs and tracks visited links
 // @author       You
 // @match        https://www.nexusmods.com/*
@@ -9,6 +9,8 @@
 // @grant        GM_getValue
 // @icon         https://www.nexusmods.com/favicon.ico
 // @run-at       document-idle
+// @updateURL    https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-uploader-new-tab.user.js
+// @downloadURL  https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-uploader-new-tab.user.js
 // ==/UserScript==
 
 (function() {
@@ -18,12 +20,6 @@
 
     // Storage key for visited uploader links
     const STORAGE_KEY = 'nexus_visited_uploaders';
-    
-    // Flag to track if the script is in active mode
-    let isActive = false;
-    
-    // Currently highlighted uploader link
-    let currentHighlightedLink = null;
 
     // Get visited uploaders from storage or initialize empty set
     function getVisitedUploaders() {
@@ -62,130 +58,89 @@
         console.log(`Marked ${markedCount} links as visited`);
     }
     
-    // Toggle active mode for opening uploader links
-    function toggleActiveMode() {
-        isActive = !isActive;
-        
-        // Remove highlight from current link if any
-        if (!isActive && currentHighlightedLink) {
-            currentHighlightedLink.style.outline = '';
-            currentHighlightedLink = null;
-        }
-        
-        // Show status message
-        const statusMessage = document.createElement('div');
-        statusMessage.textContent = isActive ? 'Uploader Link Mode: ACTIVE' : 'Uploader Link Mode: INACTIVE';
-        statusMessage.style.position = 'fixed';
-        statusMessage.style.top = '10px';
-        statusMessage.style.right = '10px';
-        statusMessage.style.backgroundColor = isActive ? '#5a9e6f' : '#7a2828';
-        statusMessage.style.color = 'white';
-        statusMessage.style.padding = '5px 10px';
-        statusMessage.style.borderRadius = '5px';
-        statusMessage.style.zIndex = '10000';
-        statusMessage.style.fontWeight = 'bold';
-        statusMessage.style.transition = 'opacity 0.5s ease-in-out';
-        
-        document.body.appendChild(statusMessage);
-        
-        // Remove the status message after 2 seconds
-        setTimeout(() => {
-            statusMessage.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(statusMessage);
-            }, 500);
-        }, 2000);
-        
-        console.log('Active mode toggled:', isActive);
-        
-        // If active mode is enabled, highlight the first uploader link
-        if (isActive) {
-            highlightFirstUploaderLink();
-        }
-    }
-    
-    // Highlight the first uploader link on the page
-    function highlightFirstUploaderLink() {
-        const uploaderLinks = document.querySelectorAll('div.author a[href^="https://www.nexusmods.com/users/"]');
-        if (uploaderLinks.length > 0) {
-            highlightLink(uploaderLinks[0]);
-        }
-    }
-    
-    // Highlight a specific link
-    function highlightLink(link) {
-        // Remove highlight from current link if any
-        if (currentHighlightedLink) {
-            currentHighlightedLink.style.outline = '';
-        }
-        
-        // Highlight the new link
-        link.style.outline = '2px solid #ff9900';
-        link.style.outlineOffset = '2px';
-        
-        // Scroll to the link if it's not in view
-        const rect = link.getBoundingClientRect();
-        if (
-            rect.top < 0 ||
-            rect.left < 0 ||
-            rect.bottom > (window.innerHeight || document.documentElement.clientHeight) ||
-            rect.right > (window.innerWidth || document.documentElement.clientWidth)
-        ) {
-            link.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        
-        currentHighlightedLink = link;
-        console.log('Highlighted link:', link.href);
-    }
-    
-    // Open the currently highlighted link in a new tab
-    function openHighlightedLink() {
-        if (!currentHighlightedLink) return;
-        
+    // Open all unvisited uploader links in new tabs
+    function openAllNewUploaderLinks() {
+        console.log('Opening all new uploader links...');
         const visitedUploaders = getVisitedUploaders();
-        const uploaderId = currentHighlightedLink.href.split('/users/')[1].split('?')[0];
         
-        console.log('Opening highlighted link in new tab:', currentHighlightedLink.href);
-        window.open(currentHighlightedLink.href, '_blank');
+        // Find all uploader links
+        const uploaderLinks = document.querySelectorAll('div.author a[href^="https://www.nexusmods.com/users/"]');
+        console.log('Found uploader links:', uploaderLinks.length);
         
-        // If we haven't visited this uploader before, mark as visited
-        if (!visitedUploaders.has(uploaderId)) {
-            visitedUploaders.add(uploaderId);
+        // Create a map to store unique uploader IDs and their corresponding links
+        const uniqueUploaders = new Map();
+        
+        // Collect unique uploader links
+        uploaderLinks.forEach(link => {
+            const uploaderId = link.href.split('/users/')[1].split('?')[0];
+            if (!uniqueUploaders.has(uploaderId)) {
+                uniqueUploaders.set(uploaderId, link);
+            }
+        });
+        
+        console.log('Found unique uploaders:', uniqueUploaders.size);
+        
+        // Open tabs for unvisited uploaders
+        let openedCount = 0;
+        uniqueUploaders.forEach((link, uploaderId) => {
+            if (!visitedUploaders.has(uploaderId)) {
+                console.log('Opening tab for uploader:', uploaderId);
+                window.open(link.href, '_blank');
+                
+                // Mark as visited
+                visitedUploaders.add(uploaderId);
+                
+                // Add visual indicator
+                link.style.textDecoration = 'underline';
+                link.style.textDecorationStyle = 'dotted';
+                link.style.textDecorationColor = '#5a9e6f';
+                link.setAttribute('data-visited', 'true');
+                
+                openedCount++;
+            }
+        });
+        
+        // Save the updated visited uploaders
+        if (openedCount > 0) {
             saveVisitedUploaders(visitedUploaders);
-            
-            // Mark as visited
-            currentHighlightedLink.style.textDecoration = 'underline';
-            currentHighlightedLink.style.textDecorationStyle = 'dotted';
-            currentHighlightedLink.style.textDecorationColor = '#5a9e6f';
-            currentHighlightedLink.setAttribute('data-visited', 'true');
-            
-            console.log('Marked link as visited:', uploaderId);
         }
         
-        // Move to the next link
-        const uploaderLinks = Array.from(document.querySelectorAll('div.author a[href^="https://www.nexusmods.com/users/"]'));
-        const currentIndex = uploaderLinks.indexOf(currentHighlightedLink);
+        // Show notification
+        showNotification(
+            openedCount > 0 
+                ? `Opened ${openedCount} new profile tab${openedCount > 1 ? 's' : ''}` 
+                : 'No unvisited profile links found'
+        );
         
-        if (currentIndex < uploaderLinks.length - 1) {
-            highlightLink(uploaderLinks[currentIndex + 1]);
-        } else {
-            // If we're at the last link, disable active mode
-            toggleActiveMode();
-        }
+        console.log(`Opened ${openedCount} new profile tabs`);
+        return openedCount;
     }
     
-    // Navigate between uploader links
-    function navigateLinks(direction) {
-        if (!isActive || !currentHighlightedLink) return;
+    // Show a notification message
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.position = 'fixed';
+        notification.style.top = '10px';
+        notification.style.right = '10px';
+        notification.style.backgroundColor = message.includes('No new') ? '#7a2828' : '#5a9e6f';
+        notification.style.color = 'white';
+        notification.style.padding = '10px 15px';
+        notification.style.borderRadius = '5px';
+        notification.style.zIndex = '10000';
+        notification.style.fontWeight = 'bold';
+        notification.style.transition = 'opacity 0.5s ease-in-out';
+        notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
         
-        const uploaderLinks = Array.from(document.querySelectorAll('div.author a[href^="https://www.nexusmods.com/users/"]'));
-        const currentIndex = uploaderLinks.indexOf(currentHighlightedLink);
+        document.body.appendChild(notification);
         
-        if (direction === 'next' && currentIndex < uploaderLinks.length - 1) {
-            highlightLink(uploaderLinks[currentIndex + 1]);
-        } else if (direction === 'prev' && currentIndex > 0) {
-            highlightLink(uploaderLinks[currentIndex - 1]);
-        }
+        // Remove the notification after 3 seconds
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 500);
+        }, 3000);
     }
     
     // Set up keyboard shortcuts
@@ -196,43 +151,10 @@
                 return;
             }
             
-            // Check for backslash key to toggle active mode
+            // Check for backslash key
             if (e.key === "\\") {
                 e.preventDefault();
-                toggleActiveMode();
-                return;
-            }
-            
-            // Only process these keys if in active mode
-            if (!isActive) return;
-            
-            // Enter key to open the highlighted link
-            if (e.key === "Enter") {
-                e.preventDefault();
-                openHighlightedLink();
-                return;
-            }
-            
-            // Arrow keys to navigate between links
-            if (e.key === "ArrowDown" || e.key === "ArrowRight") {
-                e.preventDefault();
-                navigateLinks('next');
-                return;
-            }
-            
-            if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
-                e.preventDefault();
-                navigateLinks('prev');
-                return;
-            }
-            
-            // Escape key to exit active mode
-            if (e.key === "Escape") {
-                e.preventDefault();
-                if (isActive) {
-                    toggleActiveMode();
-                }
-                return;
+                openAllNewUploaderLinks();
             }
         });
         
@@ -331,15 +253,38 @@
         instructions.style.marginBottom = '10px';
         instructions.style.fontSize = '11px';
         instructions.style.lineHeight = '1.3';
-        instructions.innerHTML = 'Press <b>\\</b> to activate link mode<br>Use <b>arrow keys</b> to navigate<br>Press <b>Enter</b> to open link<br>Press <b>Esc</b> to exit';
+        instructions.innerHTML = 'Press <b>\\</b> to open all new uploader links in tabs';
         dropdown.appendChild(instructions);
+        
+        // Add open all button
+        const openAllButton = document.createElement('button');
+        openAllButton.textContent = 'Open All New Links';
+        openAllButton.style.width = '100%';
+        openAllButton.style.padding = '5px';
+        openAllButton.style.marginBottom = '10px';
+        openAllButton.style.backgroundColor = '#5a9e6f';
+        openAllButton.style.color = 'white';
+        openAllButton.style.border = 'none';
+        openAllButton.style.borderRadius = '3px';
+        openAllButton.style.cursor = 'pointer';
+        
+        openAllButton.addEventListener('click', function() {
+            const count = openAllNewUploaderLinks();
+            if (count === 0) {
+                this.textContent = 'No New Links Found';
+                setTimeout(() => {
+                    this.textContent = 'Open All New Links';
+                }, 2000);
+            }
+        });
+        
+        dropdown.appendChild(openAllButton);
         
         // Add clear button
         const clearButton = document.createElement('button');
         clearButton.textContent = 'Clear Visited Links';
         clearButton.style.width = '100%';
         clearButton.style.padding = '5px';
-        clearButton.style.marginTop = '10px';
         clearButton.style.backgroundColor = '#7a2828';
         clearButton.style.color = 'white';
         clearButton.style.border = 'none';
@@ -363,12 +308,16 @@
                     link.removeAttribute('data-visited');
                 });
                 console.log('Visited links cleared');
+                
+                // Update button text
+                openAllButton.textContent = 'Open All New Links';
             }
         });
         
         // Add visited count
         const visitedCount = document.createElement('div');
-        visitedCount.style.marginBottom = '5px';
+        visitedCount.style.marginBottom = '10px';
+        visitedCount.style.marginTop = '10px';
         visitedCount.textContent = 'Visited uploaders: ';
         
         const visitedCountSpan = document.createElement('span');
