@@ -157,7 +157,9 @@
         "JakeAlaimo",
         "AnruiMurasaki",
         "wanderingaldecaldo",
-        "AlenVexx"
+        "AlenVexx",
+        "Luchaire",
+        "Kamajii"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -246,7 +248,9 @@
         "Breezypunk",
         "HeartsWires",
         "WingedAsarath",
-        "cedastarions"
+        "cedastarions",
+        "wrenanigans",
+        "thancredjohnson"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -334,7 +338,8 @@
         "DungeonsAndSouls",
         "Moonlilia",
         "cedastarions",
-        "AzazeLwasTaken"
+        "AzazeLwasTaken",
+        "thancredjohnson"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -381,7 +386,8 @@
         "CherryChain",
         "TechAngel85",
         "Craftian",
-        "loreenjoyer"
+        "loreenjoyer",
+        "thancredjohnson"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -2011,6 +2017,38 @@
     "AzazeLwasTaken": {
       "Paywaller": {
         "label": "Early access content paywaller.",
+        "referenceLink": null
+      }
+    },
+    "Luchaire": {
+      "Pride Flag Modder": {
+        "label": "Pansexual lmao. Sexual to pans",
+        "referenceLink": null
+      }
+    },
+    "Kamajii": {
+      "Pride Flag Modder": {
+        "label": "Modded romances to be same-sex available",
+        "referenceLink": null
+      }
+    },
+    "wrenanigans": {
+      "Troon": {
+        "label": "Has \"he/him\" in the profile, but clearly is just a confused and lost tumblr girl.",
+        "referenceLink": "https://youtu.be/7YBnXDdLXvE"
+      }
+    },
+    "thancredjohnson": {
+      "Troon": {
+        "label": "\"I'm a professional sculptor who specializes in delivering sensitive and affirming content with transparency and tact. Basically if you need a custom trans dude body mod or heavyset characters with realistic proportions, hit me up ^_^\"",
+        "referenceLink": null
+      },
+      "Paywaller": {
+        "label": "\"I don't take requests and am looking for commission work only.\"",
+        "referenceLink": null
+      },
+      "Incident": {
+        "label": "A prime example of FFXIV modding community. A special flavour of degeneracy.",
         "referenceLink": null
       }
     }

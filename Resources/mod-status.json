@@ -232,6 +232,11 @@
       "LAME": [
         "1"
       ]
+    },
+    "dragonage": {
+      "LAME": [
+        "429"
+      ]
     }
   },
   "Mod Descriptors": {
@@ -769,6 +774,11 @@
       "1": {
         "reason": "Stop being lazy. Use Mod Organizer 2",
         "alternative": "https://www.modorganizer.org/"
+      }
+    },
+    "dragonage": {
+      "429": {
+        "reason": "Makes your character gay! Run!"
       }
     }
   },
