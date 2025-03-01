@@ -314,7 +314,8 @@
         "Lordcobra12",
         "xBernos",
         "MaskedRPGFan",
-        "AkElka"
+        "AkElka",
+        "Apzurv"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -1862,6 +1863,12 @@
     "JakeAlaimo": {
       "Pride Flag Modder": {
         "label": "Mods games to have more pronoun options.",
+        "referenceLink": null
+      }
+    },
+    "Apzurv": {
+      "Paywaller": {
+        "label": null,
         "referenceLink": null
       }
     }
