@@ -243,7 +243,10 @@
         "LeahTheUnknown",
         "AnruiMurasaki",
         "meluminary",
-        "Breezypunk"
+        "Breezypunk",
+        "HeartsWires",
+        "WingedAsarath",
+        "cedastarions"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -281,7 +284,8 @@
         "mistyspring",
         "bigshot103",
         "VosVidemus",
-        "meluminary"
+        "meluminary",
+        "AshlynnMods"
       ],
       "icon": "https://f.rpghq.org/H8CVupxrNCt3.png"
     },
@@ -326,7 +330,11 @@
         "Apzurv",
         "AokiliMods",
         "Cl3mus",
-        "xavbio"
+        "xavbio",
+        "DungeonsAndSouls",
+        "Moonlilia",
+        "cedastarions",
+        "AzazeLwasTaken"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -349,7 +357,8 @@
         "neonbutchery",
         "Aether",
         "tepkunset",
-        "Mandragorasprouts"
+        "Mandragorasprouts",
+        "cedastarions"
       ],
       "icon": "https://f.rpghq.org/Z0IbrSn4rcDN.png?n=pasted-file.png"
     },
@@ -371,7 +380,8 @@
         "mm137",
         "CherryChain",
         "TechAngel85",
-        "Craftian"
+        "Craftian",
+        "loreenjoyer"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -746,6 +756,10 @@
       "Pride Flag Modder": {
         "label": "Pronouns user.",
         "referenceLink": null
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
       }
     },
     "AstralSprout": {
@@ -1025,6 +1039,10 @@
       },
       "Troon": {
         "label": null,
+        "referenceLink": null
+      },
+      "Paywaller": {
+        "label": "Comms.",
         "referenceLink": null
       }
     },
@@ -1950,6 +1968,50 @@
       "Incident": {
         "label": "Author wrote a long essay rejecting that his mods have social justice themes. Take caution.",
         "referenceLink": "https://web.archive.org/web/20230524151431/https://forums.nexusmods.com/index.php?/topic/10180283-mythos/page-2#entry96116948"
+      }
+    },
+    "AshlynnMods": {
+      "Bug Ignorer": {
+        "label": "\"None of my mods will be maintained in any way whatsoever.\"",
+        "referenceLink": null
+      }
+    },
+    "WingedAsarath": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "DungeonsAndSouls": {
+      "Paywaller": {
+        "label": "Patreon Shill.",
+        "referenceLink": null
+      }
+    },
+    "loreenjoyer": {
+      "Incident": {
+        "label": "Penis is too big. Jokes are too funny. And political views are far too based. Absolutely insufferable.",
+        "referenceLink": null
+      }
+    },
+    "cedastarions": {
+      "Troon": {
+        "label": null,
+        "referenceLink": "https://f.rpghq.org/3gIO418irTEe.png?n=pasted-file.png"
+      },
+      "Paywaller": {
+        "label": "Early access content paywaller and does commissions.",
+        "referenceLink": null
+      },
+      "Brave Social Activist!": {
+        "label": "Author seethes at \"whitewashing\".",
+        "referenceLink": "https://f.rpghq.org/3wxMxKsHAsSl.png?n=pasted-file.png"
+      }
+    },
+    "AzazeLwasTaken": {
+      "Paywaller": {
+        "label": "Early access content paywaller.",
+        "referenceLink": null
       }
     }
   }
