@@ -224,7 +224,8 @@
       "INFORMATIVE": [
         "12604",
         "6194",
-        "22306"
+        "22306",
+        "29069"
       ]
     },
     "site": {
@@ -759,6 +760,9 @@
       },
       "69993": {
         "reason": "Buggy mess. Don't expect to use this for a serious playthrough."
+      },
+      "29069": {
+        "reason": "Author wrote a long essay rejecting that his mods have social justice themes. Take caution.\n"
       }
     },
     "site": {

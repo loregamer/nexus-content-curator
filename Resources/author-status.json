@@ -155,7 +155,9 @@
         "GoesOnGhost",
         "LeahTheUnknown",
         "JakeAlaimo",
-        "AnruiMurasaki"
+        "AnruiMurasaki",
+        "wanderingaldecaldo",
+        "AlenVexx"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -240,7 +242,8 @@
         "GoesOnGhost",
         "LeahTheUnknown",
         "AnruiMurasaki",
-        "meluminary"
+        "meluminary",
+        "Breezypunk"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -320,7 +323,10 @@
         "xBernos",
         "MaskedRPGFan",
         "AkElka",
-        "Apzurv"
+        "Apzurv",
+        "AokiliMods",
+        "Cl3mus",
+        "xavbio"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -364,7 +370,8 @@
         "Bububull",
         "mm137",
         "CherryChain",
-        "TechAngel85"
+        "TechAngel85",
+        "Craftian"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -1901,6 +1908,48 @@
       "Bug Ignorer": {
         "label": "Photomode ONLY. \"None of my mods will be fixed for fpp or gameplay\"",
         "referenceLink": null
+      }
+    },
+    "Breezypunk": {
+      "Troon": {
+        "label": "Pronouns user.",
+        "referenceLink": null
+      }
+    },
+    "wanderingaldecaldo": {
+      "Pride Flag Modder": {
+        "label": "\"Mid-40s bisexual fic writer\"",
+        "referenceLink": null
+      }
+    },
+    "AokiliMods": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "AlenVexx": {
+      "Pride Flag Modder": {
+        "label": "Pronouns in bio.",
+        "referenceLink": null
+      }
+    },
+    "Cl3mus": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "xavbio": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Craftian": {
+      "Incident": {
+        "label": "Author wrote a long essay rejecting that his mods have social justice themes. Take caution.",
+        "referenceLink": "https://web.archive.org/web/20230524151431/https://forums.nexusmods.com/index.php?/topic/10180283-mythos/page-2#entry96116948"
       }
     }
   }
