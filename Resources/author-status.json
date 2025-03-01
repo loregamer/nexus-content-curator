@@ -154,7 +154,8 @@
         "MissEmlizB",
         "GoesOnGhost",
         "LeahTheUnknown",
-        "JakeAlaimo"
+        "JakeAlaimo",
+        "AnruiMurasaki"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -237,7 +238,9 @@
         "BasementDenizen",
         "btsoft2",
         "GoesOnGhost",
-        "LeahTheUnknown"
+        "LeahTheUnknown",
+        "AnruiMurasaki",
+        "meluminary"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -273,7 +276,9 @@
         "TechAngel85",
         "mm137",
         "mistyspring",
-        "bigshot103"
+        "bigshot103",
+        "VosVidemus",
+        "meluminary"
       ],
       "icon": "https://f.rpghq.org/H8CVupxrNCt3.png"
     },
@@ -1869,6 +1874,32 @@
     "Apzurv": {
       "Paywaller": {
         "label": null,
+        "referenceLink": null
+      }
+    },
+    "AnruiMurasaki": {
+      "Pride Flag Modder": {
+        "label": "Author has a decent amount of female clothes modded onto male bodies. Some things truly do not belong on male body.",
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "VosVidemus": {
+      "Bug Ignorer": {
+        "label": "Does not support mods anymore.",
+        "referenceLink": null
+      }
+    },
+    "meluminary": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      },
+      "Bug Ignorer": {
+        "label": "Photomode ONLY. \"None of my mods will be fixed for fpp or gameplay\"",
         "referenceLink": null
       }
     }
