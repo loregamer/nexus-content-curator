@@ -159,7 +159,9 @@
         "wanderingaldecaldo",
         "AlenVexx",
         "Luchaire",
-        "Kamajii"
+        "Kamajii",
+        "AntifaLafel",
+        "kascayde"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -250,7 +252,9 @@
         "WingedAsarath",
         "cedastarions",
         "wrenanigans",
-        "thancredjohnson"
+        "thancredjohnson",
+        "genderwithyourmom",
+        "koboldJuno"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -340,7 +344,10 @@
         "cedastarions",
         "AzazeLwasTaken",
         "thancredjohnson",
-        "PureDark"
+        "PureDark",
+        "AntifaLafel",
+        "koboldJuno",
+        "kascayde"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -2056,6 +2063,42 @@
     "PureDark": {
       "Paywaller": {
         "label": "Makes thousands of dollars a month paywalling DLSS/FSR mods for games.",
+        "referenceLink": null
+      }
+    },
+    "genderwithyourmom": {
+      "Troon": {
+        "label": "\"Gender was never an option.\"",
+        "referenceLink": null
+      }
+    },
+    "AntifaLafel": {
+      "Pride Flag Modder": {
+        "label": "Rainbows. Everywhere.",
+        "referenceLink": null
+      },
+      "Paywaller": {
+        "label": "\"I quit my job last year to go back to school, and I’ve started making Baldur’s Gate 3 mods as a hobby. All your donations will help me cover daily expenses.\" Has links to Patreon and Kofi literally in every nod author published AND Patreon has closed content as well.",
+        "referenceLink": null
+      }
+    },
+    "koboldJuno": {
+      "Troon": {
+        "label": "Furry.",
+        "referenceLink": null
+      },
+      "Paywaller": {
+        "label": "\"Open for commission using in-game materials.\" So, nothing original and just some tweaking of LARIAN (or others) assets? Really cool of you my dude.",
+        "referenceLink": null
+      }
+    },
+    "kascayde": {
+      "Pride Flag Modder": {
+        "label": "\"She/her || In my 30s\" who've modded very faggy clothes.",
+        "referenceLink": null
+      },
+      "Paywaller": {
+        "label": "Early access content paywaller.",
         "referenceLink": null
       }
     }
