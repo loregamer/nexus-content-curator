@@ -248,7 +248,13 @@
         "5528",
         "4440",
         "4441",
-        "153"
+        "153",
+        "4086",
+        "4570"
+      ],
+      "INFORMATIVE": [
+        "4189",
+        "4109"
       ]
     }
   },
@@ -831,6 +837,18 @@
       },
       "153": {
         "reason": "Looks horrible in game."
+      },
+      "4189": {
+        "reason": "Creative design, story line, screenplay, cut scenes, and dialogue were written by a \"British, 5'4, Sociology major guy, married with 'two anarchist children'\""
+      },
+      "4109": {
+        "reason": "Creative design, story line, screenplay, cut scenes, and dialogue were written by a \"British, 5'4, Sociology major guy, married with 'two anarchist children'\""
+      },
+      "4086": {
+        "reason": "Gay romance mod.\n\nInspiration, cut scenes, dialogue, and guidance came from a \"British, 5'4, Sociology major guy, married with 'two anarchist children'\""
+      },
+      "4570": {
+        "reason": "Gay romance mod.\n\nInspiration, cut scenes, dialogue, and guidance came from a \"British, 5'4, Sociology major guy, married with 'two anarchist children'\""
       }
     }
   },
