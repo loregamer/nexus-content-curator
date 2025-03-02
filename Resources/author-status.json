@@ -339,7 +339,8 @@
         "Moonlilia",
         "cedastarions",
         "AzazeLwasTaken",
-        "thancredjohnson"
+        "thancredjohnson",
+        "PureDark"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -2049,6 +2050,12 @@
       },
       "Incident": {
         "label": "A prime example of FFXIV modding community. A special flavour of degeneracy.",
+        "referenceLink": null
+      }
+    },
+    "PureDark": {
+      "Paywaller": {
+        "label": "Makes thousands of dollars a month paywalling DLSS/FSR mods for games.",
         "referenceLink": null
       }
     }
