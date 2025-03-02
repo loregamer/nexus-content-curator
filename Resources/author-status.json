@@ -371,7 +371,8 @@
         "Aether",
         "tepkunset",
         "Mandragorasprouts",
-        "cedastarions"
+        "cedastarions",
+        "neoncolor"
       ],
       "icon": "https://f.rpghq.org/Z0IbrSn4rcDN.png?n=pasted-file.png"
     },
@@ -2099,6 +2100,12 @@
       },
       "Paywaller": {
         "label": "Early access content paywaller.",
+        "referenceLink": null
+      }
+    },
+    "neoncolor": {
+      "Brave Social Activist!": {
+        "label": "Made white NPCs black in their \"Thedas Redone\" mods.",
         "referenceLink": null
       }
     }

@@ -235,7 +235,11 @@
     },
     "dragonage": {
       "LAME": [
-        "429"
+        "429",
+        "3480",
+        "4682",
+        "3295",
+        "5560"
       ]
     }
   },
@@ -779,6 +783,18 @@
     "dragonage": {
       "429": {
         "reason": "Makes your character gay! Run!"
+      },
+      "3480": {
+        "reason": "Anime slop hair aesthetic"
+      },
+      "4682": {
+        "reason": "Adds afros to elves. Straight hairstyles look like anime slop.\n\nAdds female-styled hair to men."
+      },
+      "3295": {
+        "reason": "Most of the presets look horrible. Anime aesthetic slop"
+      },
+      "5560": {
+        "reason": "Turns some NPCs black who were white before.\n\nCharacters who were left white have anime hair."
       }
     }
   },
