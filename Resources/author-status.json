@@ -190,7 +190,8 @@
         "FlameQuill",
         "dhague2cfo",
         "LesbianBear",
-        "MikaelaM"
+        "MikaelaM",
+        "rotol"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -287,7 +288,23 @@
         "NanamiFFXIV",
         "3L3KTR4",
         "Lokiina",
-        "LesbianBear"
+        "LesbianBear",
+        "Lunarvoxell",
+        "scarlettdays21",
+        "RealROFLkopter",
+        "NeivaDeepWater",
+        "stardebris",
+        "mw675",
+        "SpongebobHentaiSimulator",
+        "BeranabusBarnes",
+        "TRXtrixter",
+        "SharpMood",
+        "H0rnyQueen",
+        "TukasaFutaba",
+        "RuJiuWood",
+        "Eyre11",
+        "duoa",
+        "kadnUt"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -303,7 +320,12 @@
         "neonbutchery",
         "sothasimp",
         "FafnyB",
-        "LocationKingGRP"
+        "LocationKingGRP",
+        "commanderstrawberry",
+        "HollownessDevoured",
+        "Vicn",
+        "Roadhouse699",
+        "trainwiz"
       ],
       "icon": "https://f.rpghq.org/vmGUvrmZuOFz.png?n=pasted-file.png"
     },
@@ -326,7 +348,11 @@
         "bigshot103",
         "VosVidemus",
         "meluminary",
-        "AshlynnMods"
+        "AshlynnMods",
+        "HollownessDevoured",
+        "Roadhouse699",
+        "AndrealphusVIII",
+        "trainwiz"
       ],
       "icon": "https://f.rpghq.org/H8CVupxrNCt3.png"
     },
@@ -380,7 +406,13 @@
         "PureDark",
         "AntifaLafel",
         "koboldJuno",
-        "kascayde"
+        "kascayde",
+        "Letho0036",
+        "nimwraith",
+        "ElectricSparx",
+        "TREBoy",
+        "TateTaylorOH",
+        "SetteLisette"
       ],
       "icon": "https://f.rpghq.org/ehg06weLrysL.png"
     },
@@ -408,7 +440,11 @@
         "neoncolor",
         "VagranDreamer",
         "honeywhite",
-        "MikaelaM"
+        "MikaelaM",
+        "MoonAerin",
+        "KatSatPet",
+        "LMaya",
+        "MacBO0K"
       ],
       "icon": "https://f.rpghq.org/Z0IbrSn4rcDN.png?n=pasted-file.png"
     },
@@ -432,7 +468,12 @@
         "TechAngel85",
         "Craftian",
         "loreenjoyer",
-        "thancredjohnson"
+        "thancredjohnson",
+        "averagedilflover",
+        "Rigmor",
+        "shadowman2777",
+        "TREBoy",
+        "Magink666"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -2348,6 +2389,244 @@
       },
       "Brave Social Activist!": {
         "label": "British, 5'4, Sociology major, married with \"two anarchist children\"",
+        "referenceLink": null
+      }
+    },
+    "MoonAerin": {
+      "Brave Social Activist!": {
+        "label": "She/Her pronouns in bio",
+        "referenceLink": null
+      }
+    },
+    "Letho0036": {
+      "Paywaller": {
+        "label": "Paywalls their content. Bio has an edit from a Nexus admin redacting paywall links.",
+        "referenceLink": null
+      }
+    },
+    "KatSatPet": {
+      "Brave Social Activist!": {
+        "label": "Modded Dwarves to be black. Very brave!",
+        "referenceLink": "https://www.nexusmods.com/dragonage/mods/6234"
+      }
+    },
+    "LMaya": {
+      "Brave Social Activist!": {
+        "label": "Bio: \"I stand for a world in which LIFE of EVERY HUMAN is the absolute highest value!! Let's unite, talk, cooperate and grow together!  Our strength has always been in our UNITY, friends :)\"",
+        "referenceLink": null
+      }
+    },
+    "averagedilflover": {
+      "Incident": {
+        "label": "\"averagedilflover\" Ew...",
+        "referenceLink": null
+      }
+    },
+    "commanderstrawberry": {
+      "Flight Risk": {
+        "label": "Sensitive author. \"Please don't DM me your mod request. I only post my mods on Nexus. If you find them posted anywhere else, they're stolen.\"",
+        "referenceLink": null
+      }
+    },
+    "HollownessDevoured": {
+      "Flight Risk": {
+        "label": "Left the site, not due to any legitimate reason, but because of high contrast themes... Lol\\n\\n\"I may remove all my mods off nexus eventually too. Sorry to disappoint everyone but I am very disappointed and disheartened at nexus, this is no longer a place that brings me joy.\"",
+        "referenceLink": null
+      },
+      "Bug Ignorer": {
+        "label": "Mod auathor left and will delete all their mods off the site eventually.\\n\\nFrom their bio: \"I may remove all my mods off nexus eventually too. Sorry to disappoint everyone but I am very disappointed and disheartened at nexus, this is no longer a place that brings me joy.\"",
+        "referenceLink": null
+      }
+    },
+    "Rigmor": {
+      "Incident": {
+        "label": "Unsettling guy... Social media is just post after post of AI generated women over and over and over.",
+        "referenceLink": null
+      }
+    },
+    "Vicn": {
+      "Flight Risk": {
+        "label": "\"Do not send me private message with the exception of permission request.\"\\n\\n\"Because of the bad manners of Nexus users and the hassle of managing and reporting every single one of them, we have closed the comments section. If you want to interact with other users, please use other communities such as Discord.\"",
+        "referenceLink": null
+      }
+    },
+    "nimwraith": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Roadhouse699": {
+      "Flight Risk": {
+        "label": "In Bio: \"to the small number of people who are rude in Nexus interactions, I'm probably just going to ignore and block you.\"",
+        "referenceLink": null
+      },
+      "Bug Ignorer": {
+        "label": "From Bio: \"\"Do not report bugs in my mods anywhere other than the comment section for that mod. In my 8 years of posting mods on the Nexus, I've taken a break from reading comments once. Please stop trying to reach me through Youtube or Reddit. I ignore DMs that pertain to bug reports.\"",
+        "referenceLink": null
+      }
+    },
+    "AndrealphusVIII": {
+      "Bug Ignorer": {
+        "label": "Buggy mods. Author has 206 mods published, and disables Bug reports on all of them.",
+        "referenceLink": null
+      }
+    },
+    "rotol": {
+      "Pride Flag Modder": {
+        "label": "Sneaks pride flags into mods",
+        "referenceLink": "https://f.rpghq.org/PiGAjosvjMFZ.png?n=pasted-file.png"
+      }
+    },
+    "ElectricSparx": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "MacBO0K": {
+      "Brave Social Activist!": {
+        "label": "Bio is just \"Free Palestine\"",
+        "referenceLink": null
+      }
+    },
+    "shadowman2777": {
+      "Incident": {
+        "label": "Extreme gooner modder",
+        "referenceLink": null
+      }
+    },
+    "TREBoy": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      },
+      "Incident": {
+        "label": "Extreme gooner modder",
+        "referenceLink": null
+      }
+    },
+    "Magink666": {
+      "Incident": {
+        "label": "Extreme gooner modder",
+        "referenceLink": null
+      }
+    },
+    "Lunarvoxell": {
+      "Troon": {
+        "label": "Furry pfp",
+        "referenceLink": null
+      }
+    },
+    "TateTaylorOH": {
+      "Paywaller": {
+        "label": "Possible Paywaller.",
+        "referenceLink": null
+      }
+    },
+    "SetteLisette": {
+      "Paywaller": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "trainwiz": {
+      "Flight Risk": {
+        "label": "\"I DO NOT take requests for mods. I AM NOT interested in your ideas. Please do not message me with them.\"",
+        "referenceLink": null
+      },
+      "Bug Ignorer": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "scarlettdays21": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "RealROFLkopter": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "NeivaDeepWater": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "stardebris": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "mw675": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "SpongebobHentaiSimulator": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "BeranabusBarnes": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "TRXtrixter": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "SharpMood": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "H0rnyQueen": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "TukasaFutaba": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "RuJiuWood": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Eyre11": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "duoa": {
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "kadnUt": {
+      "Troon": {
+        "label": null,
         "referenceLink": null
       }
     }
