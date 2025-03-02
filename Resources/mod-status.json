@@ -239,7 +239,8 @@
         "3480",
         "4682",
         "3295",
-        "5560"
+        "5560",
+        "6108"
       ]
     }
   },
@@ -795,6 +796,9 @@
       },
       "5560": {
         "reason": "Turns some NPCs black who were white before.\n\nCharacters who were left white have anime hair."
+      },
+      "6108": {
+        "reason": "The \"graphical improvements\" includes turning white NPCs black, adding anime slop hairstyles, and making all the Elves look more modern (DA2 styled and with dreadlocks)"
       }
     }
   },

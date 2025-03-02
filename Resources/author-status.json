@@ -372,7 +372,8 @@
         "tepkunset",
         "Mandragorasprouts",
         "cedastarions",
-        "neoncolor"
+        "neoncolor",
+        "VagranDreamer"
       ],
       "icon": "https://f.rpghq.org/Z0IbrSn4rcDN.png?n=pasted-file.png"
     },
@@ -2106,6 +2107,12 @@
     "neoncolor": {
       "Brave Social Activist!": {
         "label": "Made white NPCs black in their \"Thedas Redone\" mods.",
+        "referenceLink": null
+      }
+    },
+    "VagranDreamer": {
+      "Brave Social Activist!": {
+        "label": "Tankie. Profile has hundreds of communist imagery in biography.",
         "referenceLink": null
       }
     }
