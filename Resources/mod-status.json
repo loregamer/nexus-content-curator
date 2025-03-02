@@ -240,7 +240,15 @@
         "4682",
         "3295",
         "5560",
-        "6108"
+        "6108",
+        "4508",
+        "3552",
+        "4943",
+        "750",
+        "5528",
+        "4440",
+        "4441",
+        "153"
       ]
     }
   },
@@ -799,6 +807,30 @@
       },
       "6108": {
         "reason": "The \"graphical improvements\" includes turning white NPCs black, adding anime slop hairstyles, and making all the Elves look more modern (DA2 styled and with dreadlocks)"
+      },
+      "4508": {
+        "reason": "Anime aesthetic slop"
+      },
+      "3552": {
+        "reason": "Anime hair slop"
+      },
+      "4943": {
+        "reason": "Anime hair slop"
+      },
+      "750": {
+        "reason": "Anime hair slop"
+      },
+      "5528": {
+        "reason": "Too high definition for this game. Looks uncanny."
+      },
+      "4440": {
+        "reason": "Clownish modern day hair colors"
+      },
+      "4441": {
+        "reason": "Clown lipstick"
+      },
+      "153": {
+        "reason": "Looks horrible in game."
       }
     }
   },
