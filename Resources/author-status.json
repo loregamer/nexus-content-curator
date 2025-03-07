@@ -95,7 +95,6 @@
         "SamelCamel",
         "NoraLee",
         "BSJMODZ",
-        "MrMadre",
         "SkotiPL",
         "MxOrcBoi",
         "4G3NTOR4NG3",
@@ -191,7 +190,32 @@
         "dhague2cfo",
         "LesbianBear",
         "MikaelaM",
-        "rotol"
+        "rotol",
+        "instantPR",
+        "Baddtraxx",
+        "AngelLeyend",
+        "Daveyin",
+        "RavenShade1",
+        "Novelyst",
+        "Athlov",
+        "fredvonf",
+        "bensxbd",
+        "Malaionus",
+        "Elvenbeard",
+        "Dekania",
+        "JustSomeIdiotOnline",
+        "401kplan",
+        "Kythirix",
+        "CosmicDreams",
+        "SaphyDKarosu",
+        "OogaBoogaBewba",
+        "walrus159",
+        "Gr0nch",
+        "LucazVognare",
+        "amisthiosintraining",
+        "MoragLadair1",
+        "hyperspacepotato",
+        "CherryTheGoth"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -304,7 +328,9 @@
         "RuJiuWood",
         "Eyre11",
         "duoa",
-        "kadnUt"
+        "kadnUt",
+        "CosmicDreams",
+        "CherryTheGoth"
       ],
       "icon": "https://f.rpghq.org/b1PMDDCK0hrc.png"
     },
@@ -325,7 +351,8 @@
         "HollownessDevoured",
         "Vicn",
         "Roadhouse699",
-        "trainwiz"
+        "trainwiz",
+        "Protoplast"
       ],
       "icon": "https://f.rpghq.org/vmGUvrmZuOFz.png?n=pasted-file.png"
     },
@@ -352,7 +379,8 @@
         "HollownessDevoured",
         "Roadhouse699",
         "AndrealphusVIII",
-        "trainwiz"
+        "trainwiz",
+        "Protoplast"
       ],
       "icon": "https://f.rpghq.org/H8CVupxrNCt3.png"
     },
@@ -1465,12 +1493,6 @@
       }
     },
     "NoraLee": {
-      "Pride Flag Modder": {
-        "label": null,
-        "referenceLink": null
-      }
-    },
-    "MrMadre": {
       "Pride Flag Modder": {
         "label": null,
         "referenceLink": null
@@ -2628,6 +2650,170 @@
       "Troon": {
         "label": null,
         "referenceLink": null
+      }
+    },
+    "instantPR": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/mysummercar/mods/5542"
+      }
+    },
+    "Baddtraxx": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/fallout76/mods/959"
+      }
+    },
+    "AngelLeyend": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/genshinimpact/mods/95"
+      }
+    },
+    "Daveyin": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/streetfighter6/mods/965"
+      }
+    },
+    "RavenShade1": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/supermarketsimulator/mods/332"
+      }
+    },
+    "Novelyst": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/skyrimspecialedition/mods/92646"
+      }
+    },
+    "Athlov": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/masseffectandromeda/mods/867"
+      }
+    },
+    "fredvonf": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/doometernal/mods/1345"
+      }
+    },
+    "bensxbd": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/batmanarkhamknight/mods/649"
+      }
+    },
+    "Malaionus": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/kingdomhearts3/mods/863"
+      }
+    },
+    "Elvenbeard": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/cyberpunk2077/mods/8620"
+      }
+    },
+    "Dekania": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/hitman3/mods/141"
+      }
+    },
+    "JustSomeIdiotOnline": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/dyinglight2/mods/879"
+      }
+    },
+    "401kplan": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/metalgearsolidvtpp/mods/1746"
+      }
+    },
+    "Kythirix": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/groundbranch/mods/105"
+      }
+    },
+    "CosmicDreams": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/starwarsbattlefront22017/mods/5739"
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/starwarsbattlefront22017/mods/5531"
+      }
+    },
+    "SaphyDKarosu": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/ultimatemarvelvscapcom3/mods/89"
+      }
+    },
+    "OogaBoogaBewba": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/jurassicworldevolution2/mods/1121"
+      }
+    },
+    "walrus159": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/cyberpunk2077/mods/4896"
+      }
+    },
+    "Gr0nch": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/marvelsspidermanremastered/mods/512"
+      }
+    },
+    "LucazVognare": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/stray/mods/47"
+      }
+    },
+    "amisthiosintraining": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/control/mods/85"
+      }
+    },
+    "MoragLadair1": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/doometernal/mods/1243"
+      }
+    },
+    "hyperspacepotato": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": "https://www.nexusmods.com/20minutestildawn/mods/14"
+      }
+    },
+    "CherryTheGoth": {
+      "Pride Flag Modder": {
+        "label": null,
+        "referenceLink": null
+      },
+      "Troon": {
+        "label": null,
+        "referenceLink": null
+      }
+    },
+    "Protoplast": {
+      "Flight Risk": {
+        "label": "Mod author deleted my comment in which I emphasized, and showcased with an image, how his mod breaks the camera (and sometimes awkwardly positions it due to game collisions) during interactions with the modded dog (Mutt) at x1.5 scale and I suggested to use the x1.1 scale version instead so that future players are aware of the severity of the issue. The modder downplays the issue in the mod description.",
+        "referenceLink": "https://www.nexusmods.com/kingdomcomedeliverance/mods/1865?tab=posts"
       }
     }
   }
