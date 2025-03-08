@@ -271,6 +271,14 @@
     "kingdomcomedeliverance": {
       "BROKEN": [
         "1829"
+      ],
+      "INFORMATIVE": [
+        "1715"
+      ]
+    },
+    "kingdomcomedeliverance2": {
+      "LAME": [
+        "1214"
       ]
     }
   },
@@ -891,6 +899,14 @@
     "kingdomcomedeliverance": {
       "1829": {
         "reason": "Modder called itsbttq blocks comments regarding his mods. Engages in bad practices.\n"
+      },
+      "1715": {
+        "reason": "Several settings in its configuration are dependent on the player's hardware for compatibility (number of CPU cores, multithreading, physics set to CPU or GPU, maximum amount of VRAM, etc.) This mod can break some people's game, and increase FPS for others. Players should be aware of these crucial settings in the configuration files before playing with the mod. But the author avoids that, even falsely claiming that it works for ALL systems."
+      }
+    },
+    "kingdomcomedeliverance2": {
+      "1214": {
+        "reason": "Author snuck in giving Henry a gay tattoo over his ass crack. Mod would be fine otherwise."
       }
     }
   },

@@ -215,7 +215,8 @@
         "amisthiosintraining",
         "MoragLadair1",
         "hyperspacepotato",
-        "CherryTheGoth"
+        "CherryTheGoth",
+        "DDVaMpZzz"
       ],
       "icon": "https://f.rpghq.org/0BfQ7ahUIA7b.png"
     },
@@ -2814,6 +2815,12 @@
       "Flight Risk": {
         "label": "Mod author deleted my comment in which I emphasized, and showcased with an image, how his mod breaks the camera (and sometimes awkwardly positions it due to game collisions) during interactions with the modded dog (Mutt) at x1.5 scale and I suggested to use the x1.1 scale version instead so that future players are aware of the severity of the issue. The modder downplays the issue in the mod description.",
         "referenceLink": "https://www.nexusmods.com/kingdomcomedeliverance/mods/1865?tab=posts"
+      }
+    },
+    "DDVaMpZzz": {
+      "Pride Flag Modder": {
+        "label": "Modded  Henry in KCD2 to have a tattoo saying \"Capon's Stable\" in a seemingly innocuous \" 4k Enhanced Henry's body' mod",
+        "referenceLink": "https://www.nexusmods.com/kingdomcomedeliverance2/mods/1214?tab=files"
       }
     }
   }
