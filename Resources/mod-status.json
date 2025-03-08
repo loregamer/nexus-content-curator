@@ -280,6 +280,11 @@
       "LAME": [
         "1214"
       ]
+    },
+    "fallout4": {
+      "INFORMATIVE": [
+        "72256"
+      ]
     }
   },
   "Mod Descriptors": {
@@ -907,6 +912,11 @@
     "kingdomcomedeliverance2": {
       "1214": {
         "reason": "Author snuck in giving Henry a gay tattoo over his ass crack. Mod would be fine otherwise."
+      }
+    },
+    "fallout4": {
+      "72256": {
+        "reason": "If using Neon Flats, will screw up a door."
       }
     }
   },
