@@ -285,6 +285,9 @@
     "fallout4": {
       "INFORMATIVE": [
         "72256"
+      ],
+      "LAME": [
+        "57842"
       ]
     }
   },
@@ -921,6 +924,9 @@
     "fallout4": {
       "72256": {
         "reason": "If using Neon Flats, will screw up a door."
+      },
+      "57842": {
+        "reason": "null Isn't an ESL because the author is an ass not because he can't do it.\n- Nexus version a is truncated version of the original. \n- Actual mod (varying on system specs) can cause CTDs.\n- Has a nasty habit of interrupting scripted dialogs in other mods. Sim Settlements 2, etc."
       }
     }
   },
