@@ -228,7 +228,8 @@
         "12604",
         "6194",
         "22306",
-        "29069"
+        "29069",
+        "10649"
       ]
     },
     "site": {
@@ -819,6 +820,9 @@
       },
       "29069": {
         "reason": "Author wrote a long essay rejecting that his mods have social justice themes. Take caution.\n"
+      },
+      "10649": {
+        "reason": "null Conflicts with Hearthfire!\n- Lots of errors. Not worth fixing."
       }
     },
     "site": {
