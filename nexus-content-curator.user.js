@@ -873,13 +873,15 @@
       padding: 0 0.75rem;
       min-width: 6rem;
       cursor: pointer;
-      background: #C62D51;
+      background: #242A36;
       color: white;
-      border: none;
+      border: 1px solid #C62D51;
+      transition: all 0.3s ease;
+      animation: reportButtonPulse 2s infinite;
     }
 
     .author-report-button:hover {
-      background: #A02442;
+      background: #2d3545;
     }
 
     .author-report-button span {
@@ -891,6 +893,8 @@
     .author-report-form {
       width: 600px;
       max-width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .author-report-form textarea {
@@ -928,8 +932,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 300px;
-      overflow-y: auto;
       padding: 10px;
       background: #333;
       border-radius: 4px;
@@ -2887,10 +2889,10 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
 
     button.innerHTML = `
       <span>
-        <svg viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem" role="presentation" class="shrink-0 -ml-0.5">
+        <svg viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem;transform:rotate(180deg);margin-right:5px;" role="presentation" class="shrink-0 -ml-0.5">
           <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" style="fill:currentColor"/>
         </svg>
-        <span class="typography-body-lg grow text-left leading-5">Report to HQ</span>
+        <span class="typography-body-lg grow text-left leading-5">Report to <span style="color: #F5575D">H</span><span style="color: #3889ED">Q</span></span>
       </span>
     `;
 
@@ -2988,7 +2990,12 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
       <div class="form-overlay">
         <div class="mod-report-form author-report-form">
           <button class="close">&times;</button>
-          <h2>Report Author to HQ</h2>
+          <h2>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" />
+</svg>
+            Report Author to HQ
+          </h2>
           
           <div class="form-group">
             <label>Author Username</label>
