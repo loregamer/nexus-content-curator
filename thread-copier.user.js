@@ -119,8 +119,19 @@ SOFTWARE.
 
   // Function to replace standalone "-" with "null" in report text
   function replaceHyphensWithNull(text) {
-    // Replace standalone "-" that appears after a colon and whitespace
-    return text.replace(/:\s*-(\s|$)/g, ": null$1");
+    // Split the text into lines
+    const lines = text.split('\n');
+    
+    // Process each line
+    const processedLines = lines.map(line => {
+      // Only replace if it's not in the Reason field or if it's a standalone hyphen
+      if (!line.startsWith('Reason:')) {
+        return line.replace(/:\s*-(\s|$)/g, ': null$1');
+      }
+      return line;
+    });
+    
+    return processedLines.join('\n');
   }
 
   // Function to copy text to clipboard
