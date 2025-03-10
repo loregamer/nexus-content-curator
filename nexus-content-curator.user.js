@@ -2625,8 +2625,8 @@
           </div>
           
           <div class="form-group">
-            <label>Reason</label>
-            <textarea id="modReason" placeholder="Explain why this mod should be reported..."></textarea>
+            <label>Reason <span style="color: #C62D51;">*</span></label>
+            <textarea id="modReason" placeholder="Explain why this mod should be reported..." required></textarea>
           </div>
           
           <div class="form-group">
@@ -2725,8 +2725,17 @@
     const gameShortname = document.querySelector("#gameShortname").value;
     const modId = document.querySelector("#modId").value;
     const status = document.querySelector('input[name="modStatus"]:checked').value;
-    const reason = document.querySelector("#modReason").value;
+    const reasonElement = document.querySelector("#modReason");
+    const reason = reasonElement.value.trim();
     const alternative = document.querySelector("#modAlternative").value;
+
+    // Validate that reason is provided
+    if (!reason) {
+      reasonElement.style.borderColor = "#C62D51";
+      reasonElement.style.boxShadow = "0 0 0 2px rgba(198, 45, 81, 0.25)";
+      reasonElement.focus();
+      return;
+    }
 
     const modTitle = stripEmojis(
       document.querySelector("#pagetitle h1")?.textContent.trim() ||
