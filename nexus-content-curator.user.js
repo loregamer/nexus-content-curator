@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.9.1
+// @version      1.10
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1264,7 +1264,7 @@
       .replace(/\n/g, "<br>"); // Replace actual newlines with <br> tags
     // Replace underscores with spaces in status type
     const formattedType = status.type.replace(/_/g, " ");
-    textContainer.innerHTML = `<strong>${formattedType}:</strong> ${formattedReason}`;
+    textContainer.innerHTML = `${formattedReason}`;
 
     const actionsContainer = document.createElement("div");
     actionsContainer.className = "warning-actions";
@@ -1801,7 +1801,7 @@
         const showTooltip = (e) => {
           let tooltipText = "";
           if (closedPermissions.length > 0) {
-            tooltipText = `This mod has closed or restricted permissions <span style="font-size: 0.85em;">(${closedPermissions.join(
+            tooltipText = `This mod has closed or restricted permissions\n<span style="font-size: 0.85em;">(${closedPermissions.join(
               ", "
             )})</span>`;
           } else if (
@@ -1809,12 +1809,12 @@
             customPermissions.length === 0 &&
             closedPermissions.length === 0
           ) {
-            tooltipText = `This mod has open permissions <span style="font-size: 0.85em;">(${openPermissions.join(
+            tooltipText = `This mod has open permissions\n<span style="font-size: 0.85em;">(${openPermissions.join(
               ", "
             )})</span>`;
           } else {
             const allPermissions = [...openPermissions, ...customPermissions];
-            tooltipText = `This mod has custom permissions <span style="font-size: 0.85em;">(${allPermissions.join(
+            tooltipText = `This mod has custom permissions\n<span style="font-size: 0.85em;">(${allPermissions.join(
               ", "
             )})</span>`;
           }
@@ -1966,7 +1966,7 @@
     // Add tooltip handlers
     const showTooltip = (e) => {
       tooltip.innerHTML = formatTooltipText(
-        `<strong>${status.type.replace(/_/g, " ")}:</strong> ${status.reason}`
+        `<strong>${status.type.replace(/_/g, " ")}</strong><br><br> ${status.reason}`
       );
       tooltip.style.display = "block";
       updateTooltipPosition(e);
@@ -3036,7 +3036,7 @@ ${l.type}:
             indicator.style.transform = "scale(1.3)";
             tooltip.innerHTML = formatTooltipText(
               tooltipText === null ? labelData.label : tooltipText,
-              referenceLink && referenceLink !== null ? "Click to learn more" : ""
+              referenceLink && referenceLink !== null ? "\nClick to learn more" : ""
             );
             tooltip.style.display = "block";
             updateTooltipPosition(e);
