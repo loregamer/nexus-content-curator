@@ -559,96 +559,223 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #2a2a2a;
-      padding: 20px;
+      background: #1e1e1e;
+      padding: 24px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       z-index: 10000;
-      width: 500px;
+      width: 550px;
       max-width: 90vw;
       color: white;
-      font-size: 13px;
+      font-size: 14px;
+      border: 1px solid #333;
     }
 
     .mod-report-form.active {
       display: block;
+      animation: formFadeIn 0.3s ease;
+    }
+
+    @keyframes formFadeIn {
+      from { opacity: 0; transform: translate(-50%, -48%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
     }
 
     .mod-report-form h2 {
-      margin: 0 0 20px;
+      margin: 0 0 24px;
       color: white;
-      font-size: 16px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 12px;
+    }
+
+    .mod-report-form h2 svg {
+      width: 24px;
+      height: 24px;
+      fill: #C62D51;
     }
 
     .mod-report-form .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 18px;
     }
 
     .mod-report-form label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       color: #ddd;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 500;
     }
 
     .mod-report-form input[type="text"],
-    .mod-report-form select,
     .mod-report-form textarea {
       width: 100%;
-      padding: 8px;
+      padding: 10px 12px;
       border: 1px solid #444;
       border-radius: 4px;
-      background: #333;
+      background: #2a2a2a;
       color: white;
-      font-family: monospace;
-      font-size: 12px;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 13px;
       word-wrap: break-word;
       white-space: pre-wrap;
       overflow-wrap: break-word;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .mod-report-form input[type="text"]:focus,
+    .mod-report-form textarea:focus,
+    .mod-report-form select:focus {
+      border-color: #C62D51;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(198, 45, 81, 0.25);
+    }
+
+    .mod-report-form select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background: #2a2a2a;
+      color: white;
+      font-size: 13px;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px top 50%;
+      background-size: 12px auto;
+      padding-right: 30px;
+    }
+
+    .mod-report-form .status-options {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .mod-report-form .status-option {
+      flex: 1;
+      position: relative;
+    }
+
+    .mod-report-form .status-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .mod-report-form .status-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      margin: 0;
+    }
+
+    .mod-report-form .status-option input[type="radio"]:checked + label {
+      background: #3a2a2a;
+      border-color: #C62D51;
+      box-shadow: 0 0 0 2px rgba(198, 45, 81, 0.25);
+    }
+
+    .mod-report-form .status-option label:hover {
+      background: #333;
+    }
+
+    .mod-report-form .status-option .status-icon {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .mod-report-form .status-option .status-name {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .mod-report-form .status-option .status-desc {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 4px;
     }
 
     .mod-report-form .buttons {
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 12px;
+      margin-top: 24px;
+      justify-content: flex-end;
     }
 
     .mod-report-form button {
-      padding: 8px 16px;
+      padding: 10px 16px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      background: #4a4a4a;
-      color: white;
-      transition: background 0.2s;
+      font-weight: 500;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
     }
 
-    .mod-report-form button:hover {
-      background: #5a5a5a;
+    .mod-report-form button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .mod-report-form button.secondary {
+      background: #333;
+      color: white;
+    }
+
+    .mod-report-form button.secondary:hover {
+      background: #444;
     }
 
     .mod-report-form button.primary {
-      background: #007bff;
+      background: #C62D51;
+      color: white;
     }
 
     .mod-report-form button.primary:hover {
-      background: #0056b3;
+      background: #d13359;
+      transform: translateY(-1px);
     }
 
     .mod-report-form .close {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 16px;
+      right: 16px;
       background: none;
       border: none;
       color: #999;
       cursor: pointer;
       font-size: 20px;
       padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
     }
 
     .mod-report-form .close:hover {
       color: white;
+      background: rgba(255,255,255,0.1);
     }
 
     .form-overlay {
@@ -658,18 +785,26 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.7);
       z-index: 9999;
+      backdrop-filter: blur(2px);
     }
 
     .form-overlay.active {
       display: block;
+      animation: overlayFadeIn 0.3s ease;
+    }
+
+    @keyframes overlayFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .mod-report-form .readonly-input {
       background: #222;
       cursor: default;
       user-select: all;
+      color: #aaa;
     }
 
     .mod-report-form .readonly-input:focus {
@@ -677,19 +812,50 @@
     }
 
     .mod-report-form textarea {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #444;
-      border-radius: 4px;
-      background: #333;
-      color: white;
-      font-family: monospace;
-      font-size: 12px;
-      min-height: 80px;
+      min-height: 100px;
       resize: vertical;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
+      line-height: 1.5;
+    }
+
+    .mod-report-form .form-info {
+      background: #2a2a2a;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 18px;
+      border-left: 3px solid #C62D51;
+    }
+
+    .mod-report-form .form-info p {
+      margin: 0;
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    .mod-report-form .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .mod-report-form .form-row .form-group {
+      flex: 1;
+    }
+
+    .mod-report-form .input-icon {
+      position: relative;
+    }
+
+    .mod-report-form .input-icon svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      fill: #777;
+    }
+
+    .mod-report-form .input-icon input {
+      padding-left: 36px;
     }
   `;
 
@@ -2389,38 +2555,103 @@
 
   // Create form HTML
   function createFormHTML() {
+    const { gameId, modId } = getGameAndModId();
+    const modTitle = document.querySelector("#pagetitle h1")?.textContent.trim() || "Unknown Mod";
+    
     return `
       <div class="form-overlay">
         <div class="mod-report-form">
           <button class="close">&times;</button>
-          <h2>Report Mod Status</h2>
-          <div class="form-group">
-            <label>Game Shortname</label>
-            <input type="text" id="gameShortname" readonly class="readonly-input" disabled>
+          <h2>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" />
+            </svg>
+            Report Mod Status
+          </h2>
+          
+          <div class="form-info">
+            <p>Reporting: <strong>${stripEmojis(modTitle)}</strong></p>
           </div>
-          <div class="form-group">
-            <label>Mod ID</label>
-            <input type="text" id="modId" readonly class="readonly-input" disabled>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Game Shortname</label>
+              <div class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M21,6H3A2,2 0 0,0 1,8V16A2,2 0 0,0 3,18H21A2,2 0 0,0 23,16V8A2,2 0 0,0 21,6M21,16H3V8H21M6,15H8V13H10V11H8V9H6V11H4V13H6M14.5,12A1.5,1.5 0 0,1 16,13.5A1.5,1.5 0 0,1 14.5,15A1.5,1.5 0 0,1 13,13.5A1.5,1.5 0 0,1 14.5,12M18.5,9A1.5,1.5 0 0,1 20,10.5A1.5,1.5 0 0,1 18.5,12A1.5,1.5 0 0,1 17,10.5A1.5,1.5 0 0,1 18.5,9Z" />
+                </svg>
+                <input type="text" id="gameShortname" value="${gameId}" readonly class="readonly-input" disabled>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Mod ID</label>
+              <div class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" />
+                </svg>
+                <input type="text" id="modId" value="${modId}" readonly class="readonly-input" disabled>
+              </div>
+            </div>
           </div>
+          
           <div class="form-group">
             <label>Status</label>
-            <select id="modStatus">
-              <option value="BROKEN">Broken</option>
-              <option value="LAME">Sucks</option>
-              <option value="INFORMATIVE">Informative</option>
-            </select>
+            <div class="status-options">
+              <div class="status-option">
+                <input type="radio" id="status-broken" name="modStatus" value="BROKEN" checked>
+                <label for="status-broken">
+                  <span class="status-icon">⛔</span>
+                  <span class="status-name">Broken</span>
+                  <span class="status-desc">Mod doesn't work properly</span>
+                </label>
+              </div>
+              <div class="status-option">
+                <input type="radio" id="status-lame" name="modStatus" value="LAME">
+                <label for="status-lame">
+                  <span class="status-icon">👎</span>
+                  <span class="status-name">Sucks</span>
+                  <span class="status-desc">Low quality or problematic</span>
+                </label>
+              </div>
+              <div class="status-option">
+                <input type="radio" id="status-info" name="modStatus" value="INFORMATIVE">
+                <label for="status-info">
+                  <span class="status-icon">ℹ️</span>
+                  <span class="status-name">Informative</span>
+                  <span class="status-desc">Important info about this mod</span>
+                </label>
+              </div>
+            </div>
           </div>
+          
           <div class="form-group">
-            <label>Reason (optional)</label>
-            <textarea id="modReason" rows="3"></textarea>
+            <label>Reason</label>
+            <textarea id="modReason" placeholder="Explain why this mod should be reported..."></textarea>
           </div>
+          
           <div class="form-group">
             <label>Alternative Mod Link (optional)</label>
-            <input type="text" id="modAlternative">
+            <div class="input-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z" />
+              </svg>
+              <input type="text" id="modAlternative" placeholder="https://www.nexusmods.com/...">
+            </div>
           </div>
+          
           <div class="buttons">
-            <button class="primary" id="copyToClipboard">Copy to Clipboard</button>
-            <button id="closeForm">Close</button>
+            <button class="secondary" id="closeForm">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+              </svg>
+              Cancel
+            </button>
+            <button class="primary" id="copyToClipboard">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+              </svg>
+              Copy to Clipboard
+            </button>
           </div>
         </div>
       </div>
@@ -2493,7 +2724,7 @@
   function copyFormToClipboard() {
     const gameShortname = document.querySelector("#gameShortname").value;
     const modId = document.querySelector("#modId").value;
-    const status = document.querySelector("#modStatus").value;
+    const status = document.querySelector('input[name="modStatus"]:checked').value;
     const reason = document.querySelector("#modReason").value;
     const alternative = document.querySelector("#modAlternative").value;
 
@@ -2736,7 +2967,7 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
             </label>
           </div>
           <div class="label-details">
-            <input type="text" class="label-text" placeholder="Custom label text (optional)" value="${info.defaultLabel || ''}">
+            <input type="text" class="label-text" placeholder="Custom label override (optional)" value="">
             <input type="text" class="reference-link" placeholder="Reference link (optional)">
           </div>
         </div>
