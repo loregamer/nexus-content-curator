@@ -143,7 +143,8 @@
         "5468",
         "5397",
         "10066",
-        "6977"
+        "6977",
+        "12402"
       ]
     },
     "newvegas": {
@@ -229,7 +230,11 @@
         "6194",
         "22306",
         "29069",
-        "10649"
+        "10649",
+        "14098",
+        "63863",
+        "40494",
+        "11278"
       ]
     },
     "site": {
@@ -288,6 +293,11 @@
       ],
       "LAME": [
         "57842"
+      ]
+    },
+    "stardewvalley": {
+      "INFORMATIVE": [
+        "17059"
       ]
     }
   },
@@ -690,6 +700,9 @@
       },
       "6977": {
         "reason": "Allows male characters to wear dresses, feminine corsets and weird booby armours."
+      },
+      "12402": {
+        "reason": "In theory a good upscale, but if your character's textures are reverting to their lowest quality, this is probably why."
       }
     },
     "newvegas": {
@@ -826,6 +839,19 @@
       },
       "10649": {
         "reason": "null Conflicts with Hearthfire!\n- Lots of errors. Not worth fixing."
+      },
+      "14098": {
+        "reason": "- Includes very old version of Papyrus Utilities.\n- If on Skyrim 1170-ish also grab the alternative download.",
+        "alternative": "https://www.nexusmods.com/skyrimspecialedition/mods/24297?tab=files"
+      },
+      "63863": {
+        "reason": "- Headshots can cause problems with death alternative mods. (AE or SE)."
+      },
+      "40494": {
+        "reason": "- AI Voice is so bad it may cause ear cancer. (Remove voice folder on installation!)\n- Alters a lot of exterior zones. (Will require redoing LOD.)\n- Plots are middling to stupid. \n- Interiors are some of the worst I've ever seen. There is a mod that fixes them up but one has to go to LL."
+      },
+      "11278": {
+        "reason": "- Will go gay if given the option.\n- Main appearance is still a potato head, get a replacer!"
       }
     },
     "site": {
@@ -927,6 +953,11 @@
       },
       "57842": {
         "reason": "null Isn't an ESL because the author is an ass not because he can't do it.\n- Nexus version a is truncated version of the original. \n- Actual mod (varying on system specs) can cause CTDs.\n- Has a nasty habit of interrupting scripted dialogs in other mods. Sim Settlements 2, etc."
+      }
+    },
+    "stardewvalley": {
+      "17059": {
+        "reason": "Mod Author is an absolute loser who not only had to diversify Stardew Valley but is seemingly unemployed and spends all day monitoring the SV nexus page to see if someone uploaded a fixed version of a closed permissions mod so they can scream at them about theft."
       }
     }
   },
