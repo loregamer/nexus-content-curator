@@ -885,7 +885,6 @@
     }
 
     .author-report-button span {
-      display: flex;
       align-items: center;
       gap: 0.375rem;
     }
@@ -2889,9 +2888,6 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
 
     button.innerHTML = `
       <span>
-        <svg viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem;transform:rotate(180deg);margin-right:5px;" role="presentation" class="shrink-0 -ml-0.5">
-          <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" style="fill:currentColor"/>
-        </svg>
         <span class="typography-body-lg grow text-left leading-5">Report to <span style="color: #F5575D">H</span><span style="color: #3889ED">Q</span></span>
       </span>
     `;
