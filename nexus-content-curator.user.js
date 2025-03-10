@@ -835,10 +835,47 @@
     }
 
     .label-icon {
-      width: 16px;
-      height: 16px;
+      width: 32px;
+      height: 32px;
       object-fit: contain;
     }
+    
+    .label-image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .label-image-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 8px;
+      background: #2a2a2a;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    
+    .label-image-item:hover {
+      background: #333;
+    }
+    
+    .label-image-item.selected {
+      border-color: #C62D51;
+      background: #3a2a2a;
+    }
+    
+    .label-image-item img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+    
+    /* Remove label name display */
   `;
 
   // Add styles to document
@@ -2673,10 +2710,22 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
       };
     }
 
+    // Create image grid for selection (without text labels)
+    const imageGrid = Object.entries(labels)
+      .map(
+        ([name, info]) => `
+        <div class="label-image-item" data-label="${name}">
+          <img src="${info.icon}" alt="${name}" class="label-icon">
+        </div>
+      `
+      )
+      .join("");
+
+    // Create hidden label rows for form submission
     const labelRows = Object.entries(labels)
       .map(
         ([name, info]) => `
-        <div class="label-row" data-label="${name}">
+        <div class="label-row" data-label="${name}" style="display: none;">
           <div class="label-header">
             <input type="checkbox" id="label-${name
               .toLowerCase()
@@ -2686,8 +2735,8 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
               ${name}
             </label>
           </div>
-          <div class="label-details" style="display: none;">
-            <input type="text" class="label-text" placeholder="Custom label text (optional)">
+          <div class="label-details">
+            <input type="text" class="label-text" placeholder="Custom label text (optional)" value="${info.defaultLabel || ''}">
             <input type="text" class="reference-link" placeholder="Reference link (optional)">
           </div>
         </div>
@@ -2707,7 +2756,13 @@ Status: ${status}${reason ? `\nReason: ${reason}` : ""}${
           </div>
           
           <div class="form-group">
-            <label>Labels</label>
+            <div class="label-image-grid">
+              ${imageGrid}
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Selected Labels</label>
             <div class="label-selections">
               ${labelRows}
             </div>
@@ -2875,34 +2930,33 @@ ${l.type}:
 
   // Update the setupLabelDetailsToggle function
   function setupLabelDetailsToggle() {
+    // Set up image grid selection
+    document.querySelectorAll(".label-image-item").forEach((item) => {
+      const labelName = item.getAttribute("data-label");
+      
+      item.addEventListener("click", () => {
+        // Toggle selected state
+        item.classList.toggle("selected");
+        
+        // Find corresponding label row
+        const labelRow = document.querySelector(`.label-row[data-label="${labelName}"]`);
+        if (labelRow) {
+          const checkbox = labelRow.querySelector('input[type="checkbox"]');
+          
+          // Toggle checkbox and show/hide details
+          checkbox.checked = item.classList.contains("selected");
+          
+          // Show the row if selected
+          labelRow.style.display = checkbox.checked ? "flex" : "none";
+        }
+      });
+    });
+    
+    // Set up label rows for editing details
     document.querySelectorAll(".label-row").forEach((row) => {
       const checkbox = row.querySelector('input[type="checkbox"]');
       const details = row.querySelector(".label-details");
-      const labelHeader = row.querySelector(".label-header");
-
-      // Function to handle state change
-      const toggleState = (checked) => {
-        checkbox.checked = checked;
-        details.style.display = checked ? "flex" : "none";
-      };
-
-      // Handle label header click (the main row area)
-      labelHeader.addEventListener("click", (e) => {
-        // Don't toggle if clicking directly on the checkbox (let its native behavior work)
-        if (e.target === checkbox) {
-          return;
-        }
-
-        toggleState(!checkbox.checked);
-        e.preventDefault();
-        e.stopPropagation();
-      });
-
-      // Handle checkbox change
-      checkbox.addEventListener("change", (e) => {
-        toggleState(e.target.checked);
-      });
-
+      
       // Prevent clicks in the details section from toggling the checkbox
       details.addEventListener("click", (e) => {
         e.stopPropagation();
