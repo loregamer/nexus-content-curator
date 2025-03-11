@@ -353,7 +353,8 @@
         "Vicn",
         "Roadhouse699",
         "trainwiz",
-        "Protoplast"
+        "Protoplast",
+        "kylin3"
       ],
       "icon": "https://f.rpghq.org/vmGUvrmZuOFz.png?n=pasted-file.png"
     },
@@ -2821,6 +2822,12 @@
       "Pride Flag Modder": {
         "label": "Modded  Henry in KCD2 to have a tattoo saying \"Capon's Stable\" in a seemingly innocuous \" 4k Enhanced Henry's body' mod",
         "referenceLink": "https://www.nexusmods.com/kingdomcomedeliverance2/mods/1214?tab=files"
+      }
+    },
+    "kylin3": {
+      "Flight Risk": {
+        "label": "Author refused to update one of their mod any further because \"someone stole their work\".",
+        "referenceLink": null
       }
     }
   }

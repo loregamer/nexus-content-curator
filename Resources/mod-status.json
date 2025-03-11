@@ -144,7 +144,8 @@
         "5397",
         "10066",
         "6977",
-        "12402"
+        "12402",
+        "2631"
       ]
     },
     "newvegas": {
@@ -703,6 +704,9 @@
       },
       "12402": {
         "reason": "In theory a good upscale, but if your character's textures are reverting to their lowest quality, this is probably why."
+      },
+      "2631": {
+        "reason": "This mod replaces the entire Language files and their lines. It will be incompatible with any content mod, like No Alphabets."
       }
     },
     "newvegas": {
