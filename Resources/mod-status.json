@@ -81,7 +81,8 @@
         "5747",
         "5100",
         "5011",
-        "7133"
+        "7133",
+        "6708"
       ],
       "ABANDONED": [],
       "CAUTION": [
@@ -145,7 +146,8 @@
         "10066",
         "6977",
         "12402",
-        "2631"
+        "2631",
+        "2409"
       ]
     },
     "newvegas": {
@@ -299,6 +301,14 @@
     "stardewvalley": {
       "INFORMATIVE": [
         "17059"
+      ]
+    },
+    "dragonballsparkingzero": {
+      "BROKEN": [
+        "29"
+      ],
+      "INFORMATIVE": [
+        "149"
       ]
     }
   },
@@ -707,6 +717,13 @@
       },
       "2631": {
         "reason": "This mod replaces the entire Language files and their lines. It will be incompatible with any content mod, like No Alphabets."
+      },
+      "6708": {
+        "reason": "This is a worse and more broken version of Sit This One Out 2's random mode.",
+        "alternative": "https://www.nexusmods.com/baldursgate3/mods/6183"
+      },
+      "2409": {
+        "reason": "Custom closed perms."
       }
     },
     "newvegas": {
@@ -962,6 +979,14 @@
     "stardewvalley": {
       "17059": {
         "reason": "Mod Author is an absolute loser who not only had to diversify Stardew Valley but is seemingly unemployed and spends all day monitoring the SV nexus page to see if someone uploaded a fixed version of a closed permissions mod so they can scream at them about theft."
+      }
+    },
+    "dragonballsparkingzero": {
+      "29": {
+        "reason": "The mod used to work fine, but after many game updates the mod hasn't kept up and is now either not working or, according to one comment, full of bugs."
+      },
+      "149": {
+        "reason": "The updated version (v1.4) of the mod is hidden behind a paywall. The author said it was only so that players could test it early, and that he would later release it to the public. It never was."
       }
     }
   },

@@ -503,7 +503,8 @@
         "Rigmor",
         "shadowman2777",
         "TREBoy",
-        "Magink666"
+        "Magink666",
+        "champagne26"
       ],
       "icon": "https://f.rpghq.org/xjhpiEPNoOV6.png"
     }
@@ -2828,6 +2829,12 @@
       "Flight Risk": {
         "label": "Author refused to update one of their mod any further because \"someone stole their work\".",
         "referenceLink": null
+      }
+    },
+    "champagne26": {
+      "Incident": {
+        "label": "Got mad someone edited a mod for PERSONAL use and didn't ask for permission",
+        "referenceLink": "https://www.nexusmods.com/baldursgate3/mods/15284?tab=posts&jump_to_comment=151175132"
       }
     }
   }
