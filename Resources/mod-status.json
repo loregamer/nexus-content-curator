@@ -315,8 +315,8 @@
   "Mod Descriptors": {
     "baldursgate3": {
       "899": {
-        "reason": "This mod will break your game. It's a buggy mess. Avoid like the plague",
-        "alternative": "https://rpghq.org/forums/viewtopic.php?t=3638-origin-mirror-unlock-1-2-1-2-baldur-s-gate-3&p=219459#p219459"
+        "reason": "This mod will break your game. It's a buggy mess. Avoid like the plague\n\nUse \"Origin Mirror Unlock\" instead.",
+        "alternative": "https://rpghq.org/forums/viewtopic.php?t=3638-origin-mirror-unlock-1-2-1-2-baldur-s-gate-3"
       },
       "141": {
         "reason": "This mod is no longer necessary if you are on Patch 7 or later.",
