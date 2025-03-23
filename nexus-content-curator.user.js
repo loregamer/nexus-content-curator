@@ -1154,7 +1154,19 @@
     .modpage .sideitems.side-tags h2 {display: none;}
 
     /* Keep the same color as other links */
-    .modtabs .alert {color: var(--theme-primary);}
+    .modtabs .alert {
+      color: var(--theme-primary);
+      display: inline-block;
+      font-size: 11px;
+      color: #fff;
+      padding: 2px 4px;
+      text-align: center;
+      border-radius: 2px;
+      position: relative;
+      margin: 0 0 0 5px;
+      top: -1px;
+      background-color: var(--theme-primary, #da8e35);
+    }
 
     /*
       Share and report buttons should be up in the header, not in the middle of the page wasting
