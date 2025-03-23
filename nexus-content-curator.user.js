@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.12.1
+// @version      1.12.3
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -37,6 +37,8 @@
     MOD_STATUS: "nexus_mod_status_data",
     AUTHOR_STATUS: "nexus_author_status_data",
     LAST_UPDATE: "nexus_data_last_update",
+    HIDDEN_MODS: "nexus_hidden_mods",
+    HIDDEN_AUTHORS: "nexus_hidden_authors",
   };
 
   // Cache duration in milliseconds (24 hours)
@@ -1433,6 +1435,10 @@
     hasCheckedCurrentMod = true;
     checkAuthorStatus();
     
+    // Apply hidden status to mods and authors
+    applyHiddenModStatus();
+    applyHiddenAuthorStatus();
+    
     // Process all mod tiles on page load
     const cachedData = getStoredData(STORAGE_KEYS.MOD_STATUS);
     if (cachedData) {
@@ -2004,6 +2010,15 @@
     const reportLi = document.createElement("li");
     reportLi.id = "action-report-hq";
 
+    // Create hide button
+    const hideLi = document.createElement("li");
+    hideLi.id = "action-hide-mod";
+    const hideButton = createHideModButton();
+    hideLi.appendChild(hideButton);
+    
+    // Add the hide button first
+    modActions.appendChild(hideLi);
+
     const reportButton = document.createElement("a");
     reportButton.className = "btn inline-flex";
     reportButton.style.cssText = `
@@ -2059,6 +2074,10 @@
       checkTimeout = setTimeout(() => {
         // Add report button
         addReportButton();
+        
+        // Apply hidden status to elements
+        applyHiddenModStatus();
+        applyHiddenAuthorStatus();
 
         // Add copy link buttons to any new comments
         addCopyLinkButtons();
@@ -2191,23 +2210,45 @@
     return null;
   }
 
-  // Modify checkModTileStatus to handle the new mod tile structure
+  // Function to check and add warning to mod tile if needed
   function checkModTileStatus(modTile) {
     // Find the title link in the new structure
     const titleLink = modTile.querySelector('[data-e2eid="mod-tile-title"]');
     if (!titleLink) {
-      console.warn("[Debug] Could not find title link in new tile structure");
       return null;
     }
 
     const match = titleLink.href.match(/nexusmods\.com\/([^\/]+)\/mods\/(\d+)/);
     if (!match) {
-      console.warn("[Debug] Could not parse game/mod ID from URL");
       return null;
     }
 
     const gameId = match[1];
     const modId = match[2];
+    
+    // Always add data attributes for game and mod ID
+    if (!modTile.hasAttribute("data-game")) {
+      modTile.setAttribute("data-game", gameId);
+    }
+    if (!modTile.hasAttribute("data-mod")) {
+      modTile.setAttribute("data-mod", modId);
+    }
+    
+    // Try to add author attribute if not already present
+    if (!modTile.hasAttribute("data-author")) {
+      const authorElement = modTile.querySelector('a[href*="/users/"]');
+      if (authorElement) {
+        const authorMatch = authorElement.href.match(/\/users\/([^\/]+)/);
+        if (authorMatch) {
+          modTile.setAttribute("data-author", authorMatch[1]);
+        }
+      }
+    }
+    
+    // Check if this mod is hidden and apply hidden style
+    if (isModHidden(gameId, modId)) {
+      modTile.style.display = 'none';
+    }
 
     return { gameId, modId };
   }
@@ -3529,6 +3570,15 @@ ${l.type}:
     // Check if button already exists
     if (buttonContainer.querySelector(".author-report-button")) return;
 
+    // Get author username from URL
+    const urlParts = window.location.pathname.split("/");
+    const usernameIndex = urlParts.indexOf("profile") + 1;
+    const username = usernameIndex < urlParts.length ? urlParts[usernameIndex] : "";
+
+    // Add the hide button first
+    const hideButton = createHideAuthorButton(username);
+    buttonContainer.appendChild(hideButton);
+
     // Add the report button
     const reportButton = createAuthorReportButton();
     buttonContainer.appendChild(reportButton);
@@ -3835,97 +3885,45 @@ ${l.type}:
 
   // Add new function to process all mod tiles at once
   function addModStatusToTiles(modStatusData) {
-    if (!modStatusData) {
-      console.warn("[Debug] No mod status data available");
-      return;
-    }
+    if (!modStatusData) return;
 
-    console.log("[Debug] Adding mod status to all tiles");
-    
-    // Get all mod tiles that haven't been processed yet
-    // Updated selector to match the new mod tile structure
-    const modTiles = document.querySelectorAll('div[data-e2eid="mod-tile"]:not(.status-processed)');
-    if (modTiles.length === 0) {
-      console.log("[Debug] No unprocessed mod tiles found");
-      return;
-    }
-    
-    console.log(`[Debug] Found ${modTiles.length} unprocessed mod tiles`);
-    
-    // For each tile, extract the mod ID and check if it has a status
-    modTiles.forEach(tile => {
-      // Get game and mod ID from the tile
-      const modInfo = checkModTileStatus(tile);
-      if (!modInfo) {
-        // Mark tile as processed even if we couldn't get mod info
-        tile.classList.add('status-processed');
-        return;
+    // Get all mod tiles on the page
+    const modTiles = document.querySelectorAll(".mod-tile");
+    modTiles.forEach((modTile) => {
+      // Skip if already processed
+      if (modTile.getAttribute("data-processed")) return;
+
+      const modNameElement = modTile.querySelector(".tile-name a");
+      if (!modNameElement) return;
+
+      const modUrl = modNameElement.getAttribute("href");
+      if (!modUrl) return;
+
+      // Get game name and mod ID from URL
+      // URL format: /gamename/mods/moduleid
+      const modUrlParts = modUrl.split("/");
+      if (modUrlParts.length < 4) return;
+
+      const gameName = modUrlParts[1];
+      const modId = modUrlParts[3];
+
+      // Add data attributes to the mod tile for easier targeting
+      modTile.setAttribute("data-game", gameName);
+      modTile.setAttribute("data-mod", modId);
+
+      // Get author name
+      const authorElement = modTile.querySelector(".tile-info a[rel='author']");
+      if (authorElement) {
+        const authorName = authorElement.textContent.trim();
+        modTile.setAttribute("data-author", authorName);
       }
-      
-      const { gameId, modId } = modInfo;
-      
-      // Look for an explicit status for this mod
-      const gameStatuses = modStatusData["Mod Statuses"]?.[gameId];
-      let foundStatus = null;
-      let statusType = null;
-      
-      if (gameStatuses) {
-        for (const [type, modList] of Object.entries(gameStatuses)) {
-          if (modList.includes(modId)) {
-            foundStatus = type;
-            statusType = type;
-            break;
-          }
-        }
-      }
-      
-      if (foundStatus) {
-        // Create status object
-        const status = {
-          type: foundStatus === "CAUTION" ? "INFORMATIVE" : foundStatus,
-          reason: `This mod is marked as ${foundStatus.toLowerCase()}`,
-          color: STATUS_TYPES[foundStatus === "CAUTION" ? "INFORMATIVE" : foundStatus]?.color || "#ff0000",
-        };
-        
-        // Check if we have additional descriptor info
-        const modDescriptor = modStatusData["Mod Descriptors"]?.[gameId]?.[modId];
-        if (modDescriptor) {
-          if (modDescriptor.reason) status.reason = modDescriptor.reason;
-          if (modDescriptor.alternative) status.alternative = modDescriptor.alternative;
-          if (modDescriptor.url) status.url = modDescriptor.url;
-          if (modDescriptor.icon) status.icon = modDescriptor.icon;
-        }
-        
-        // Add warning banner to the tile
-        addWarningBannerToTile(tile, status);
-      } else {
-        // If no explicit status was found, check keyword rules
-        const titleElement = tile.querySelector('[data-e2eid="mod-tile-title"]');
-        if (titleElement) {
-          const modTitle = titleElement.textContent.trim();
-          
-          // Check keyword rules
-          const keywordStatus = checkKeywordRules(modStatusData, gameId, modTitle);
-          if (keywordStatus) {
-            console.log("[Debug] Found keyword match for tile:", keywordStatus);
-            // Ensure CAUTION is converted to INFORMATIVE
-            if (keywordStatus.type === "CAUTION") {
-              keywordStatus.type = "INFORMATIVE";
-              keywordStatus.color = STATUS_TYPES["INFORMATIVE"]?.color || "#0088ff";
-            }
-            addWarningBannerToTile(tile, keywordStatus);
-          } else {
-            // Mark tile as processed even if no status was found
-            tile.classList.add('status-processed');
-          }
-        } else {
-          // Mark tile as processed even if no title element was found
-          tile.classList.add('status-processed');
-        }
-      }
+
+      // Mark as processed
+      modTile.setAttribute("data-processed", "true");
+
+      // Check mod status
+      checkModTileStatus(modTile);
     });
-    
-    console.log("[Debug] Finished processing mod tiles");
   }
 
   // Function to add Mod manager download buttons when they don't exist
@@ -4147,5 +4145,516 @@ ${l.type}:
         fileItem.textContent = fileItem.textContent.replace(/^[^\w]*/, icon + ' ');
       });
     });
+  }
+
+  // Function to hide a mod
+  function hideMod(gameId, modId) {
+    const key = `${gameId}:${modId}`;
+    const hiddenMods = GM_getValue(STORAGE_KEYS.HIDDEN_MODS, []);
+    if (!hiddenMods.includes(key)) {
+      hiddenMods.push(key);
+      GM_setValue(STORAGE_KEYS.HIDDEN_MODS, hiddenMods);
+    }
+    
+    // If on the mod page, hide the content
+    if (isModPage()) {
+      const mainContent = document.querySelector("#mod-page-content");
+      if (mainContent) {
+        mainContent.style.display = 'none';
+        
+        // Create informational banner
+        const banner = document.createElement('div');
+        banner.id = 'hidden-mod-banner';
+        banner.style.cssText = `
+          background-color: #242A36;
+          color: white;
+          padding: 15px;
+          text-align: center;
+          margin: 20px 0;
+          border: 1px solid #C62D51;
+          border-radius: 5px;
+        `;
+        banner.innerHTML = `
+          <p>This mod has been hidden by you.</p>
+          <button id="unhide-mod-btn" style="
+            background-color: #333;
+            color: white;
+            border: 1px solid #C62D51;
+            padding: 5px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+          ">Unhide Mod</button>
+        `;
+        
+        // Insert banner before the hidden content
+        mainContent.parentNode.insertBefore(banner, mainContent);
+        
+        // Add event listener to unhide button
+        document.getElementById('unhide-mod-btn').addEventListener('click', () => {
+          unhideMod(gameId, modId);
+          banner.remove();
+          mainContent.style.display = '';
+        });
+      }
+    } else {
+      // Just hide the mod tile if on listing page
+      const modElements = document.querySelectorAll(`.mod-tile[data-game="${gameId}"][data-mod="${modId}"]`);
+      modElements.forEach(el => {
+        el.style.display = 'none';
+      });
+    }
+    
+    // Update the button state if exists
+    const hideBtn = document.querySelector('#action-hide-mod a');
+    if (hideBtn) {
+      const svgIcon = hideBtn.querySelector('svg');
+      const label = hideBtn.querySelector('.flex-label');
+      
+      if (svgIcon) {
+        svgIcon.innerHTML = `
+          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" fill="currentColor"/>
+          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" fill="currentColor"/>
+        `;
+      }
+      
+      if (label) {
+        label.textContent = "Unhide";
+      }
+    }
+  }
+
+  // Function to unhide a mod
+  function unhideMod(gameId, modId) {
+    const key = `${gameId}:${modId}`;
+    const hiddenMods = GM_getValue(STORAGE_KEYS.HIDDEN_MODS, []);
+    const index = hiddenMods.indexOf(key);
+    if (index !== -1) {
+      hiddenMods.splice(index, 1);
+      GM_setValue(STORAGE_KEYS.HIDDEN_MODS, hiddenMods);
+    }
+    
+    // Show mod tiles if on listing page
+    const modElements = document.querySelectorAll(`.mod-tile[data-game="${gameId}"][data-mod="${modId}"]`);
+    modElements.forEach(el => {
+      el.style.display = '';
+    });
+    
+    // Remove the banner if exists
+    const banner = document.getElementById('hidden-mod-banner');
+    if (banner) {
+      banner.remove();
+    }
+    
+    // Show the content if on mod page
+    if (isModPage()) {
+      const mainContent = document.querySelector("#mod-page-content");
+      if (mainContent) {
+        mainContent.style.display = '';
+      }
+    }
+    
+    // Update the button state if exists
+    const hideBtn = document.querySelector('#action-hide-mod a');
+    if (hideBtn) {
+      const svgIcon = hideBtn.querySelector('svg');
+      const label = hideBtn.querySelector('.flex-label');
+      
+      if (svgIcon) {
+        svgIcon.innerHTML = `
+          <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" fill="currentColor"/>
+          <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" fill="currentColor"/>
+          <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" fill="currentColor"/>
+        `;
+      }
+      
+      if (label) {
+        label.textContent = "Hide";
+      }
+    }
+  }
+
+  // Function to check if a mod is hidden
+  function isModHidden(gameId, modId) {
+    const key = `${gameId}:${modId}`;
+    const hiddenMods = GM_getValue(STORAGE_KEYS.HIDDEN_MODS, []);
+    return hiddenMods.includes(key);
+  }
+
+  // Function to hide an author
+  function hideAuthor(authorName) {
+    const hiddenAuthors = GM_getValue(STORAGE_KEYS.HIDDEN_AUTHORS, []);
+    if (!hiddenAuthors.includes(authorName)) {
+      hiddenAuthors.push(authorName);
+      GM_setValue(STORAGE_KEYS.HIDDEN_AUTHORS, hiddenAuthors);
+    }
+    
+    // If on author profile, hide the content
+    if (window.location.href.includes('/profile/')) {
+      const profileContent = document.querySelector(".profile-container");
+      if (profileContent) {
+        profileContent.style.display = 'none';
+        
+        // Create informational banner
+        const banner = document.createElement('div');
+        banner.id = 'hidden-author-banner';
+        banner.style.cssText = `
+          background-color: #242A36;
+          color: white;
+          padding: 15px;
+          text-align: center;
+          margin: 20px 0;
+          border: 1px solid #C62D51;
+          border-radius: 5px;
+        `;
+        banner.innerHTML = `
+          <p>This author has been hidden by you.</p>
+          <button id="unhide-author-btn" style="
+            background-color: #333;
+            color: white;
+            border: 1px solid #C62D51;
+            padding: 5px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+          ">Unhide Author</button>
+        `;
+        
+        // Insert banner before the profile container
+        profileContent.parentNode.insertBefore(banner, profileContent);
+        
+        // Add event listener to unhide button
+        document.getElementById('unhide-author-btn').addEventListener('click', () => {
+          unhideAuthor(authorName);
+          banner.remove();
+          profileContent.style.display = '';
+        });
+      }
+    } else {
+      // Hide author content on listing pages
+      document.querySelectorAll(`[data-author="${authorName}"]`).forEach(el => {
+        el.style.display = 'none';
+      });
+    }
+    
+    // Update the button state if it exists
+    const hideBtn = document.querySelector('.author-hide-button');
+    if (hideBtn) {
+      const svgElement = hideBtn.querySelector('svg');
+      const textSpan = hideBtn.querySelector('.typography-body-lg');
+      
+      if (svgElement) {
+        svgElement.innerHTML = `
+          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" fill="currentColor"/>
+          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" fill="currentColor"/>
+        `;
+      }
+      
+      if (textSpan) {
+        textSpan.textContent = "Unhide";
+      }
+    }
+  }
+
+  // Function to unhide an author
+  function unhideAuthor(authorName) {
+    const hiddenAuthors = GM_getValue(STORAGE_KEYS.HIDDEN_AUTHORS, []);
+    const index = hiddenAuthors.indexOf(authorName);
+    if (index !== -1) {
+      hiddenAuthors.splice(index, 1);
+      GM_setValue(STORAGE_KEYS.HIDDEN_AUTHORS, hiddenAuthors);
+    }
+    
+    // Show author content
+    document.querySelectorAll(`[data-author="${authorName}"]`).forEach(el => {
+      el.style.display = '';
+    });
+    
+    // Remove the banner if exists
+    const banner = document.getElementById('hidden-author-banner');
+    if (banner) {
+      banner.remove();
+    }
+    
+    // Show profile content if on profile page
+    if (window.location.href.includes('/profile/')) {
+      const profileContent = document.querySelector(".profile-container");
+      if (profileContent) {
+        profileContent.style.display = '';
+      }
+    }
+    
+    // Update the button state if it exists
+    const hideBtn = document.querySelector('.author-hide-button');
+    if (hideBtn) {
+      const svgElement = hideBtn.querySelector('svg');
+      const textSpan = hideBtn.querySelector('.typography-body-lg');
+      
+      if (svgElement) {
+        svgElement.innerHTML = `
+          <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" fill="currentColor"/>
+          <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" fill="currentColor"/>
+          <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" fill="currentColor"/>
+        `;
+      }
+      
+      if (textSpan) {
+        textSpan.textContent = "Hide";
+      }
+    }
+  }
+
+  // Function to check if an author is hidden
+  function isAuthorHidden(authorName) {
+    const hiddenAuthors = GM_getValue(STORAGE_KEYS.HIDDEN_AUTHORS, []);
+    return hiddenAuthors.includes(authorName);
+  }
+  
+  // Function to create hide mod button
+  function createHideModButton() {
+    const { gameId, modId } = getGameAndModId();
+    const isHidden = isModHidden(gameId, modId);
+    
+    const hideButton = document.createElement("a");
+    hideButton.className = "btn inline-flex";
+    hideButton.style.cssText = `
+        font-size: 12px;
+        background-color: #242A36;
+        border: 1px solid #C62D51;
+        margin-right: 5px;
+    `;
+
+    // Create eye-slash icon
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "16");
+    svg.setAttribute("height", "16");
+    svg.setAttribute("viewBox", "0 0 16 16");
+    svg.style.marginRight = "5px";
+    
+    // Use an eye icon with a slash
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    if (isHidden) {
+      // Show icon (eye)
+      path.setAttribute("d", "M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z");
+      path.setAttribute("fill", "currentColor");
+      
+      const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path2.setAttribute("d", "M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z");
+      path2.setAttribute("fill", "currentColor");
+      
+      svg.appendChild(path);
+      svg.appendChild(path2);
+    } else {
+      // Hide icon (eye-slash)
+      path.setAttribute("d", "M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z");
+      path.setAttribute("fill", "currentColor");
+      
+      const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path2.setAttribute("d", "M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z");
+      path2.setAttribute("fill", "currentColor");
+      
+      const path3 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path3.setAttribute("d", "M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z");
+      path3.setAttribute("fill", "currentColor");
+      
+      svg.appendChild(path);
+      svg.appendChild(path2);
+      svg.appendChild(path3);
+    }
+
+    const label = document.createElement("span");
+    label.className = "flex-label";
+    label.textContent = isHidden ? "Unhide" : "Hide";
+
+    hideButton.appendChild(svg);
+    hideButton.appendChild(label);
+    
+    hideButton.addEventListener("click", () => {
+      if (isHidden) {
+        unhideMod(gameId, modId);
+      } else {
+        hideMod(gameId, modId);
+      }
+    });
+    
+    return hideButton;
+  }
+  
+  // Function to create hide author button
+  function createHideAuthorButton(authorName) {
+    const isHidden = isAuthorHidden(authorName);
+    
+    const button = document.createElement("button");
+    button.className = "author-hide-button";
+    button.type = "button";
+    button.style.cssText = `
+      position: relative;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.25rem;
+      min-height: 2.25rem;
+      padding: 0 0.75rem;
+      min-width: 6rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      background: #242A36;
+      color: white;
+      border: 1px solid #C62D51;
+    `;
+
+    button.innerHTML = `
+      <span>
+        <svg width="16" height="16" viewBox="0 0 16 16" style="margin-right: 5px;">
+          ${isHidden ? 
+            `<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" fill="currentColor"/>
+             <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" fill="currentColor"/>`
+            : 
+            `<path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" fill="currentColor"/>
+             <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" fill="currentColor"/>
+             <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" fill="currentColor"/>`
+          }
+        </svg>
+        <span class="typography-body-lg grow text-left leading-5">${isHidden ? "Unhide" : "Hide"}</span>
+      </span>
+    `;
+
+    button.addEventListener("click", () => {
+      if (isHidden) {
+        unhideAuthor(authorName);
+      } else {
+        hideAuthor(authorName);
+      }
+    });
+    
+    return button;
+  }
+
+  // Function to apply hidden status to mod tiles
+  function applyHiddenModStatus() {
+    const hiddenMods = GM_getValue(STORAGE_KEYS.HIDDEN_MODS, []);
+    if (hiddenMods.length === 0) return;
+    
+    // Apply to mod tiles with data attributes
+    document.querySelectorAll('[data-game][data-mod]').forEach(tile => {
+      const gameId = tile.getAttribute('data-game');
+      const modId = tile.getAttribute('data-mod');
+      
+      if (gameId && modId && hiddenMods.includes(`${gameId}:${modId}`)) {
+        tile.style.display = 'none';
+      }
+    });
+    
+    // Also look for new style mod tiles
+    document.querySelectorAll('div[data-e2eid="mod-tile"]').forEach(tile => {
+      // Try to add data attributes if not present
+      if (!tile.hasAttribute('data-game') || !tile.hasAttribute('data-mod')) {
+        checkModTileStatus(tile);
+      }
+      
+      // Now check if it should be hidden
+      const gameId = tile.getAttribute('data-game');
+      const modId = tile.getAttribute('data-mod');
+      
+      if (gameId && modId && hiddenMods.includes(`${gameId}:${modId}`)) {
+        tile.style.display = 'none';
+      }
+    });
+    
+    // If on mod page, check if we need to hide it
+    if (isModPage()) {
+      const { gameId, modId } = getGameAndModId();
+      if (gameId && modId && hiddenMods.includes(`${gameId}:${modId}`)) {
+        // Hide content if not already hidden
+        const mainContent = document.querySelector("#mod-page-content");
+        if (mainContent && mainContent.style.display !== 'none') {
+          hideMod(gameId, modId);
+        }
+      }
+    }
+  }
+
+  // Function to apply hidden status to author elements
+  function applyHiddenAuthorStatus() {
+    const hiddenAuthors = GM_getValue(STORAGE_KEYS.HIDDEN_AUTHORS, []);
+    if (hiddenAuthors.length === 0) return;
+    
+    // Apply to author elements
+    document.querySelectorAll('[data-author]').forEach(el => {
+      const author = el.getAttribute('data-author');
+      if (author && hiddenAuthors.includes(author)) {
+        el.style.display = 'none';
+      }
+    });
+    
+    // Special case for author profile page
+    if (window.location.href.includes('/profile/')) {
+      const urlParts = window.location.pathname.split("/");
+      const usernameIndex = urlParts.indexOf("profile") + 1;
+      const username = usernameIndex < urlParts.length ? urlParts[usernameIndex] : "";
+      
+      if (username && hiddenAuthors.includes(username)) {
+        // Hide profile content if not already hidden
+        const profileContent = document.querySelector(".profile-container");
+        if (profileContent && profileContent.style.display !== 'none') {
+          hideAuthor(username);
+        }
+      }
+    }
+    
+    // Also look for author links without data attributes
+    document.querySelectorAll('a[href*="/users/"]').forEach(link => {
+      const authorMatch = link.href.match(/\/users\/([^\/]+)/);
+      if (authorMatch) {
+        const authorName = authorMatch[1];
+        if (hiddenAuthors.includes(authorName)) {
+          // Add data attribute if not present
+          const parentElement = link.closest('.mod-tile, .comment');
+          if (parentElement && !parentElement.hasAttribute('data-author')) {
+            parentElement.setAttribute('data-author', authorName);
+          }
+          
+          // Hide the parent element
+          if (parentElement) {
+            parentElement.style.display = 'none';
+          }
+        }
+      }
+    });
+  }
+
+  // Initialize the userscript
+  function init() {
+    checkModStatus();
+    hasCheckedCurrentMod = true;
+    checkAuthorStatus();
+    
+    // Process all mod tiles on page load
+    const cachedData = getStoredData(STORAGE_KEYS.MOD_STATUS);
+    if (cachedData) {
+      addModStatusToTiles(cachedData);
+    } else {
+      fetchAndStoreJSON(
+        MOD_STATUS_URL,
+        STORAGE_KEYS.MOD_STATUS,
+        addModStatusToTiles
+      );
+    }
+    
+    // Replace file icons in any file lists already on the page
+    replaceFileIcons();
+    
+    setupDOMObserver();
+    addCopyLinkButtons();
+    addModManagerDownloadButtons(); // Add this line to call our new function
+  }
+
+  // Run init when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
