@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.12.3
+// @version      1.12.4
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1053,6 +1053,16 @@
     @import url('https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;500;600;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+    /* Prevent images from enlarging on hover */
+    .group-hover\\/image\\:scale-105 {
+      transform: scale(1) !important;
+    }
+    
+    /* Disable image hover animations in mod tiles */
+    .group\\/image img.transition-transform {
+      transition: none !important;
+    }
+    
     /* Awful big game-name header below breadcrumbs */
     #mainContent nav:first-child + div {
       display: none;
