@@ -1909,9 +1909,31 @@
       status.type = "INFORMATIVE";
     }
 
-    // Create a simplified banner for tiles
+    // Add highlight styling to the mod tile itself
+    modTile.style.border = `2px solid ${status.color || STATUS_TYPES[status.type]?.color || "#ff0000"}`;
+    modTile.style.boxShadow = `0 0 8px ${status.color || STATUS_TYPES[status.type]?.color || "#ff0000"}`;
+    
+    // Add status class to the tile
+    modTile.classList.add(`status-${status.type.toLowerCase()}`);
+    modTile.classList.add('status-processed');
+
+    // Remove the title emoji code section - as requested
+
+    // Create a simplified banner for tiles (icon only, no text)
     const banner = document.createElement("div");
     banner.className = `mod-warning-banner ${status.type.toLowerCase()}`;
+    banner.style.position = "absolute";
+    banner.style.zIndex = "11"; // Set higher than the existing elements to ensure visibility
+    banner.style.bottom = "3px"; // Changed from top to bottom
+    banner.style.left = "3px";
+    banner.style.display = "flex";
+    banner.style.alignItems = "center";
+    banner.style.justifyContent = "center";
+    banner.style.borderRadius = "50%"; // Make it circular
+    banner.style.padding = "5px"; // Smaller padding for icon-only
+    banner.style.width = "24px";
+    banner.style.height = "24px";
+    banner.style.backgroundColor = status.color || STATUS_TYPES[status.type]?.color || "#ff0000";
 
     const iconContainer = document.createElement("div");
     iconContainer.className = "warning-icon-container";
@@ -1920,12 +1942,8 @@
     icon.textContent = STATUS_TYPES[status.type]?.icons[0] || "⛔";
     iconContainer.appendChild(icon);
 
-    const textContainer = document.createElement("div");
-    textContainer.className = "warning-text";
-    textContainer.textContent = status.type;
-
+    // Remove text container - icon only
     banner.appendChild(iconContainer);
-    banner.appendChild(textContainer);
 
     // Add tooltip with full details
     const showTooltip = (e) => {
@@ -1943,21 +1961,14 @@
     banner.addEventListener("mouseout", hideTooltip);
     banner.style.cursor = "help";
 
-    // Add banner to tile's image
-    const imageContainer = modTile.querySelector(".mod-image");
+    // Find the relative div that contains the image
+    const imageContainer = modTile.querySelector('.relative');
     if (imageContainer) {
       imageContainer.appendChild(banner);
-      
-      // Add warning class to tile for highlighting
-      if (status.type === "BROKEN" || status.type === "LAME") {
-        modTile.classList.add("has-broken-warning");
-      } else if (status.type === "INFORMATIVE") {
-        modTile.classList.add("has-informative-warning");
-      }
+    } else {
+      // Fallback to appending to the tile itself if the new structure isn't found
+      modTile.appendChild(banner);
     }
-    
-    // Always mark the tile as processed
-    modTile.classList.add('status-processed');
   }
 
   // Function to replace download buttons with report button
@@ -2066,18 +2077,23 @@
         }
 
         // Check for unprocessed mod tiles and process them in batch
-        const unprocessedTiles = document.querySelectorAll('.mod-tile:not(.status-processed)');
+        // Updated selector to handle both old and new mod tile structures
+        const unprocessedTiles = document.querySelectorAll(
+          '.mod-tile:not(.status-processed), div[data-e2eid="mod-tile"]:not(.status-processed)'
+        );
         if (unprocessedTiles.length > 0) {
-          // Use cached data if available, otherwise fetch fresh data
-          const cachedData = getStoredData(STORAGE_KEYS.MOD_STATUS);
-          if (cachedData) {
+          console.log(`[Debug] Found ${unprocessedTiles.length} unprocessed mod tiles`);
+          
+          // Get the cached data
+          const cachedData = getStoredData("modStatus");
+          if (cachedData && isCacheValid()) {
+            console.log("[Debug] Using cached mod status data");
             addModStatusToTiles(cachedData);
           } else {
-            fetchAndStoreJSON(
-              MOD_STATUS_URL,
-              STORAGE_KEYS.MOD_STATUS,
-              addModStatusToTiles
-            );
+            console.log("[Debug] Fetching fresh mod status data");
+            fetchAndStoreJSON(MOD_STATUS_URL, "modStatus", (data) => {
+              addModStatusToTiles(data);
+            });
           }
         }
 
@@ -2171,12 +2187,12 @@
     return null;
   }
 
-  // Modify checkModTileStatus to do nothing for now
+  // Modify checkModTileStatus to handle the new mod tile structure
   function checkModTileStatus(modTile) {
-    // Re-enable and update this function to use the new approach
-    const titleLink = modTile.querySelector(".tile-name a");
+    // Find the title link in the new structure
+    const titleLink = modTile.querySelector('[data-e2eid="mod-tile-title"]');
     if (!titleLink) {
-      console.warn("[Debug] Could not find title link in tile");
+      console.warn("[Debug] Could not find title link in new tile structure");
       return null;
     }
 
@@ -2737,11 +2753,8 @@
       return warning;
     });
 
-    // Add warning icons to title if nofeature is present or if on mobile
-    if (nofeature || isMobile) {
-      addWarningIconsToTitle(warnings);
-    }
-
+    // Removed adding warning icons to title as requested
+    
     // Apply gradient effect based on most severe warning
     let gradientClass = "";
     if (warnings.some((w) => w.type === "BROKEN" || w.type === "LAME" || w.type === "INFORMATIVE")) {
@@ -3826,7 +3839,8 @@ ${l.type}:
     console.log("[Debug] Adding mod status to all tiles");
     
     // Get all mod tiles that haven't been processed yet
-    const modTiles = document.querySelectorAll('.mod-tile:not(.status-processed)');
+    // Updated selector to match the new mod tile structure
+    const modTiles = document.querySelectorAll('div[data-e2eid="mod-tile"]:not(.status-processed)');
     if (modTiles.length === 0) {
       console.log("[Debug] No unprocessed mod tiles found");
       return;
@@ -3882,7 +3896,7 @@ ${l.type}:
         addWarningBannerToTile(tile, status);
       } else {
         // If no explicit status was found, check keyword rules
-        const titleElement = tile.querySelector(".tile-name");
+        const titleElement = tile.querySelector('[data-e2eid="mod-tile-title"]');
         if (titleElement) {
           const modTitle = titleElement.textContent.trim();
           
