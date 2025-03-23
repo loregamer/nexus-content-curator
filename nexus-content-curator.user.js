@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.10
+// @version      1.11
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1110,7 +1110,8 @@
     }
     
     setupDOMObserver();
-    addCopyLinkButtons(); // Add this line
+    addCopyLinkButtons();
+    addModManagerDownloadButtons(); // Add this line to call our new function
   }
 
   // Run init when DOM is ready
@@ -1707,6 +1708,9 @@
 
         // Add copy link buttons to any new comments
         addCopyLinkButtons();
+        
+        // Add Mod manager download buttons to any new download sections
+        addModManagerDownloadButtons();
 
         // Check if we're on a mod page and haven't checked it yet
         const pageTitle = document.querySelector("#pagetitle");
@@ -3562,5 +3566,106 @@ ${l.type}:
     });
     
     console.log("[Debug] Finished processing mod tiles");
+  }
+
+  // Function to add Mod manager download buttons when they don't exist
+  function addModManagerDownloadButtons() {
+    // Helper function to create and add a Mod manager download button
+    function createModManagerButton(manualDownloadButton) {
+      if (!manualDownloadButton) return;
+      
+      // Get the href from the manual download button
+      const manualDownloadHref = manualDownloadButton.getAttribute('href');
+      
+      // Create the Mod manager download button based on the manual download button
+      const modManagerButton = document.createElement('a');
+      modManagerButton.className = manualDownloadButton.className;
+      modManagerButton.href = manualDownloadHref + (manualDownloadHref.includes('?') ? '&' : '?') + 'nmm=1';
+      
+      // Copy data attributes
+      Array.from(manualDownloadButton.attributes).forEach(attr => {
+        if (attr.name.startsWith('data-')) {
+          modManagerButton.setAttribute(attr.name, attr.value);
+        }
+      });
+      
+      // Update tracking data if present
+      if (modManagerButton.hasAttribute('data-tracking')) {
+        try {
+          const trackingData = JSON.parse(modManagerButton.getAttribute('data-tracking'));
+          if (Array.isArray(trackingData) && trackingData.length > 2) {
+            trackingData[2] = "Mod manager download";
+            modManagerButton.setAttribute('data-tracking', JSON.stringify(trackingData));
+          }
+        } catch (e) {
+          console.error("[Debug] Error updating tracking data:", e);
+        }
+      }
+      
+      // Create the inner content for the button
+      modManagerButton.innerHTML = `
+        <svg class="icon icon-mods">
+          <use xlink:href="/assets/images/icons/icons.svg#icon-mods"></use>
+        </svg>
+        <span class="flex-label">Mod manager download</span>
+      `;
+      
+      // Create a new list item
+      const listItem = document.createElement('li');
+      listItem.appendChild(modManagerButton);
+      
+      // Insert the new button before the manual download button list item
+      manualDownloadButton.closest('li').before(listItem);
+      
+      console.log("[Debug] Added Mod manager download button");
+    }
+    
+    // Look for accordion-downloads sections which contain download buttons
+    const downloadSections = document.querySelectorAll('.accordion-downloads');
+    if (!downloadSections.length) return;
+    
+    console.log("[Debug] Found download sections:", downloadSections.length);
+    
+    downloadSections.forEach(section => {
+      // Check if this section already has a Mod manager download button
+      const hasModManagerButton = Array.from(section.querySelectorAll('.btn')).some(btn => 
+        btn.textContent.trim().includes('Mod manager download'));
+      
+      // If it doesn't have a mod manager button, we need to add one
+      if (!hasModManagerButton) {
+        // Find the manual download button
+        const manualDownloadButton = Array.from(section.querySelectorAll('.btn')).find(btn => 
+          btn.textContent.trim().includes('Manual download'));
+        
+        createModManagerButton(manualDownloadButton);
+      }
+    });
+    
+    // Also set up click handlers for accordion headers to process newly revealed download sections
+    const accordionHeaders = document.querySelectorAll('.file-expander-header:not(.mod-manager-processed)');
+    accordionHeaders.forEach(header => {
+      header.classList.add('mod-manager-processed');
+      
+      header.addEventListener('click', () => {
+        // Short timeout to allow the accordion to expand
+        setTimeout(() => {
+          // Find the associated download section and process it
+          const downloadSection = header.nextElementSibling?.querySelector('.accordion-downloads');
+          if (downloadSection) {
+            // Check if this section already has a Mod manager download button
+            const hasModManagerButton = Array.from(downloadSection.querySelectorAll('.btn')).some(btn => 
+              btn.textContent.trim().includes('Mod manager download'));
+            
+            // If it doesn't have a mod manager button, we need to process this section
+            if (!hasModManagerButton) {
+              const manualDownloadButton = Array.from(downloadSection.querySelectorAll('.btn')).find(btn => 
+                btn.textContent.trim().includes('Manual download'));
+              
+              createModManagerButton(manualDownloadButton);
+            }
+          }
+        }, 100);
+      });
+    });
   }
 })();
