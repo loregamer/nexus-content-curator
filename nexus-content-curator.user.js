@@ -1924,22 +1924,26 @@
     banner.className = `mod-warning-banner ${status.type.toLowerCase()}`;
     banner.style.position = "absolute";
     banner.style.zIndex = "11"; // Set higher than the existing elements to ensure visibility
-    banner.style.bottom = "3px"; // Changed from top to bottom
-    banner.style.left = "3px";
+    banner.style.top = "5px"; // Changed from bottom to top for better visibility
+    banner.style.right = "5px"; // Changed from left to right for better visibility
     banner.style.display = "flex";
     banner.style.alignItems = "center";
     banner.style.justifyContent = "center";
     banner.style.borderRadius = "50%"; // Make it circular
     banner.style.padding = "5px"; // Smaller padding for icon-only
-    banner.style.width = "24px";
-    banner.style.height = "24px";
+    banner.style.width = "28px"; // Slightly larger for better visibility
+    banner.style.height = "28px"; // Slightly larger for better visibility
     banner.style.backgroundColor = status.color || STATUS_TYPES[status.type]?.color || "#ff0000";
+    banner.style.backgroundColor = "transparent"; // Remove background color
+    banner.style.boxShadow = "none"; // Remove shadow
 
     const iconContainer = document.createElement("div");
     iconContainer.className = "warning-icon-container";
     const icon = document.createElement("span");
     icon.className = "warning-icon";
     icon.textContent = STATUS_TYPES[status.type]?.icons[0] || "⛔";
+    icon.style.fontSize = "20px"; // Adjust size for better visibility
+    icon.style.lineHeight = "1"; // Improve vertical centering
     iconContainer.appendChild(icon);
 
     // Remove text container - icon only
