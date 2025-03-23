@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.11
+// @version      1.12
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -1445,6 +1445,9 @@
       );
     }
     
+    // Replace file icons in any file lists already on the page
+    replaceFileIcons();
+    
     setupDOMObserver();
     addCopyLinkButtons();
     addModManagerDownloadButtons(); // Add this line to call our new function
@@ -2047,6 +2050,9 @@
         
         // Add Mod manager download buttons to any new download sections
         addModManagerDownloadButtons();
+        
+        // Replace file icons in any file lists
+        replaceFileIcons();
 
         // Check if we're on a mod page and haven't checked it yet
         const pageTitle = document.querySelector("#pagetitle");
@@ -4001,6 +4007,126 @@ ${l.type}:
             }
           }
         }, 100);
+      });
+    });
+  }
+
+  // Function to get appropriate icon for file based on extension
+  function getFileIcon(fileName) {
+    // Default icons
+    const DEFAULT_FILE_ICON = "📄";
+    const DEFAULT_DIR_ICON = "📁";
+    
+    // Check if it's a directory
+    if (!fileName.includes(".")) {
+      return DEFAULT_DIR_ICON;
+    }
+    
+    // Extract extension
+    const extension = fileName.split(".").pop().toLowerCase();
+    
+    // Map extensions to icons
+    const extensionIcons = {
+      // Documents
+      "txt": "📝",
+      "md": "📝",
+      "pdf": "📕",
+      "doc": "📘",
+      "docx": "📘",
+      "rtf": "📝",
+      
+      // Web
+      "html": "🌐",
+      "htm": "🌐",
+      "css": "🎨",
+      "js": "📜",
+      "json": "🔧",
+      "xml": "📋",
+      
+      // Images
+      "jpg": "🖼️",
+      "jpeg": "🖼️",
+      "png": "🖼️",
+      "gif": "🖼️",
+      "bmp": "🖼️",
+      "svg": "🖼️",
+      "webp": "🖼️",
+      "dds": "🖼️",
+      
+      // Audio/Video
+      "mp3": "🎵",
+      "wav": "🎵",
+      "ogg": "🎵",
+      "mp4": "🎬",
+      "avi": "🎬",
+      "mov": "🎬",
+      "mkv": "🎬",
+      
+      // Archives
+      "zip": "📦",
+      "rar": "📦",
+      "7z": "📦",
+      "tar": "📦",
+      "gz": "📦",
+      "pak": "📦",
+      "bsa": "📦",
+      
+      // Code
+      "py": "🐍",
+      "java": "☕",
+      "c": "🔧",
+      "cpp": "🔧",
+      "h": "🔧",
+      "cs": "🔧",
+      "php": "🔧",
+      "rb": "💎",
+      
+      // Game/Mod files
+      "esp": "🎮",
+      "esm": "🎮",
+      "ini": "⚙️",
+      "modgroups": "🎮",
+    };
+    
+    return extensionIcons[extension] || DEFAULT_FILE_ICON;
+  }
+  
+  // Function to replace emojis in file lists
+  function replaceFileIcons() {
+    // Find all file-list divs
+    const fileLists = document.querySelectorAll('.file-list');
+    if (!fileLists.length) return;
+    
+    console.log("[Debug] Found file lists:", fileLists.length);
+    
+    fileLists.forEach(fileList => {
+      // Process all file items in this list
+      const fileItems = fileList.querySelectorAll('.file');
+      
+      fileItems.forEach(fileItem => {
+        // Get the text content (filename)
+        const originalText = fileItem.textContent.trim();
+        if (!originalText) return;
+        
+        // Extract file name from the text (remove emoji and size info)
+        let fileName = originalText;
+        
+        // Remove emoji at the beginning
+        fileName = fileName.replace(/^[^\w]*/, '').trim();
+        
+        // Remove size info at the end if present (e.g., (123 KB))
+        fileName = fileName.replace(/\s*\([\d.]+\s*[KMG]?B\)\s*$/, '').trim();
+        
+        // Get appropriate icon for this file
+        let icon;
+        if (fileItem.classList.contains('dir-expand')) {
+          icon = "📁"; // Directory that can be expanded
+        } else {
+          icon = getFileIcon(fileName);
+        }
+        
+        // Replace the beginning emoji
+        fileItem.textContent = fileItem.textContent.replace(/^[^\w]*/, icon + ' ');
       });
     });
   }
