@@ -1376,6 +1376,9 @@
       --theme-secondary: #cc0019 !important;
       --theme-dark: #cc0019 !important
     }
+    .btn.inline-flex .icon {
+        display: block !important;
+    }
   `;
 
   // Add styles to document
@@ -3937,8 +3940,8 @@ ${l.type}:
       
       // Create the inner content for the button
       modManagerButton.innerHTML = `
-        <svg class="icon icon-mods">
-          <use xlink:href="/assets/images/icons/icons.svg#icon-mods"></use>
+        <svg class="icon icon-nmm">
+            <use xlink:href="/assets/images/icons/icons.svg#icon-nmm"></use>
         </svg>
         <span class="flex-label">Mod manager download</span>
       `;
