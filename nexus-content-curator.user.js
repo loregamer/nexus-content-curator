@@ -1532,6 +1532,9 @@
     const modTiles = document.querySelectorAll('div[data-e2eid="mod-tile"]');
     console.log('Found mod tiles:', modTiles.length);
     
+    // Check if we're on a mobile device
+    const isMobile = isMobileDevice();
+    
     modTiles.forEach(modTile => {
       // Skip if already processed
       if (modTile.hasAttribute('data-hide-button-added')) return;
@@ -1602,8 +1605,15 @@
       hideButton.setAttribute('aria-label', 'Hide mod');
       hideButton.setAttribute('type', 'button');
       
-      // Create the SVG icon (X mark)
-      hideButton.innerHTML = `<svg viewBox="0 0 24 24" role="presentation" class="relative" style="width: 1.25rem; height: 1.25rem;">
+      // Adjust size based on device type
+      const iconSize = isMobile ? '1.5rem' : '1.25rem';
+      const padding = isMobile ? '0.5rem' : '0.25rem';
+      
+      // Add custom styles to make button more visible/usable
+      hideButton.style.padding = padding;
+      
+      // Create the SVG icon (X mark) with adjusted size
+      hideButton.innerHTML = `<svg viewBox="0 0 24 24" role="presentation" class="relative" style="width: ${iconSize}; height: ${iconSize};">
         <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" style="fill: currentcolor;"></path>
       </svg>`;
       
