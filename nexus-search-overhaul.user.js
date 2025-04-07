@@ -20,8 +20,13 @@
     
     console.log('=== Nexus Search Page - Old Style Renderer Started ===');
 
-    // Custom CSS to mimic the old Nexus Mods design
+    // Custom CSS to mimic the Nexus Mods search page design
     const customCSS = `
+        /* Reset and base styles */
+        #classic-search-container * {
+            box-sizing: border-box;
+        }
+
         /* General Layout */
         body {
             margin: 0;
@@ -187,10 +192,13 @@
         }
 
         /* Mod Listing */
-        .mod-list {
+        .mod-list.tile-list {
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         .mod-tile {
@@ -473,6 +481,7 @@
     function createClassicSearchPage() {
         const container = document.createElement('div');
         container.id = 'classic-search-container';
+        container.className = 'static resultpage';
         
         // Game header
         const gameHeader = document.createElement('div');
@@ -676,24 +685,80 @@
         container.appendChild(resultsHeader);
         
         // Mod list
-        const modList = document.createElement('div');
-        modList.className = 'mod-list';
+        const modList = document.createElement('ul');
+        modList.className = 'mod-list tile-list';
         
         placeholderMods.forEach(mod => {
-            const modTile = document.createElement('div');
+            const modTile = document.createElement('li');
             modTile.className = 'mod-tile';
             
             // Left side (image and stats)
             const tileLeft = document.createElement('div');
             tileLeft.className = 'mod-tile-left';
+            tileLeft.setAttribute('data-mod-id', mod.id);
+            tileLeft.setAttribute('data-game-id', '3474');
+            tileLeft.setAttribute('data-tracking', '["Mods Listing Page","View Mod",""]');
             
-            const tileImage = document.createElement('div');
-            tileImage.className = 'tile-image';
+            // Add expand tile overlay
+            const expandTile = document.createElement('div');
+            expandTile.className = 'expandtile';
+            
+            const btnExpand = document.createElement('div');
+            btnExpand.className = 'btnexpand btnoverlay inline-flex';
+            
+            const padding = document.createElement('div');
+            padding.className = 'padding';
+            btnExpand.appendChild(padding);
+            
+            // Add SVG icon
+            const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svgIcon.classList.add('icon-plus');
+            svgIcon.setAttribute('title', '');
+            const useElement = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+            useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'https://www.nexusmods.com/assets/images/icons/icons.svg#icon-plus');
+            svgIcon.appendChild(useElement);
+            btnExpand.appendChild(svgIcon);
+            
+            // Add menu options
+            const optionsList = document.createElement('ul');
+            
+            const viewModLi = document.createElement('li');
+            const viewModLink = document.createElement('a');
+            viewModLink.className = 'mod-view';
+            viewModLink.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}`;
+            viewModLink.setAttribute('data-tracking', '["Mods Listing Page","Plus Icon Action","View Mod Page"]');
+            viewModLink.textContent = 'View mod page';
+            viewModLi.appendChild(viewModLink);
+            optionsList.appendChild(viewModLi);
+            
+            const viewGalleryLi = document.createElement('li');
+            const viewGalleryLink = document.createElement('a');
+            viewGalleryLink.className = 'mod-gallery';
+            viewGalleryLink.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}?tab=images`;
+            viewGalleryLink.setAttribute('data-tracking', '["Mods Listing Page","Plus Icon Action","View Image Gallery"]');
+            viewGalleryLink.textContent = 'View image gallery';
+            viewGalleryLi.appendChild(viewGalleryLink);
+            optionsList.appendChild(viewGalleryLi);
+            
+            btnExpand.appendChild(optionsList);
+            expandTile.appendChild(btnExpand);
+            tileLeft.appendChild(expandTile);
+            
+            // Add image
+            const modImage = document.createElement('a');
+            modImage.className = 'mod-image';
+            modImage.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}`;
+            
+            const figure = document.createElement('figure');
+            figure.className = 'image_figure';
             
             const img = document.createElement('img');
             img.src = mod.image;
             img.alt = mod.title;
-            tileImage.appendChild(img);
+            
+            figure.appendChild(img);
+            modImage.appendChild(figure);
+            tileLeft.appendChild(modImage);
             
             const tileData = document.createElement('div');
             tileData.className = 'tile-data';
@@ -701,13 +766,16 @@
             const statsList = document.createElement('ul');
             
             const fileSize = document.createElement('li');
-            fileSize.innerHTML = `<svg viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"></path></svg><span>${mod.fileSize}</span>`;
+            fileSize.className = 'sizecount inline-flex';
+            fileSize.innerHTML = `<svg title="" class="icon icon-filesize"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-filesize"></use></svg><span class="flex-label">${mod.fileSize}</span>`;
             
             const endorsements = document.createElement('li');
-            endorsements.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path></svg><span>${mod.endorsements}</span>`;
+            endorsements.className = 'endorsecount inline-flex';
+            endorsements.innerHTML = `<svg title="" class="icon icon-endorse"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-endorse"></use></svg><span class="flex-label">${mod.endorsements}</span>`;
             
             const downloads = document.createElement('li');
-            downloads.innerHTML = `<svg viewBox="0 0 24 24"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"></path></svg><span>${mod.downloads}</span>`;
+            downloads.className = 'downloadcount inline-flex';
+            downloads.innerHTML = `<svg title="" class="icon icon-downloads"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-downloads"></use></svg><span class="flex-label">${mod.downloads}</span>`;
             
             statsList.appendChild(fileSize);
             statsList.appendChild(endorsements);
@@ -715,12 +783,19 @@
             
             tileData.appendChild(statsList);
             
-            tileLeft.appendChild(tileImage);
+            // The tileImage is now replaced with modImage
             tileLeft.appendChild(tileData);
             
             // Right side (content)
             const tileRight = document.createElement('div');
             tileRight.className = 'mod-tile-right';
+            
+            const tileDesc = document.createElement('div');
+            tileDesc.className = 'tile-desc';
+            
+            const fadeoff = document.createElement('div');
+            fadeoff.className = 'fadeoff';
+            tileDesc.appendChild(fadeoff);
             
             const tileContent = document.createElement('div');
             tileContent.className = 'tile-content';
@@ -769,7 +844,8 @@
             tileContent.appendChild(meta);
             tileContent.appendChild(desc);
             
-            tileRight.appendChild(tileContent);
+            tileDesc.appendChild(tileContent);
+            tileRight.appendChild(tileDesc);
             
             modTile.appendChild(tileLeft);
             modTile.appendChild(tileRight);
