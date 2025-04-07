@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Use fs_read_file_structure, fs_read_snippet, and fs_replace_text_in_file

@@ -21,6 +21,35 @@
 (function () {
   "use strict";
 
+  // Add CSS to hide mod tiles by default unless they have content-processed attribute
+  const injectStyles = () => {
+    const style = document.createElement('style');
+    style.id = 'nexus-mod-tile-filter';
+    style.textContent = `
+      div.bg-surface-low[data-e2eid="mod-tile"]:not([content-processed]),
+      div[data-e2eid="mod-tile"]:not([content-processed]) {
+        display: none !important;
+        visibility: hidden !important;
+      }
+    `;
+    // Insert at the beginning of the head for higher priority
+    if (document.head) {
+      document.head.insertBefore(style, document.head.firstChild);
+    } else {
+      // If head is not available yet, wait for it
+      const headObserver = new MutationObserver(() => {
+        if (document.head) {
+          document.head.insertBefore(style, document.head.firstChild);
+          headObserver.disconnect();
+        }
+      });
+      headObserver.observe(document.documentElement, { childList: true, subtree: true });
+    }
+  };
+  
+  // Run immediately
+  injectStyles();
+
   // Configuration - Replace with your GitHub raw JSON URL
   const MOD_STATUS_URL =
     "https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/Resources/mod-status.json";
@@ -1441,13 +1470,15 @@
 
   // Initialize main functionality when DOM is ready
   function init() {
+    // First, process and hide mod tiles that need to be hidden
+    // This should happen before other operations to prevent briefly showing tiles
+    applyHiddenModStatus();
+    applyHiddenAuthorStatus();
+    
+    // Process mod and author status
     checkModStatus();
     hasCheckedCurrentMod = true;
     checkAuthorStatus();
-    
-    // Apply hidden status to mods and authors
-    applyHiddenModStatus();
-    applyHiddenAuthorStatus();
     
     // Process all mod tiles on page load
     const cachedData = getStoredData(STORAGE_KEYS.MOD_STATUS);
@@ -1568,6 +1599,11 @@
       
       // Mark this mod tile as processed
       modTile.setAttribute('data-hide-button-added', 'true');
+      
+      // Add content-processed attribute if not hidden
+      if (!isHidden) {
+        modTile.setAttribute('content-processed', 'true');
+      }
     });
   }
 
@@ -2199,8 +2235,14 @@
         // Add report button
         addReportButton();
         
+        // Process and mark new mod tiles
+        const unprocessedTiles = document.querySelectorAll('div[data-e2eid="mod-tile"]:not([content-processed]):not([data-hide-button-added])');
+        if (unprocessedTiles.length > 0) {
+          console.log('Found unprocessed mod tiles:', unprocessedTiles.length);
+        }
+        
         // Add hide buttons to mod tiles (especially if new ones were added)
-        if (hasModTileChanges) {
+        if (hasModTileChanges || unprocessedTiles.length > 0) {
           console.log('Detected new mod tiles, adding hide buttons');
           addHideButtonsToModTiles();
         }
@@ -4665,15 +4707,21 @@ ${l.type}:
   // Function to apply hidden status to mod tiles
   function applyHiddenModStatus() {
     const hiddenMods = GM_getValue(STORAGE_KEYS.HIDDEN_MODS, []);
-    if (hiddenMods.length === 0) return;
     
-    // Apply to mod tiles with data attributes
-    document.querySelectorAll('[data-game][data-mod]').forEach(tile => {
+    // Process all mod tiles, marking them as processed and hiding if needed
+    document.querySelectorAll('div[data-e2eid="mod-tile"]').forEach(tile => {
       const gameId = tile.getAttribute('data-game');
       const modId = tile.getAttribute('data-mod');
       
-      if (gameId && modId && hiddenMods.includes(`${gameId}:${modId}`)) {
-        tile.style.display = 'none';
+      if (gameId && modId) {
+        if (hiddenMods.includes(`${gameId}:${modId}`)) {
+          tile.style.display = 'none';
+          // Remove content-processed attribute if hidden
+          tile.removeAttribute('content-processed');
+        } else {
+          // Mark as processed if not hidden
+          tile.setAttribute('content-processed', 'true');
+        }
       }
     });
     
