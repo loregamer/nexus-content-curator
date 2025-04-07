@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         Nexus Mods - Background and Layout Squeeze
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Applies a background image to Nexus Mods and squeezes the layout
 // @author       loregamer
 // @match        https://www.nexusmods.com/games/*
 // @match        https://www.nexusmods.com/*/search/*
-// @match        https://www.nexusmods.com/*/mods/*
 // @grant        GM_addStyle
 // @icon         https://www.nexusmods.com/favicon.ico
 // @updateURL    https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-background-squeeze.user.js
@@ -32,13 +31,24 @@
         .bg-surface-base\\/95, .bg-surface-base\\/100,
         .to-surface-base, .via-surface-base, .from-surface-base\\/60,
         .bg-gradient-to-b,
-        .bg-surface-low {
+        .bg-surface-low,
+        .bg-surface-translucent-high,
+        .bg-surface-translucent,
+        .bg-white,
+        .bg-slate-50,
+        .bg-surface-raised,
+        .bg-overlay,
+        [class*="bg-surface-"] {
             background-color: transparent !important;
             background-image: none !important;
         }
         
-        /* Remove gradient overlay */
-        .absolute.inset-0.bg-gradient-to-b {
+        /* Remove all overlays */
+        .absolute.inset-0.bg-gradient-to-b,
+        .absolute.inset-0,
+        .overlay,
+        [class*="overlay-"],
+        [class*="bg-overlay"] {
             display: none !important;
         }
         
@@ -62,7 +72,7 @@
             background-repeat: no-repeat;
             will-change: transform;
             z-index: -1;
-            opacity: 0.9;
+            opacity: 1.0;
         }
         
         /* Layout squeeze */
@@ -77,23 +87,32 @@
             margin-right: auto !important;
         }
         
-        /* Mod Tile Styling - Classic Look */
+        /* Mod Tile Styling - Original Look */
         [class*="@container/mod-tile"] {
-            background-color: #1a1a1a !important;
-            border-radius: 2px !important;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
-            border: 1px solid #333 !important;
-            margin-bottom: 10px !important;
+            background-color: #383838 !important;
+            border: 1px solid #444 !important;
+            margin-bottom: 15px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
         }
         
+        /* Left side of mod tile - image container */
+        [class*="@container/mod-tile"] .group\\/image {
+            background: #2d2d2d !important;
+            border-radius: 0 !important;
+            border-bottom: 1px solid #444 !important;
+        }
+        
+        /* Tile description */
         .bg-surface-translucent-low {
-            background-color: #252525 !important;
+            background-color: #383838 !important;
         }
         
         /* Title and headings styling */
         [class*="@container/mod-tile"] a[data-e2eid="mod-tile-title"] {
             color: rgb(255, 255, 255) !important;
             font-weight: bold !important;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.4) !important;
+            margin: 0 !important;
         }
         
         /* Category styling */
@@ -104,12 +123,23 @@
         /* Author styling */
         [data-e2eid="user-link"] {
             color: #ddd !important;
+            max-width: 230px !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            display: inline-block !important;
         }
         
-        /* Image container */
-        [class*="@container/mod-tile"] .group\/image {
-            border-radius: 0 !important;
-            border-bottom: 1px solid #333 !important;
+        /* Download status styles */
+        [class*="@container/mod-tile"] [data-e2eid="mod-tile-dl-status"] {
+            font-family: Roboto, sans-serif !important;
+            font-weight: 400 !important;
+            font-size: 14px !important;
+            color: rgb(255, 255, 255) !important;
+            text-align: left !important;
+            position: absolute !important;
+            padding: 2px 5px !important;
+            top: 8px !important;
         }
         
         /* Endorsements and downloads */
@@ -136,6 +166,19 @@
         
         [data-e2eid="user-link"]:hover {
             color: #f1913c !important;
+        }
+        
+        /* Responsive styling - based on original */
+        @media (max-width: 1460px) {
+            [class*="@container/mod-tile"] .tile-desc {
+                padding-top: 0 !important;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .mod-tile-desc {
+                display: none !important;
+            }
         }
     `;
 
