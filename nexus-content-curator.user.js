@@ -26,8 +26,28 @@
     const style = document.createElement('style');
     style.id = 'nexus-mod-tile-filter';
     style.textContent = `
+      /* Style for unprocessed mod tiles - show a blank container */
       div.bg-surface-low[data-e2eid="mod-tile"]:not([content-processed]),
       div[data-e2eid="mod-tile"]:not([content-processed]) {
+        visibility: visible !important;
+        position: relative !important;
+      }
+      
+      div.bg-surface-low[data-e2eid="mod-tile"]:not([content-processed])::before,
+      div[data-e2eid="mod-tile"]:not([content-processed])::before {
+        content: "" !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-color: #242A36 !important; /* Match the site's surface color */
+        z-index: 100 !important;
+        border-radius: inherit !important;
+      }
+
+      /* Style for hidden mods - completely hide them */
+      div.ncc-hidden-mod {
         display: none !important;
         visibility: hidden !important;
       }
@@ -1591,7 +1611,10 @@
       hideButton.addEventListener('click', (e) => {
         e.stopPropagation();
         hideMod(gameId, modId);
+        // Completely hide the tile
+        modTile.classList.add('ncc-hidden-mod');
         modTile.style.display = 'none';
+        modTile.removeAttribute('content-processed');
       });
       
       // Replace the original button with our hide button
@@ -2269,27 +2292,6 @@
         ) {
           checkModStatus();
           hasCheckedCurrentMod = true;
-        }
-
-        // Check for unprocessed mod tiles and process them in batch
-        // Updated selector to handle both old and new mod tile structures
-        const unprocessedTiles = document.querySelectorAll(
-          '.mod-tile:not(.status-processed), div[data-e2eid="mod-tile"]:not(.status-processed)'
-        );
-        if (unprocessedTiles.length > 0) {
-          console.log(`[Debug] Found ${unprocessedTiles.length} unprocessed mod tiles`);
-          
-          // Get the cached data
-          const cachedData = getStoredData("modStatus");
-          if (cachedData && isCacheValid()) {
-            console.log("[Debug] Using cached mod status data");
-            addModStatusToTiles(cachedData);
-          } else {
-            console.log("[Debug] Fetching fresh mod status data");
-            fetchAndStoreJSON(MOD_STATUS_URL, "modStatus", (data) => {
-              addModStatusToTiles(data);
-            });
-          }
         }
 
         // Check which type of page we're on and run appropriate checks
@@ -4370,10 +4372,15 @@ ${l.type}:
         });
       }
     } else {
-      // Just hide the mod tile if on listing page
-      const modElements = document.querySelectorAll(`.mod-tile[data-game="${gameId}"][data-mod="${modId}"]`);
+      // Completely remove mod tiles from the page
+      const modElements = document.querySelectorAll(`div[data-e2eid="mod-tile"][data-game="${gameId}"][data-mod="${modId}"]`);
       modElements.forEach(el => {
+        // Add class for CSS hiding
+        el.classList.add('ncc-hidden-mod');
+        // Also set display none directly for immediate effect
         el.style.display = 'none';
+        // Remove the content-processed attribute
+        el.removeAttribute('content-processed');
       });
     }
     
@@ -4407,9 +4414,14 @@ ${l.type}:
     }
     
     // Show mod tiles if on listing page
-    const modElements = document.querySelectorAll(`.mod-tile[data-game="${gameId}"][data-mod="${modId}"]`);
+    const modElements = document.querySelectorAll(`div[data-e2eid="mod-tile"][data-game="${gameId}"][data-mod="${modId}"]`);
     modElements.forEach(el => {
+      // Remove the hiding class
+      el.classList.remove('ncc-hidden-mod');
+      // Reset display style
       el.style.display = '';
+      // Add content-processed to make it visible
+      el.setAttribute('content-processed', 'true');
     });
     
     // Remove the banner if exists
@@ -4715,12 +4727,15 @@ ${l.type}:
       
       if (gameId && modId) {
         if (hiddenMods.includes(`${gameId}:${modId}`)) {
-          tile.style.display = 'none';
+          // For hidden mods, add a class instead of display:none to maintain layout
+          tile.classList.add('ncc-hidden-mod');
           // Remove content-processed attribute if hidden
           tile.removeAttribute('content-processed');
         } else {
           // Mark as processed if not hidden
           tile.setAttribute('content-processed', 'true');
+          // Remove hidden class if it exists
+          tile.classList.remove('ncc-hidden-mod');
         }
       }
     });
