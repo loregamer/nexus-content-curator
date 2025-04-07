@@ -21,6 +21,31 @@
 
     // Custom CSS for background and layout
     const customCSS = `
+        /* Remove background colors from all elements */
+        html, body,
+        .bg-surface-base\\/5, .bg-surface-base\\/10, .bg-surface-base\\/15, 
+        .bg-surface-base\\/20, .bg-surface-base\\/25, .bg-surface-base\\/30,
+        .bg-surface-base\\/35, .bg-surface-base\\/40, .bg-surface-base\\/45,
+        .bg-surface-base\\/50, .bg-surface-base\\/55, .bg-surface-base\\/60,
+        .bg-surface-base\\/65, .bg-surface-base\\/70, .bg-surface-base\\/75,
+        .bg-surface-base\\/80, .bg-surface-base\\/85, .bg-surface-base\\/90,
+        .bg-surface-base\\/95, .bg-surface-base\\/100,
+        .to-surface-base, .via-surface-base, .from-surface-base\\/60,
+        .bg-gradient-to-b {
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+        
+        /* Remove gradient overlay */
+        .absolute.inset-0.bg-gradient-to-b {
+            display: none !important;
+        }
+        
+        /* Hide the page's background image */
+        #mainContent .absolute.inset-0.overflow-hidden {
+            display: none !important;
+        }
+        
         /* Background image */
         body::before {
             content: "";
@@ -36,7 +61,7 @@
             background-repeat: no-repeat;
             will-change: transform;
             z-index: -1;
-            opacity: 0.8;
+            opacity: 0.9;
         }
         
         /* Layout squeeze */
@@ -49,40 +74,6 @@
             max-width: 90% !important;
             margin-left: auto !important;
             margin-right: auto !important;
-        }
-        
-        /* Game header adjustments */
-        .game-header {
-            background-color: rgba(24, 24, 24, 0.7) !important;
-            border-radius: 8px;
-            margin-top: 1rem;
-            padding: 1rem !important;
-        }
-        
-        /* Mod tiles/cards */
-        .tile-container {
-            background-color: rgba(42, 42, 42, 0.9) !important;
-            border-radius: 6px !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
-            transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-        }
-        
-        .tile-container:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
-        }
-        
-        /* Make text more readable on dark background */
-        .tile-desc, .tile-name a {
-            color: #e0e0e0 !important;
-        }
-        
-        /* Style filter boxes */
-        .filter-block {
-            background-color: rgba(24, 24, 24, 0.8) !important;
-            border-radius: 6px !important;
-            padding: 1rem !important;
-            margin-bottom: 1rem !important;
         }
     `;
 
