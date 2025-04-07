@@ -58,7 +58,13 @@
         
         /* Main header background */
         header.bg-surface-base.sticky {
-            background-color: #2D2D2D !important;
+            background-color: #181818 !important;
+        }
+        
+        /* Footer background */
+        footer {
+            background-color: #181818 !important;
+        }
         }
         
         /* Hide the page's background image */
