@@ -77,15 +77,47 @@
             margin-right: auto !important;
         }
         
-        /* Mod Tile Styling */
+        /* Mod Tile Styling - Classic Look */
         [class*="@container/mod-tile"] {
-            background-color: rgba(20, 20, 20, 0.7) !important;
-            border-radius: 8px !important;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+            background-color: #1a1a1a !important;
+            border-radius: 2px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+            border: 1px solid #333 !important;
+            margin-bottom: 10px !important;
         }
         
         .bg-surface-translucent-low {
-            background-color: rgba(30, 30, 30, 0.7) !important;
+            background-color: #252525 !important;
+        }
+        
+        /* Title and headings styling */
+        [class*="@container/mod-tile"] a[data-e2eid="mod-tile-title"] {
+            color: rgb(255, 255, 255) !important;
+            font-weight: bold !important;
+        }
+        
+        /* Category styling */
+        [class*="@container/mod-tile"] a[data-e2eid="mod-tile-category"] {
+            color: #f1913c !important;
+        }
+        
+        /* Author styling */
+        [data-e2eid="user-link"] {
+            color: #ddd !important;
+        }
+        
+        /* Image container */
+        [class*="@container/mod-tile"] .group\/image {
+            border-radius: 0 !important;
+            border-bottom: 1px solid #333 !important;
+        }
+        
+        /* Endorsements and downloads */
+        [class*="@container/mod-tile"] [data-e2eid="mod-tile-endorsements"],
+        [class*="@container/mod-tile"] [data-e2eid="mod-tile-downloads"],
+        [class*="@container/mod-tile"] [data-e2eid="mod-tile-file-size"] {
+            color: #bbb !important;
+            font-weight: bold !important;
         }
     `;
 
