@@ -31,7 +31,8 @@
         .bg-surface-base\\/80, .bg-surface-base\\/85, .bg-surface-base\\/90,
         .bg-surface-base\\/95, .bg-surface-base\\/100,
         .to-surface-base, .via-surface-base, .from-surface-base\\/60,
-        .bg-gradient-to-b {
+        .bg-gradient-to-b,
+        .bg-surface-low {
             background-color: transparent !important;
             background-image: none !important;
         }
@@ -74,6 +75,17 @@
             max-width: 90% !important;
             margin-left: auto !important;
             margin-right: auto !important;
+        }
+        
+        /* Mod Tile Styling */
+        [class*="@container/mod-tile"] {
+            background-color: rgba(20, 20, 20, 0.7) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        .bg-surface-translucent-low {
+            background-color: rgba(30, 30, 30, 0.7) !important;
         }
     `;
 
