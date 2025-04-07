@@ -1467,6 +1467,108 @@
     setupDOMObserver();
     addCopyLinkButtons();
     addModManagerDownloadButtons(); // Add this line to call our new function
+    
+    // Add a small delay before adding hide buttons to ensure DOM is fully loaded
+    setTimeout(() => {
+      addHideButtonsToModTiles(); // Add hide buttons to mod tiles
+      applyHiddenModStatus(); // Apply any existing hidden mod status
+    }, 1000);
+  }
+
+  // Function to add hide buttons to mod tiles
+  function addHideButtonsToModTiles() {
+    // Find all mod tiles first
+    const modTiles = document.querySelectorAll('div[data-e2eid="mod-tile"]');
+    console.log('Found mod tiles:', modTiles.length);
+    
+    modTiles.forEach(modTile => {
+      // Skip if already processed
+      if (modTile.hasAttribute('data-hide-button-added')) return;
+      
+      // Find the mod options button inside this mod tile
+      const button = modTile.querySelector('button[aria-label="Mod options"]');
+      if (!button) return;
+      
+      // Get or extract game and mod ID
+      let gameId = modTile.getAttribute('data-game');
+      let modId = modTile.getAttribute('data-mod');
+      
+      // If we don't have the game ID and mod ID, try to extract them from the URL
+      if (!gameId || !modId) {
+        // First try to find the mod link
+        let modUrl = null;
+        // Try several possible selectors to find the mod link
+        const possibleLinkSelectors = [
+          '.tile-name a', 
+          'a[data-e2eid="mod-tile-title"]',
+          'a[href*="/mods/"]'
+        ];
+        
+        for (const selector of possibleLinkSelectors) {
+          const modLinkElement = modTile.querySelector(selector);
+          if (modLinkElement) {
+            modUrl = modLinkElement.getAttribute('href');
+            if (modUrl) break;
+          }
+        }
+        
+        if (modUrl) {
+          // Check if it's a full URL or relative path
+          if (modUrl.startsWith('http')) {
+            // Format: https://www.nexusmods.com/gamename/mods/moduleid
+            const urlObj = new URL(modUrl);
+            const pathParts = urlObj.pathname.split('/');
+            if (pathParts.length >= 4) {
+              gameId = pathParts[1];
+              modId = pathParts[3];
+            }
+          } else {
+            // Relative URL format: /gamename/mods/moduleid
+            const modUrlParts = modUrl.split('/');
+            if (modUrlParts.length >= 4) {
+              gameId = modUrlParts[1];
+              modId = modUrlParts[3];
+            }
+          }
+          
+          // Add data attributes to the mod tile for easier targeting
+          if (gameId && modId) {
+            modTile.setAttribute('data-game', gameId);
+            modTile.setAttribute('data-mod', modId);
+          }
+        }
+      }
+      
+      // Skip if we still don't have the necessary data
+      if (!gameId || !modId) return;
+      
+      // Check if mod is already hidden
+      const isHidden = isModHidden(gameId, modId);
+      
+      // Create the hide button with the same styling as the original button
+      const hideButton = document.createElement('button');
+      hideButton.className = button.className;
+      hideButton.setAttribute('aria-label', 'Hide mod');
+      hideButton.setAttribute('type', 'button');
+      
+      // Create the SVG icon (X mark)
+      hideButton.innerHTML = `<svg viewBox="0 0 24 24" role="presentation" class="relative" style="width: 1.25rem; height: 1.25rem;">
+        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" style="fill: currentcolor;"></path>
+      </svg>`;
+      
+      // Add event listener to hide the mod
+      hideButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hideMod(gameId, modId);
+        modTile.style.display = 'none';
+      });
+      
+      // Replace the original button with our hide button
+      button.parentNode.replaceChild(hideButton, button);
+      
+      // Mark this mod tile as processed
+      modTile.setAttribute('data-hide-button-added', 'true');
+    });
   }
 
   // Run init when DOM is ready
@@ -2080,10 +2182,28 @@
         hasCheckedCurrentMod = false;
       }
 
+      // Check specifically for mod tiles or their buttons being added
+      const hasModTileChanges = mutations.some(mutation => {
+        return Array.from(mutation.addedNodes).some(node => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            return node.querySelector?.('div[data-e2eid="mod-tile"]') || 
+                  node.matches?.('div[data-e2eid="mod-tile"]') ||
+                  node.querySelector?.('button[aria-label="Mod options"]');
+          }
+          return false;
+        });
+      });
+      
       // Set a new timeout to run checks after mutations have settled
       checkTimeout = setTimeout(() => {
         // Add report button
         addReportButton();
+        
+        // Add hide buttons to mod tiles (especially if new ones were added)
+        if (hasModTileChanges) {
+          console.log('Detected new mod tiles, adding hide buttons');
+          addHideButtonsToModTiles();
+        }
         
         // Apply hidden status to elements
         applyHiddenModStatus();
