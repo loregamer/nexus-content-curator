@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Background and Layout Squeeze
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Applies a background image to Nexus Mods and squeezes the layout
 // @author       loregamer
 // @match        https://www.nexusmods.com/games/*
@@ -72,7 +72,7 @@
         .container-full,
         .main-container,
         .game-header-container {
-            max-width: 90% !important;
+            max-width: 70% !important;
             margin-left: auto !important;
             margin-right: auto !important;
         }
@@ -118,6 +118,24 @@
         [class*="@container/mod-tile"] [data-e2eid="mod-tile-file-size"] {
             color: #bbb !important;
             font-weight: bold !important;
+        }
+        
+        /* Remove underlines on hover and restore color change */
+        a:hover {
+            text-decoration: none !important;
+        }
+        
+        /* Hover color effects */
+        [class*="@container/mod-tile"] a[data-e2eid="mod-tile-title"]:hover {
+            color: #da8e35 !important;
+        }
+        
+        [class*="@container/mod-tile"] a[data-e2eid="mod-tile-category"]:hover {
+            color: #f7aa5d !important;
+        }
+        
+        [data-e2eid="user-link"]:hover {
+            color: #f1913c !important;
         }
     `;
 
