@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.12.4
+// @version      1.13
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
