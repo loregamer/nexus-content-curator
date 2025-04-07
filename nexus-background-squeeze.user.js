@@ -180,6 +180,10 @@
                 display: none !important;
             }
         }
+        
+        .relative {
+            background-color: #363737 !important;
+        }
     `;
 
     // Apply the CSS
