@@ -35,6 +35,23 @@
             background-color: #181818;
             color: #c8c8c8;
             line-height: 1.5;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: " ";
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgb(6, 7, 2);
+            background-image: url("https://www.nexusmods.com/assets/images/default/bg_game_index.jpg");
+            background-position: center top;
+            background-size: cover;
+            background-repeat: no-repeat;
+            will-change: transform;
+            z-index: -1;
         }
 
         /* Only keep the original header and footer */
@@ -43,9 +60,11 @@
         }
 
         #classic-search-container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 2rem auto;
             padding: 0 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         /* Game Header */
@@ -75,10 +94,11 @@
 
         /* Search and Filters Section */
         .search-filters {
-            background-color: #242424;
+            background-color: rgba(36, 36, 36, 0.95);
             border-radius: 6px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .search-form {
@@ -164,8 +184,9 @@
             align-items: center;
             margin-bottom: 1rem;
             padding: 0.75rem;
-            background-color: #2a2a2a;
+            background-color: rgba(42, 42, 42, 0.95);
             border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
         }
 
         .results-count {
@@ -193,9 +214,9 @@
 
         /* Mod Listing */
         .mod-list.tile-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
             list-style: none;
             padding: 0;
             margin: 0;
@@ -203,30 +224,97 @@
 
         .mod-tile {
             display: flex;
-            background-color: #2a2a2a;
+            flex-direction: column;
+            background-color: rgba(42, 42, 42, 0.95);
             border-radius: 4px;
             overflow: hidden;
             transition: background-color 0.2s ease;
+            height: 100%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
         .mod-tile:hover {
+            background-color: rgba(51, 51, 51, 0.98);
+        }
+
+        .mod-header {
+            padding: 10px 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .mod-title {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+        
+        .mod-title a {
+            color: #da8e35;
+            text-decoration: none;
+        }
+        
+        .mod-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #a0a0a0;
+        }
+        
+        .mod-category,
+        .mod-date,
+        .mod-updated,
+        .mod-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .mod-category a,
+        .mod-author a {
+            color: #a0a0a0;
+            text-decoration: none;
+        }
+        
+        .mod-category a:hover,
+        .mod-author a:hover {
+            color: #da8e35;
+        }
+        
+        .mod-desc {
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            color: #c8c8c8;
+        }
+        
+        .mod-staff-note {
+            padding: 5px 15px;
             background-color: #333;
+            font-size: 0.9rem;
+            color: #da8e35;
+        }
+        
+        .mod-stats {
+            padding: 10px 15px;
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 15px;
+            background-color: #222;
+        }
+        
+        .mod-stats .stat {
+            display: flex;
+            align-items: center;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        .mod-stats svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            fill: #a0a0a0;
         }
 
-        .mod-tile-left {
-            width: 200px;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .mod-tile-right {
-            flex-grow: 1;
-            padding: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tile-image img {
+        .mod-image img, .tile-image img {
             width: 100%;
             height: 150px;
             object-fit: cover;
@@ -306,7 +394,7 @@
         /* Pagination */
         .pagination {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             margin: 2rem 0;
         }
 
@@ -317,11 +405,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #2a2a2a;
+            background-color: rgba(42, 42, 42, 0.95);
             border-radius: 4px;
             cursor: pointer;
             color: #c8c8c8;
             text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .pagination-item.active {
@@ -330,7 +419,7 @@
         }
 
         .pagination-item:hover:not(.active) {
-            background-color: #333;
+            background-color: rgba(51, 51, 51, 0.98);
         }
     `;
 
@@ -691,164 +780,107 @@
         placeholderMods.forEach(mod => {
             const modTile = document.createElement('li');
             modTile.className = 'mod-tile';
+            modTile.setAttribute('data-mod-id', mod.id);
+            modTile.setAttribute('data-game-id', '3474');
             
-            // Left side (image and stats)
-            const tileLeft = document.createElement('div');
-            tileLeft.className = 'mod-tile-left';
-            tileLeft.setAttribute('data-mod-id', mod.id);
-            tileLeft.setAttribute('data-game-id', '3474');
-            tileLeft.setAttribute('data-tracking', '["Mods Listing Page","View Mod",""]');
+            // Header section with title and metadata
+            const modHeader = document.createElement('div');
+            modHeader.className = 'mod-header';
             
-            // Add expand tile overlay
-            const expandTile = document.createElement('div');
-            expandTile.className = 'expandtile';
+            const modTitle = document.createElement('h3');
+            modTitle.className = 'mod-title';
             
-            const btnExpand = document.createElement('div');
-            btnExpand.className = 'btnexpand btnoverlay inline-flex';
+            const titleLink = document.createElement('a');
+            titleLink.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}`;
+            titleLink.textContent = mod.title;
+            modTitle.appendChild(titleLink);
             
-            const padding = document.createElement('div');
-            padding.className = 'padding';
-            btnExpand.appendChild(padding);
+            const modMeta = document.createElement('div');
+            modMeta.className = 'mod-meta';
             
-            // Add SVG icon
-            const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svgIcon.classList.add('icon-plus');
-            svgIcon.setAttribute('title', '');
-            const useElement = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-            useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'https://www.nexusmods.com/assets/images/icons/icons.svg#icon-plus');
-            svgIcon.appendChild(useElement);
-            btnExpand.appendChild(svgIcon);
-            
-            // Add menu options
-            const optionsList = document.createElement('ul');
-            
-            const viewModLi = document.createElement('li');
-            const viewModLink = document.createElement('a');
-            viewModLink.className = 'mod-view';
-            viewModLink.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}`;
-            viewModLink.setAttribute('data-tracking', '["Mods Listing Page","Plus Icon Action","View Mod Page"]');
-            viewModLink.textContent = 'View mod page';
-            viewModLi.appendChild(viewModLink);
-            optionsList.appendChild(viewModLi);
-            
-            const viewGalleryLi = document.createElement('li');
-            const viewGalleryLink = document.createElement('a');
-            viewGalleryLink.className = 'mod-gallery';
-            viewGalleryLink.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}?tab=images`;
-            viewGalleryLink.setAttribute('data-tracking', '["Mods Listing Page","Plus Icon Action","View Image Gallery"]');
-            viewGalleryLink.textContent = 'View image gallery';
-            viewGalleryLi.appendChild(viewGalleryLink);
-            optionsList.appendChild(viewGalleryLi);
-            
-            btnExpand.appendChild(optionsList);
-            expandTile.appendChild(btnExpand);
-            tileLeft.appendChild(expandTile);
-            
-            // Add image
-            const modImage = document.createElement('a');
-            modImage.className = 'mod-image';
-            modImage.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}`;
-            
-            const figure = document.createElement('figure');
-            figure.className = 'image_figure';
-            
-            const img = document.createElement('img');
-            img.src = mod.image;
-            img.alt = mod.title;
-            
-            figure.appendChild(img);
-            modImage.appendChild(figure);
-            tileLeft.appendChild(modImage);
-            
-            const tileData = document.createElement('div');
-            tileData.className = 'tile-data';
-            
-            const statsList = document.createElement('ul');
-            
-            const fileSize = document.createElement('li');
-            fileSize.className = 'sizecount inline-flex';
-            fileSize.innerHTML = `<svg title="" class="icon icon-filesize"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-filesize"></use></svg><span class="flex-label">${mod.fileSize}</span>`;
-            
-            const endorsements = document.createElement('li');
-            endorsements.className = 'endorsecount inline-flex';
-            endorsements.innerHTML = `<svg title="" class="icon icon-endorse"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-endorse"></use></svg><span class="flex-label">${mod.endorsements}</span>`;
-            
-            const downloads = document.createElement('li');
-            downloads.className = 'downloadcount inline-flex';
-            downloads.innerHTML = `<svg title="" class="icon icon-downloads"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-downloads"></use></svg><span class="flex-label">${mod.downloads}</span>`;
-            
-            statsList.appendChild(fileSize);
-            statsList.appendChild(endorsements);
-            statsList.appendChild(downloads);
-            
-            tileData.appendChild(statsList);
-            
-            // The tileImage is now replaced with modImage
-            tileLeft.appendChild(tileData);
-            
-            // Right side (content)
-            const tileRight = document.createElement('div');
-            tileRight.className = 'mod-tile-right';
-            
-            const tileDesc = document.createElement('div');
-            tileDesc.className = 'tile-desc';
-            
-            const fadeoff = document.createElement('div');
-            fadeoff.className = 'fadeoff';
-            tileDesc.appendChild(fadeoff);
-            
-            const tileContent = document.createElement('div');
-            tileContent.className = 'tile-content';
-            
-            const tileName = document.createElement('p');
-            tileName.className = 'tile-name';
-            
-            const nameLink = document.createElement('a');
-            nameLink.href = `https://www.nexusmods.com/baldursgate3/mods/${mod.id}`;
-            nameLink.textContent = mod.title;
-            tileName.appendChild(nameLink);
-            
-            const meta = document.createElement('div');
-            meta.className = 'meta';
-            
-            const category = document.createElement('div');
-            category.className = 'category';
+            // Category
+            const modCategory = document.createElement('div');
+            modCategory.className = 'mod-category';
             
             const categoryLink = document.createElement('a');
             categoryLink.href = `https://www.nexusmods.com/baldursgate3/mods/categories/${categories.indexOf(mod.category) + 1}/`;
             categoryLink.textContent = mod.category;
-            category.appendChild(categoryLink);
+            modCategory.appendChild(categoryLink);
             
-            const author = document.createElement('div');
-            author.className = 'author';
+            // Upload date
+            const modUploaded = document.createElement('div');
+            modUploaded.className = 'mod-date';
+            modUploaded.innerHTML = `Uploaded: <time datetime="${mod.uploadDate}">${mod.uploadDate}</time>`;
+            
+            // Last updated
+            const modUpdated = document.createElement('div');
+            modUpdated.className = 'mod-updated';
+            // Using uploadDate as a placeholder, in a real implementation this would be lastUpdated
+            modUpdated.innerHTML = `Last Update: <time datetime="${mod.uploadDate}">${mod.uploadDate}</time>`;
+            
+            // Author
+            const modAuthor = document.createElement('div');
+            modAuthor.className = 'mod-author';
             
             const authorLink = document.createElement('a');
             authorLink.href = `https://www.nexusmods.com/baldursgate3/users/${mod.author.toLowerCase()}`;
-            authorLink.textContent = `by ${mod.author}`;
-            author.appendChild(authorLink);
+            authorLink.textContent = mod.author;
+            modAuthor.innerHTML = 'Author: ';
+            modAuthor.appendChild(authorLink);
             
-            const date = document.createElement('time');
-            date.className = 'date';
-            date.setAttribute('datetime', mod.uploadDate);
-            date.innerHTML = `<span class="label">Uploaded: </span>${mod.uploadDate}`;
+            // Add all meta elements
+            modMeta.appendChild(modCategory);
+            modMeta.appendChild(modUploaded);
+            modMeta.appendChild(modUpdated);
+            modMeta.appendChild(modAuthor);
             
-            meta.appendChild(category);
-            meta.appendChild(author);
-            meta.appendChild(date);
+            // Add title and meta to header
+            modHeader.appendChild(modTitle);
+            modHeader.appendChild(modMeta);
             
-            const desc = document.createElement('p');
-            desc.className = 'desc';
-            desc.textContent = mod.description;
+            // Description section (optional staff note)
+            const modStaffNote = document.createElement('div');
+            modStaffNote.className = 'mod-staff-note';
+            // Only add for the first item as an example
+            if (mod.id === 1) {
+                modStaffNote.innerHTML = 'Nexus Mods Staff edit: This mod is now the de-facto Mod Fixer for Baldur\'s Gate 3 and works with the Full Release. This pak forces the story to recompile, allowing pak mods to work with the Full...';
+            }
             
-            tileContent.appendChild(tileName);
-            tileContent.appendChild(meta);
-            tileContent.appendChild(desc);
+            // Regular description
+            const modDesc = document.createElement('div');
+            modDesc.className = 'mod-desc';
+            modDesc.textContent = mod.description;
             
-            tileDesc.appendChild(tileContent);
-            tileRight.appendChild(tileDesc);
+            // Stats section (bottom)
+            const modStats = document.createElement('div');
+            modStats.className = 'mod-stats';
             
-            modTile.appendChild(tileLeft);
-            modTile.appendChild(tileRight);
+            const fileSize = document.createElement('div');
+            fileSize.className = 'stat filesize';
+            fileSize.innerHTML = `<svg title="" class="icon icon-filesize"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-filesize"></use></svg><span>${mod.fileSize}</span>`;
+            
+            const endorsements = document.createElement('div');
+            endorsements.className = 'stat endorsements';
+            endorsements.innerHTML = `<svg title="" class="icon icon-endorse"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-endorse"></use></svg><span>${mod.endorsements}</span>`;
+            
+            const downloads = document.createElement('div');
+            downloads.className = 'stat downloads';
+            downloads.innerHTML = `<svg title="" class="icon icon-downloads"><use xlink:href="https://www.nexusmods.com/assets/images/icons/icons.svg#icon-downloads"></use></svg><span>${mod.downloads}</span>`;
+            
+            modStats.appendChild(fileSize);
+            modStats.appendChild(endorsements);
+            modStats.appendChild(downloads);
+            
+            // Assemble the tile
+            modTile.appendChild(modHeader);
+            
+            // Only add staff note if it has content
+            if (mod.id === 1) {
+                modTile.appendChild(modStaffNote);
+            }
+            
+            modTile.appendChild(modDesc);
+            modTile.appendChild(modStats);
             
             modList.appendChild(modTile);
         });
@@ -1018,6 +1050,8 @@
                 background-color: #1a1a1a;
                 padding: 1rem;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                position: relative;
+                z-index: 1;
             }
             
             .header-container {
@@ -1083,6 +1117,8 @@
                 padding: 2rem 1rem;
                 margin-top: 3rem;
                 color: #a0a0a0;
+                position: relative;
+                z-index: 1;
             }
             
             .footer-container {
