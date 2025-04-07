@@ -5,7 +5,6 @@
 // @description  Applies a background image to Nexus Mods and squeezes the layout
 // @author       loregamer
 // @match        https://www.nexusmods.com/games/*
-// @match        https://www.nexusmods.com/*/search/*
 // @grant        GM_addStyle
 // @icon         https://www.nexusmods.com/favicon.ico
 // @updateURL    https://github.com/loregamer/nexus-content-curator/raw/refs/heads/main/nexus-background-squeeze.user.js
@@ -182,7 +181,12 @@
         }
         
         .relative {
-            background-color: #363737 !important;
+            background-color: #444444 !important;
+        }
+
+        /* Dropdown background */
+        [role="listbox"].z-dropdown {
+            background-color: #383838 !important;
         }
     `;
 
