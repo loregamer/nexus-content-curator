@@ -65,6 +65,10 @@
         footer {
             background-color: #181818 !important;
         }
+
+        /* Sub-navigation panel background */
+        div[data-e2eid$="-sub-nav"] {
+            background-color: #181818 !important;
         }
         
         /* Hide the page's background image */
@@ -119,6 +123,11 @@
         
         /* Tile description */
         .bg-surface-translucent-low {
+            background-color: #383838 !important;
+        }
+        
+        /* More specific rule for the stats footer */
+        [class*="@container/mod-tile"] .min-h-8 {
             background-color: #383838 !important;
         }
         
@@ -2115,7 +2124,7 @@ ${customCSS}`;
       color: "#888888",
       class: "info",
     },
-    AUTHOR_SUCKS: {
+    TAGGED_AUTHOR: {
       icons: ["👿"],
       color: "#ff4400",
       class: "warning",
@@ -2835,7 +2844,7 @@ ${customCSS}`;
         type: "CLOSED_PERMISSIONS",
         reason: `This mod has closed or restricted permissions <span style="font-style: italic; font-size: 0.85em;">(${closedPermissions.join(
           ", "
-        )})</span>.<br>Please consider bullying and harassing this mod author into being <a href="https://www.youtube.com/watch?v=edea7yMqOY8" target="_blank" style="color: inherit; text-decoration: underline;">Cathedral</a>, and perhaps reupload on ModHQ if you are feeling spiteful.`,
+        )})`,
         color: STATUS_TYPES.CLOSED_PERMISSIONS.color,
         skipBanner: noFeatureElement ? true : false,
       };
@@ -3007,10 +3016,10 @@ ${customCSS}`;
     );
     existingWarningTags.forEach((tag) => tag.remove());
 
-    // Check if any author has warnings and add the AUTHOR_SUCKS tag if needed
+    // Check if any author has warnings and add the TAGGED_AUTHOR tag if needed
     if (hasAuthorWarnings()) {
       const badAuthorWarning = {
-        type: "AUTHOR_SUCKS",
+        type: "TAGGED_AUTHOR",
         reason: "This mod is from an author with warning labels",
         color: "#ff4400",
       };
@@ -3078,7 +3087,7 @@ ${customCSS}`;
         case "LAME":
           icon = "👎";
           break;
-        case "AUTHOR_SUCKS":
+        case "TAGGED_AUTHOR":
           icon = "👿";
           break;
         case "INFORMATIVE":
