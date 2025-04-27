@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator
 // @namespace    http://tampermonkey.net/
-// @version      1.13
+// @version      1.15
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -698,11 +698,11 @@
             content: ' ';
             position: fixed;
             width: 100%;
-            height: 100%;
+            height: 100% !important;
             top: 0;
             left: 0;
             background-color: #060702;
-            background-image: url('/assets/images/default/bg_game_index.jpg');
+            background-image: url('/assets/images/default/bg_game_index.jpg') !important;
             background-position: center top;
             background-size: cover;
             background-repeat: no-repeat;
@@ -1369,13 +1369,6 @@
 
     /* Comments below article have extra space they don't need */
     .container ~ #comment-container {padding-top: 0;}
-
-    /* Give back the nice background image */
-    body::before {
-      background-image: url('/assets/images/default/bg_game_index.jpg');
-      height: 100%;
-      filter: none;
-    }
 
     /* Game overview page */
 
