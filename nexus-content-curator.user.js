@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Nexus Mods - Content Curator
+// @name         Nexus Mods - Content Curator + UI Revert
 // @namespace    http://tampermonkey.net/
 // @version      1.15
 // @description  Adds warning labels to mods and their authors
