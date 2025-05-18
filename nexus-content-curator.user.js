@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexus Mods - Content Curator + UI Revert
 // @namespace    http://tampermonkey.net/
-// @version      1.15
+// @version      1.15.1
 // @description  Adds warning labels to mods and their authors
 // @author       loregamer
 // @match        https://www.nexusmods.com/*
@@ -4230,6 +4230,7 @@ ${l.type}:
       const modManagerButton = document.createElement('a');
       modManagerButton.className = manualDownloadButton.className;
       modManagerButton.href = manualDownloadHref + (manualDownloadHref.includes('?') ? '&' : '?') + 'nmm=1';
+      modManagerButton.style.opacity = '0.55';
       
       // Copy data attributes
       Array.from(manualDownloadButton.attributes).forEach(attr => {
